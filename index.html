@@ -1,0 +1,1740 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title> TINMARUY </title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--azul:#1F4E78;--azul-claro:#2E6FA8;--verde:#00B050;--amarillo:#E5A100;--rojo:#E53935;--gris-bg:#F0F2F5;--gris-borde:#DDE1E7;--texto:#2C3E50;--sombra:0 8px 30px rgba(0,0,0,0.08)}
+body{font-family:'Segoe UI',Tahoma,Arial,sans-serif;background:var(--gris-bg);color:var(--texto);min-height:100vh;padding:15px 15px 95px 15px;overflow-x:hidden}
+#appContainer.bloqueado>:not(.user-bar):not(.aviso-bloqueo):not(.anuncio-flotante):not(#modalMensajeSistema):not(#chat-widget):not(.portal-nav){filter:blur(6px);pointer-events:none;user-select:none}
+.aviso-bloqueo{display:none;position:sticky;top:70px;z-index:50;background:linear-gradient(135deg,#1F4E78 0%,#2E6FA8 100%);color:#fff;padding:22px 20px;border-radius:14px;box-shadow:0 15px 40px rgba(31,78,120,.4);text-align:center;margin-bottom:15px;animation:pulseAviso 2s ease-in-out infinite}
+.aviso-bloqueo.visible{display:block}
+.aviso-bloqueo h3{font-size:19px;margin-bottom:8px;font-weight:700}
+.aviso-bloqueo p{font-size:13px;opacity:.92;margin-bottom:16px;line-height:1.45}
+.aviso-bloqueo .btn-registrarse{background:#fff;color:#1F4E78;border:none;padding:12px 28px;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;transition:transform .2s,box-shadow .2s;box-shadow:0 4px 12px rgba(0,0,0,.15)}
+.aviso-bloqueo .btn-registrarse:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,.25)}
+@keyframes pulseAviso{0%,100%{box-shadow:0 15px 40px rgba(31,78,120,.4)}50%{box-shadow:0 15px 50px rgba(31,78,120,.65)}}
+#modalAuth{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;z-index:9999;padding:20px;overflow-y:auto;backdrop-filter:blur(4px)}
+#modalAuth.active{display:flex}
+#modalAuth .auth-card{background:#fff;border-radius:16px;padding:28px 24px;max-width:440px;width:100%;box-shadow:0 25px 60px rgba(0,0,0,.5);position:relative;text-align:center;max-height:92vh;overflow-y:auto}
+#modalAuth .auth-card .btn-cerrar{position:absolute;top:10px;right:10px;background:#F0F2F5;border:none;width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:16px;color:#7F8C8D;font-family:inherit;z-index:10}
+#modalAuth .auth-card .btn-cerrar:hover{background:var(--rojo);color:#fff}
+#modalAuth .auth-card h2{color:var(--azul);font-size:20px;margin-bottom:6px}
+#modalAuth .auth-card .sub{color:#7F8C8D;font-size:13px;margin-bottom:20px}
+.form-auth-group{text-align:left;margin-bottom:14px}
+.form-auth-group label{font-size:11px;font-weight:700;color:#7F8C8D;text-transform:uppercase;display:block;margin-bottom:5px}
+.form-auth-group input{width:100%;padding:10px;border:1.5px solid var(--gris-borde);border-radius:8px;font-size:14px;font-family:inherit}
+.btn-auth-submit{width:100%;background:var(--azul);color:#fff;border:none;padding:12px;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;margin-top:10px;font-family:inherit}
+.btn-auth-submit:hover{background:var(--azul-claro)}
+
+/* SOBRE DENTRO DE LA BARRA SUPERIOR */
+.sobre-notificacion-bar { position: relative; background: var(--azul); color: #fff; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; cursor: pointer; border: none; transition: transform .2s; flex-shrink: 0; }
+.sobre-notificacion-bar:hover { transform: scale(1.1); }
+.sobre-badge { position: absolute; top: -2px; right: -2px; background: var(--rojo); color: #fff; font-size: 9px; padding: 2px 5px; border-radius: 50%; font-weight: 700; display: none; }
+.sobre-badge.activo { display: block; }
+
+.anuncio-flotante{position:fixed;bottom:85px;right:-320px;width:280px;background:#fff;border-left:5px solid var(--azul);border-radius:10px;box-shadow:0 5px 25px rgba(0,0,0,.2);padding:12px 14px;z-index:997;transition:right .4s cubic-bezier(.175,.885,.32,1.275);font-size:12px}
+.anuncio-flotante.mostrar{right:15px}
+.anuncio-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;font-weight:700;color:var(--azul)}
+.anuncio-header span{font-size:13px}
+.anuncio-cerrar{background:none;border:none;cursor:pointer;font-size:12px;color:#95A5A6}
+.anuncio-cerrar:hover{color:var(--rojo)}
+.anuncio-texto{color:var(--texto);line-height:1.4}
+
+/* BARRA SUPERIOR DE USUARIO Y TIENDA */
+.user-bar{display:flex;align-items:center;justify-content:flex-end;gap:8px;margin-bottom:10px;padding:8px 12px;background:#fff;border-radius:10px;box-shadow:0 2px 6px rgba(0,0,0,.05);font-size:13px;flex-wrap:wrap;position:relative;z-index:60}
+.user-bar .avatar{width:36px;height:36px;border-radius:50%;background:var(--azul);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;flex-shrink:0;overflow:hidden}
+.user-bar .nombre{font-weight:600;color:var(--texto);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:130px}
+.user-bar button{background:#F0F2F5;color:var(--texto);border:none;padding:8px 14px;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit}
+.user-bar button:hover{background:var(--rojo);color:#fff}
+.user-bar button.btn-ingresar{background:var(--azul);color:#fff}
+.user-bar button.btn-ingresar:hover{background:var(--azul-claro)}
+
+/* BOTÓN FIJO DE TIENDA EN BARRA SUPERIOR */
+.btn-tienda-bar { background: #ffffff !important; color: var(--azul) !important; border: 1.5px solid var(--azul) !important; font-weight: 700 !important; font-size: 14px !important; margin-right: auto; display: flex; align-items: center; gap: 6px; padding: 8px 16px !important; border-radius: 8px !important; box-shadow: 0 2px 5px rgba(0,0,0,0.06); transition: all 0.2s ease; }
+.btn-tienda-bar:hover { background: var(--azul) !important; color: #fff !important; transform: translateY(-1px); }
+
+/* ESTILOS DEL PORTAL DE INFORMACIÓN */
+.portal-header{text-align:center;margin-bottom:20px;background:linear-gradient(135deg,#1a3d5c,var(--azul));color:#fff;padding:25px 15px;border-radius:15px;box-shadow:var(--sombra)}
+.portal-header h1{font-size:24px;margin-bottom:6px;letter-spacing:.5px}
+.portal-header p{font-size:13px;opacity:0.85}
+
+/* BARRA DE NAVEGACIÓN INFERIOR ESTILO APP */
+.portal-nav{
+  position: fixed;
+  bottom: 15px;
+  left: 15px;
+  right: 15px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 8px 6px;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.18);
+  border: 1px solid rgba(221, 225, 231, 0.8);
+  z-index: 1000;
+}
+.portal-nav button{
+  flex: 1;
+  background: transparent;
+  border: none;
+  border-radius: 12px;
+  padding: 8px 4px;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  color: #718096;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  transition: all .2s ease;
+}
+.portal-nav button span.nav-icon {
+  font-size: 18px;
+}
+.portal-nav button:hover{
+  color: var(--azul);
+}
+.portal-nav button.active{
+  background: var(--azul);
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(31,78,120,.3);
+  transform: translateY(-2px);
+}
+
+.portal-section{display:none;background:#fff;border-radius:15px;box-shadow:var(--sombra);padding:20px;animation:fadeIn .4s ease;margin-bottom:20px}
+.portal-section.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+/* SECCIÓN INICIO SIN FONDO NI RECUADRO */
+#seccion-inicio.portal-section {
+  background: transparent !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  border: none !important;
+}
+
+.portal-section h2{color:var(--azul);font-size:20px;margin-bottom:15px;border-bottom:2px solid var(--gris-borde);padding-bottom:8px;display:flex;align-items:center;gap:8px}
+.grid-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:15px}
+
+/* ESTILOS FORMULARIO / TIENDA */
+.form-sugerencias {
+  max-width: 600px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.form-sugerencias .campo {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  text-align: left;
+}
+.form-sugerencias label {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--texto);
+}
+.form-sugerencias input[type="text"],
+.form-sugerencias input[type="email"],
+.form-sugerencias textarea,
+.form-sugerencias select,
+.form-sugerencias input[type="file"] {
+  width: 100%;
+  padding: 9px 12px;
+  border: 1.5px solid var(--gris-borde);
+  border-radius: 8px;
+  font-size: 13px;
+  font-family: inherit;
+  background: #f8fafc;
+}
+.form-sugerencias textarea {
+  resize: vertical;
+}
+.form-sugerencias .btn-sugerencia {
+  background: var(--azul);
+  color: #fff;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background .2s;
+  margin-top: 5px;
+}
+.form-sugerencias .btn-sugerencia:hover {
+  background: var(--azul-claro);
+}
+
+/* GRILLA DE PRODUCTOS DE LA TIENDA */
+.tienda-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
+}
+@media (min-width: 768px) {
+  .tienda-grid {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  }
+}
+.item {
+  background: #F8FAFC;
+  border: 1px solid var(--gris-borde);
+  border-radius: 12px;
+  padding: 12px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+}
+.item-container { position: relative; }
+.item img {
+  width: 100%;
+  height: 130px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 8px;
+}
+.encargalo {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  background: var(--azul);
+  color: white;
+  font-size: 10px;
+  font-weight: bold;
+  padding: 2px 6px;
+  border-radius: 4px;
+  z-index: 2;
+}
+.item h3 {
+  font-size: 13px;
+  color: var(--azul);
+  margin-bottom: 3px;
+}
+.item p {
+  font-size: 11px;
+  color: #7F8C8D;
+  margin-bottom: 6px;
+}
+.precio {
+  font-size: 14px;
+  font-weight: bold;
+  color: var(--verde);
+  display: block;
+  margin-bottom: 8px;
+}
+.cantidad-input {
+  width: 50px;
+  padding: 4px;
+  border: 1px solid var(--gris-borde);
+  border-radius: 6px;
+  text-align: center;
+  font-size: 12px;
+}
+.add-to-cart {
+  width: 100%;
+  background: var(--azul);
+  color: white;
+  border: none;
+  padding: 8px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.add-to-cart:hover {
+  background: var(--azul-claro);
+}
+
+/* CARRITO DE COMPRAS EN LA TIENDA */
+.carrito-seccion {
+  background: #fff;
+  border: 2px dashed var(--azul);
+  border-radius: 12px;
+  padding: 15px;
+  margin-top: 20px;
+  text-align: center;
+}
+.carrito-lista {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0;
+  text-align: left;
+  font-size: 13px;
+}
+.carrito-lista li {
+  padding: 6px 0;
+  border-bottom: 1px solid var(--gris-borde);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.btn-eliminar {
+  background: var(--rojo);
+  color: white;
+  border: none;
+  padding: 2px 6px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 10px;
+}
+.btn-whatsapp-pedir {
+  background: #25D366;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.btn-whatsapp-pedir:hover { background: #1ebc57; }
+
+/* ESTILOS DESPLEGABLES SOLICITA WEB */
+.sw-fila { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; }
+.sw-select { width: 100%; margin-bottom: 8px; position: relative; }
+.sw-select-btn { width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 11px 12px; border: 1.5px solid var(--gris-borde); border-radius: 8px; background: #f8fafc; color: var(--texto); font-size: 13px; cursor: pointer; font-weight: bold; }
+.sw-select-btn span { flex: 1; text-align: left; margin-left: 7px; }
+.sw-opciones { display: none; width: 100%; margin-top: 4px; border: 1.5px solid var(--gris-borde); border-radius: 8px; background: #fff; overflow: hidden; position: absolute; z-index: 50; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+.sw-select.abierto .sw-opciones { display: block; }
+.sw-opciones label { display: flex; align-items: center; gap: 8px; width: 100%; padding: 10px; border-bottom: 1px solid #eee; font-size: 13px; cursor: pointer; font-weight: bold; color: var(--texto); }
+.sw-opciones label:hover { background: #f3f4f6; }
+.sw-opciones input { width: auto !important; margin: 0; }
+.sw-select.sw-error .sw-select-btn { border-color: var(--rojo) !important; background: #fff5f5 !important; }
+
+/* FIX DOBLE COLUMNA: RELOJ Y RADIO */
+.fila-widgets { 
+  display: flex !important; 
+  flex-direction: row !important; 
+  gap: 10px !important; 
+  width: 100% !important; 
+  align-items: stretch !important; 
+  margin-bottom: 20px !important; 
+} 
+#reloj-lluvia { 
+  flex: 1 !important; 
+  width: 50% !important; 
+  background: #0f172a; 
+  border-radius: 16px; 
+  box-shadow: var(--sombra); 
+  position: relative; 
+  height: 140px; 
+  overflow: hidden; 
+  box-sizing: border-box;
+} 
+#reloj-lluvia canvas.fondo-lluvia { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; } 
+#reloj-lluvia .contenido-reloj { position: relative; z-index: 1; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 5px; } 
+#reloj-lluvia #hora { color: #e0ffff !important; font-size: 24px; font-weight: bold; text-shadow: 0 0 10px rgba(126, 239, 255, 0.9); line-height: 1.1; font-family: monospace; } 
+#reloj-lluvia #fecha { color: #b0e0e6 !important; font-size: 11px; font-weight: 500; text-shadow: 0 0 5px rgba(126, 239, 255, 0.5); margin-top: 4px; } 
+
+radio-player { 
+  flex: 1 !important; 
+  width: 50% !important; 
+  height: 140px !important; 
+  display: block !important; 
+}
+
+/* CARRUSEL CONTINUO */
+.carousel-wrapper { 
+  margin: 20px 0; 
+  border-radius: 16px; 
+  overflow: hidden; 
+  box-shadow: var(--sombra); 
+  background: #0f172a; 
+}
+.carousel-container2 { 
+  position: relative; 
+  width: 100%; 
+  height: auto; 
+  padding: 12px 0;
+  overflow: hidden; 
+  background: #0f172a; 
+  display: flex; 
+  align-items: center; 
+} 
+.carousel-slide2 { 
+  display: flex; 
+  width: max-content; 
+  gap: 15px; 
+  align-items: center;
+  animation: scrollInfinito 30s linear infinite; 
+} 
+@keyframes scrollInfinito {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.carousel-container2 .slide { 
+  width: auto; 
+  height: auto; 
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  background: #0f172a; 
+  flex-shrink: 0; 
+  border-radius: 10px; 
+  overflow: hidden; 
+  padding: 4px;
+} 
+.carousel-container2 .slide img { 
+  width: auto; 
+  max-width: 280px;
+  height: auto; 
+  max-height: 380px;
+  object-fit: contain !important; 
+  display: block;
+  border-radius: 6px;
+  user-select: none;
+  -webkit-user-drag: none;
+} 
+
+@media (max-width: 600px) {
+  .carousel-container2 .slide img {
+    max-width: 220px;
+    max-height: 280px;
+  }
+}
+
+/* BOTÓN SOLICITA TU WEB */
+.btn-solicita-web { display: block; width: 100%; max-width: 500px; margin: 20px auto; padding: 15px 10px; box-sizing: border-box; background: #e8f3ff; color: #1769aa; text-decoration: none; font-weight: bold; font-size: 17px; border-radius: 12px; text-align: center; border: 1px solid #c9e2f7; box-shadow: 0 4px 10px rgba(0,0,0,0.08); transition: 0.3s ease; cursor: pointer; } 
+.btn-solicita-web:hover { background: #d8ecff; transform: translateY(-2px); }
+
+/* ESTILOS DEL CLIMA Y CONTACTO */
+.clima-card, .contact-card {background:linear-gradient(145deg, #ffffff, #f0f4f8);border:1px solid #e2e8f0;border-radius:12px;padding:18px;box-shadow:0 4px 15px rgba(0,0,0,.03)}
+.clima-header, .contact-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;border-bottom:1px solid #e2e8f0;padding-bottom:8px}
+.clima-header h3, .contact-header h3{margin:0;font-size:15px;color:#2d3748;display:flex;align-items:center;gap:6px}
+.clima-header .ubicacion{font-size:10px;color:#718096;background:#edf2f7;padding:3px 6px;border-radius:10px;font-weight:600}
+.clima-body{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.clima-temp{font-size:36px;font-weight:800;color:var(--azul);line-height:1}
+.clima-icon{font-size:42px;line-height:1}
+.clima-detalles{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px;font-size:12px;color:#4a5568;background:#fff;padding:8px;border-radius:8px}
+.clima-detalles div{display:flex;align-items:center;gap:5px}
+.clima-loading{font-size:13px;color:#718096;text-align:center;padding:15px 0}
+.clima-error{font-size:12px;color:var(--rojo);text-align:center;padding:15px 0;background:#fef2f2;border-radius:8px}
+
+/* ESTILOS DE CONTACTO */
+.contact-card .info-icon { font-size: 13px; color: #4a5568; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+.contact-card .info-icon strong { color: var(--azul); }
+
+/* ESTILOS DE PROTOCOLOS Y LEYES */
+.protocolo-card{background:#fff;border-left:4px solid var(--azul);padding:15px;margin-bottom:12px;border-radius:0 8px 8px 0;box-shadow:0 2px 10px rgba(0,0,0,.03);border-top:1px solid #f0f0f0;border-right:1px solid #f0f0f0;border-bottom:1px solid #f0f0f0}
+.protocolo-card h4{color:var(--azul);margin-bottom:5px;font-size:15px;display:flex;align-items:center;gap:8px}
+.protocolo-card p{font-size:13px;color:#4a5568;line-height:1.45}
+
+/* URULEYES IFRAME */
+#uruleyesFullscreen { display: none; position: fixed; inset: 0; z-index: 9000; background: #f5f5f5; flex-direction: column; }
+#uruleyesFullscreen.active { display: flex; }
+.uruleyes-header { background: #0d1b2a; color: #fff; display: flex; justify-content: space-between; align-items: center; padding: 12px 6%; border-bottom: 3px solid #d4af37; z-index: 1000; }
+.uruleyes-header h1 { font-size: 18px; margin: 0; }
+.uruleyes-header h1 span { color: #d4af37; }
+.uruleyes-header nav a { color: #fff; text-decoration: none; margin-left: 15px; font-weight: bold; font-size: 13px; cursor: pointer; }
+.uruleyes-frame-container { flex: 1; width: 100%; position: relative; }
+.uruleyes-frame-container iframe { width: 100%; height: 100%; border: none; position: absolute; inset: 0; }
+
+/* Toast y Modales */
+.toast{position:fixed;bottom:90px;right:20px;background:var(--azul);color:#fff;padding:12px 18px;border-radius:10px;box-shadow:0 8px 20px rgba(0,0,0,.25);font-weight:600;font-size:13px;transform:translateX(400px);transition:transform .35s ease-out;z-index:2000}
+.toast.show{transform:translateX(0)}
+.toast.success{background:var(--verde)}
+.toast.error{background:var(--rojo)}
+.toast.warning{background:var(--amarillo)}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;align-items:center;justify-content:center;z-index:2000;padding:15px}
+.modal-overlay.active{display:flex}
+.modal{background:#fff;border-radius:12px;width:100%;max-width:560px;padding:18px 20px;box-shadow:0 20px 50px rgba(0,0,0,.3);max-height:85vh;overflow-y:auto}
+.modal h3{color:var(--azul);margin-bottom:14px;font-size:16px;border-bottom:2px solid var(--gris-borde);padding-bottom:8px}
+.modal-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:15px;padding-top:10px;border-top:1px solid var(--gris-borde);flex-wrap:wrap}
+.btn{padding:8px 14px;font-size:12px;font-weight:600;border:none;border-radius:8px;cursor:pointer;font-family:inherit}
+.btn-secondary{background:#E0E5EC;color:var(--texto)}
+.btn-primary{background:var(--azul);color:#fff}
+
+/* CHATBOT */
+#chat-widget { position: fixed; bottom: 85px; right: 15px; z-index: 5000; }
+#chat-toggle { width: 52px; height: 52px; border-radius: 50%; background: var(--azul); color: white; border: none; font-size: 24px; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.3); transition: transform 0.2s; display: flex; align-items: center; justify-content: center; }
+#chat-toggle:hover { transform: scale(1.1); }
+#chat-window { position: absolute; bottom: 65px; right: 0; width: 320px; height: 390px; background: #fff; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); display: flex; flex-direction: column; overflow: hidden; transform: scale(0); transform-origin: bottom right; transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); border: 1px solid var(--gris-borde); }
+#chat-window.active { transform: scale(1); }
+.chat-header { background: var(--azul); color: white; padding: 10px 14px; font-weight: 700; font-size: 13px; display: flex; justify-content: space-between; align-items: center; }
+.chat-header button { background: rgba(255,255,255,0.2); border: none; color: white; width: 24px; height: 24px; border-radius: 50%; cursor: pointer; font-size: 13px; }
+.chat-body { flex: 1; padding: 12px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; background: #f7f9fb; white-space: pre-line; }
+.chat-msg { padding: 8px 10px; border-radius: 10px; font-size: 12px; max-width: 90%; line-height: 1.4; }
+.chat-msg.bot { background: #fff; border: 1px solid var(--gris-borde); align-self: flex-start; color: var(--texto); border-bottom-left-radius: 2px; }
+.chat-msg.user { background: var(--azul); color: #fff; align-self: flex-end; border-bottom-right-radius: 2px; }
+.chat-input-area { display: flex; padding: 8px; background: #fff; border-top: 1px solid var(--gris-borde); }
+.chat-input-area input { flex: 1; padding: 7px 10px; border: 1px solid var(--gris-borde); border-radius: 20px; outline: none; font-size: 12px; font-family: inherit; }
+.chat-input-area button { background: var(--azul); color: white; border: none; width: 32px; height: 32px; border-radius: 50%; margin-left: 6px; cursor: pointer; font-size: 14px; }
+
+@media (max-width: 500px) {
+  #reloj-lluvia #hora { font-size: 18px; }
+  #reloj-lluvia #fecha { font-size: 9px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ANUNCIO FLOTANTE -->
+<div class="anuncio-flotante" id="anuncioFlotante">
+  <div class="anuncio-header"><span id="anuncioTitulo">💡 Consejo útil</span><button class="anuncio-cerrar" onclick="cerrarAnuncioFlotante()">✕</button></div>
+  <div class="anuncio-texto" id="anuncioTexto">Cargando anuncio...</div>
+</div>
+
+<!-- Modal mensaje sistema -->
+<div class="modal-overlay" id="modalMensajeSistema">
+  <div class="modal">
+    <h3>📬 Novedades del Sistema</h3>
+    <div id="contenidoMensajeSistema" style="font-size:13px;line-height:1.5;margin-bottom:12px;color:var(--texto);"></div>
+    <div id="panelAdminMensaje" style="display:none;border-top:1px dashed var(--gris-borde);padding-top:8px;margin-top:8px;">
+      <label style="font-size:11px;font-weight:bold;color:var(--azul);">Editar mensaje:</label>
+      <textarea id="inputNuevoMensaje" style="width:100%;padding:8px;border:1px solid var(--gris-borde);border-radius:6px;margin-top:5px;font-family:inherit;"></textarea>
+      <button class="btn btn-success btn-sm" style="margin-top:6px;background:var(--verde);color:#fff;" onclick="guardarNuevoMensaje()">💾 Guardar</button>
+    </div>
+    <div class="modal-actions" style="justify-content:space-between;">
+      <button type="button" class="btn btn-secondary" onclick="toggleAdminMensaje()">⚙️ Configurar</button>
+      <button type="button" class="btn btn-primary" onclick="cerrarModalMensaje()">Cerrar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de autenticación -->
+<div id="modalAuth">
+  <div class="auth-card">
+    <button class="btn-cerrar" onclick="cerrarModalAuth()" title="Cerrar">✕</button>
+    <h2>🔑 Registro de Guardia</h2>
+    <p class="sub">Solicita tu código de acceso al administrador.</p>
+    
+    <div id="pasoPedirCodigo">
+      <div class="form-auth-group"><label>Nombre del Guardia *</label><input type="text" id="regNombre" placeholder="Ej: Juan Pérez"></div>
+      <div class="form-auth-group"><label>Correo Electrónico *</label><input type="email" id="regEmail" placeholder="tu@email.com"></div>
+      <button class="btn-auth-submit" onclick="solicitarCodigoPersonal()">✉️ Solicitar mi Código</button>
+      <div style="margin-top:12px;font-size:12px;color:#7F8C8D;">
+        ¿Ya tienes código? <a href="#" onclick="mostrarPasoCodigo();return false;" style="color:var(--azul);font-weight:bold;">Ingresar aquí</a>
+      </div>
+    </div>
+    
+    <div id="pasoIngresarCodigo" style="display:none;">
+      <p style="font-size:12px;color:#2E6FA8;margin-bottom:10px;" id="infoUsuarioAviso"></p>
+      <div class="form-auth-group">
+        <label>Código de Acceso</label>
+        <input type="text" id="inputCodigoValidar" placeholder="123456" maxlength="6" style="text-align:center;font-size:18px;letter-spacing:4px;">
+      </div>
+      <button class="btn-auth-submit" onclick="validarCodigoUsuario()">✅ Desbloquear Portal</button>
+      <div style="margin-top:12px;font-size:12px;"><a href="#" onclick="mostrarPasoPedir();return false;" style="color:var(--azul);">Nueva solicitud</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- APP PRINCIPAL -->
+<div id="appContainer" class="bloqueado">
+  
+  <div class="user-bar" id="userBar">
+    <button class="sobre-notificacion-bar" onclick="abrirModalMensaje()" title="Novedades del sistema">✉️<span class="sobre-badge" id="sobreBadge">1</span></button>
+    <button type="button" class="btn-tienda-bar" onclick="cambiarPortal('tienda', null)">🏪 Tienda</button>
+    <div class="avatar" id="userAvatar">?</div>
+    <div class="nombre" id="userNombre">Invitado</div>
+    <button type="button" id="btnAccionUser" class="btn-ingresar" onclick="accionUsuario()">🔑 Ingresar</button>
+  </div>
+  
+  <div class="aviso-bloqueo visible" id="avisoBloqueo">
+    <h3>🔒 Portal Bloqueado</h3>
+    <p>Ingresa tus datos para solicitar tu código de acceso y ver el contenido del portal.</p>
+    <button class="btn-registrarse" onclick="abrirModalAuth()">🔑 Solicitar mi Código</button>
+  </div>
+
+<!-- PORTAL DE INFORMACIÓN -->
+<div id="portalContenido">
+  
+  <div class="portal-header">
+    <h1><b>👋 <span style="color:#2E6FA8;">TIN</span><span style="color:#E5A100;">MAR</span></b></h1>
+    <p>Info útil para tu día a día</p> 
+  </div>
+
+    <!-- NAVEGACIÓN INFERIOR TIPO APP -->
+    <div class="portal-nav">
+      <button class="active" onclick="cambiarPortal('inicio', this)">
+        <span class="nav-icon">🏠</span>
+        <span>Inicio</span>
+      </button>
+      <button onclick="cambiarPortal('protocolos', this)">
+        <span class="nav-icon">📋</span>
+        <span>Protocolos</span>
+      </button>
+      <button onclick="cambiarPortal('sugerencias', this)">
+        <span class="nav-icon">📩</span>
+        <span>Sugerencias</span>
+      </button>
+      <button onclick="cambiarPortal('solicitarweb', this)">
+        <span class="nav-icon">🌐</span>
+        <span>Solicitar Web</span>
+      </button>
+      <button onclick="abrirUruleyes()">
+        <span class="nav-icon">⚖️</span>
+        <span>Uruleyes</span>
+      </button>
+    </div>
+
+    <!-- SECCIÓN INICIO -->
+    <section id="seccion-inicio" class="portal-section active">
+      <h2>📢 ¡Bienvenido al Portal!</h2>
+      
+      <div class="fila-widgets"> 
+        <div id="reloj-lluvia"> 
+          <canvas class="fondo-lluvia"></canvas> 
+          <div class="contenido-reloj"> 
+            <div id="hora">00:00:00</div> 
+            <div id="fecha">Cargando fecha...</div> 
+          </div> 
+        </div> 
+        <radio-player></radio-player> 
+      </div>
+
+      <div class="grid-cards" style="margin-bottom: 20px;">
+        <div class="clima-card">
+          <div class="clima-header">
+            <h3>☀️ Clima Actual</h3>
+            <span class="ubicacion" id="climaUbicacion">Montevideo, UY</span>
+          </div>
+          <div id="climaContenedor">
+            <div class="clima-loading">⏳ Cargando clima...</div>
+          </div>
+        </div>
+
+        <div class="contact-card">
+          <div class="contact-header">
+           <b> <h3>📌 Contacto</h3></b>
+          </div>
+          <p class="info-icon">📍 <strong>Dirección:</strong> Montevideo, UY</p>
+          <p class="info-icon">⏰ <strong>Horarios:</strong> Todos los días 24 hrs</p>
+          <p class="info-icon">📞 <strong>Teléfono:</strong> <a href="tel:+59899295848" style="color: var(--azul); text-decoration: none; font-weight: 600;">099 295 848</a></p>
+          <p class="info-icon">📱 <strong>WhatsApp:</strong> <a href="https://wa.me/59899295848" target="_blank" style="color: var(--verde); text-decoration: none; font-weight: 600;">Chatear ahora</a></p>
+          <p class="info-icon">✉️ <strong>Email:</strong> <a href="mailto:Martinsampayo9@gmail.com" style="color: var(--rojo); text-decoration: none; font-weight: 600;">Enviar correo</a></p>
+        </div>
+      </div>
+
+      <!-- CARRUSEL INFINITO QUE NUNCA SE DETIENE -->
+      <div class="carousel-wrapper"> 
+        <div class="carousel-container2" id="carouselContainer2"> 
+          <div class="carousel-slide2" id="carouselSlide2"> 
+            <!-- BLOQUE 1 DE IMÁGENES -->
+            <div class="slide"><img src="https://i.ibb.co/BHXwnMsH/IMG-20260819-225326.jpg" alt="CUADRO"></div>
+            <div class="slide"><img src="https://i.ibb.co/23kt61qF/IMG-20260914-182826.jpg" alt="abigado"></div>
+            <div class="slide"><img src="https://i.ibb.co/Kc7fWd9X/IMG-20260914-035047.jpg" alt="tinmar"></div>
+            <div class="slide"><img src="https://i.ibb.co/GfzyhQ43/IMG-20260914-034441.jpg" alt="tero"></div>
+            <div class="slide"><img src="https://i.ibb.co/rGRwzQXF/IMG-20260914-133953.jpg" alt="buen"></div>
+            <div class="slide"><img src="https://i.ibb.co/1t2h9fcW/IMG-20260914-181328.jpg" alt="buen"></div>
+            <div class="slide"><img src="https://i.ibb.co/XZzggbCL/IMG-20260918-031138.jpg" alt="app"></div>
+            <!-- BLOQUE 2 DUPLICADO PARA BUCLE INFINITO FLUIDO -->
+            <div class="slide"><img src="https://i.ibb.co/BHXwnMsH/IMG-20260819-225326.jpg" alt="CUADRO"></div>
+            <div class="slide"><img src="https://i.ibb.co/23kt61qF/IMG-20260914-182826.jpg" alt="abigado"></div>
+            <div class="slide"><img src="https://i.ibb.co/Kc7fWd9X/IMG-20260914-035047.jpg" alt="tinmar"></div>
+            <div class="slide"><img src="https://i.ibb.co/GfzyhQ43/IMG-20260914-034441.jpg" alt="tero"></div>
+            <div class="slide"><img src="https://i.ibb.co/rGRwzQXF/IMG-20260914-133953.jpg" alt="buen"></div>
+            <div class="slide"><img src="https://i.ibb.co/1t2h9fcW/IMG-20260914-181328.jpg" alt="buen"></div>
+            <div class="slide"><img src="https://i.ibb.co/XZzggbCL/IMG-20260918-031138.jpg" alt="app"></div>
+          </div> 
+        </div> 
+      </div>
+
+      <a class="btn-solicita-web" onclick="cambiarPortal('solicitarweb', document.querySelector('.portal-nav button:nth-child(4)'))"><b>🌐 SOLICITA TU WEB</b></a>
+    </section>
+
+    <!-- SECCIÓN TIENDA VARIEDAD -->
+    <section id="seccion-tienda" class="portal-section">
+      <h2 style="text-align: center;">VARIEDAD 📦 🛍</h2>
+      <p style="margin-bottom:15px;font-size:13px;color:#7F8C8D;text-align:center;">Agrega tus artículos al carrito y haz tu pedido directamente por WhatsApp.</p>
+
+      <div class="tienda-grid">
+        
+        <div class="item" data-name="PARLANTE JBL Flip 6" data-price="2000">
+          <div class="item-container">
+            <span class="encargalo">JBL</span>
+            <img src="https://f.fcdn.app/imgs/674292/www.zonatecno.com.uy/zoteuy/2a8f/original/catalogo/107531_107531_1/1500-1500/parlante-portatil-jbl-flip-7-waterproof-bluetooth-negro-parlante-portatil-jbl-flip-7-waterproof-bluetooth-negro.jpg" alt="PARLANTE JBL">
+          </div>
+          <div>
+            <h3>Parlante JBL</h3>
+            <p>Altavoz Bluetooth</p>
+            <span class="precio">$2000</span>
+            <button class="add-to-cart" onclick="agregarAlCarrito('PARLANTE JBL Flip 6', 2000, 1)">Agregar al carrito</button>
+          </div>
+        </div>
+
+        <div class="item" data-name="Cargador rápido Samsung" data-price="1000" data-has-quantity="true">
+          <div class="item-container">
+            <span class="encargalo">SAMSUNG</span>
+            <img src="https://f.fcdn.app/imgs/ae973c/www.market.com.uy/markuy/617e/webp/catalogo/8806090104510_1/1500-1500/cargador-original-samsung-usb-c-45w-v01.jpg" alt="Cargador">
+          </div>
+          <div>
+            <h3>Cargador rápido</h3>
+            <p>Original Samsung</p>
+            <span class="precio">$1000</span>
+            <div style="text-align: center; margin-bottom: 5px;">
+              <label for="cant-cargador">Cant:</label>
+              <input type="number" id="cant-cargador" class="cantidad-input" value="1" min="1">
+            </div>
+            <button class="add-to-cart" onclick="agregarAlCarrito('Cargador rápido Samsung', 1000, document.getElementById('cant-cargador').value)">Agregar al carrito</button>
+          </div>
+        </div>
+
+        <div class="item" data-name="Auriculares oraimo USB-C" data-price="500" data-has-quantity="true">
+          <div class="item-container">
+            <img src="https://f.fcdn.app/imgs/057b49/www.market.com.uy/markuy/5d90/webp/catalogo/4895180799907_1/1500-1500/auriculares-oraimo-usb-c-oep-650-v01.jpg" alt="Auriculares">
+          </div>
+          <div>
+            <h3>Auriculares oraimo USB-C</h3>
+            <p>Alta fidelidad</p>
+            <span class="precio">$500</span>
+            <div style="text-align: center; margin-bottom: 5px;">
+              <label for="cant-auri">Cant:</label>
+              <input type="number" id="cant-auri" class="cantidad-input" value="1" min="1">
+            </div>
+            <button class="add-to-cart" onclick="agregarAlCarrito('Auriculares oraimo USB-C', 500, document.getElementById('cant-auri').value)">Agregar al carrito</button>
+          </div>
+        </div>
+
+        <div class="item" data-name="Auriculares JBL" data-price="2000" data-has-quantity="true">
+          <div class="item-container">
+            <span class="encargalo">JBL</span>
+            <img src="https://http2.mlstatic.com/D_NQ_NP_645102-MLA99968185015_112025-O.webp" alt="Auriculares JBL">
+          </div>
+          <div>
+            <h3>Auriculares JBL</h3>
+            <p>Sonido Premium</p>
+            <span class="precio">$2000</span>
+            <div style="text-align: center; margin-bottom: 5px;">
+              <label for="cant-jbl-head">Cant:</label>
+              <input type="number" id="cant-jbl-head" class="cantidad-input" value="1" min="1">
+            </div>
+            <button class="add-to-cart" onclick="agregarAlCarrito('Auriculares JBL', 2000, document.getElementById('cant-jbl-head').value)">Agregar al carrito</button>
+          </div>
+        </div>
+
+        <div class="item" data-name="Mouse Inalámbrico Logitech" data-price="800">
+          <div class="item-container">
+            <img src="https://de2kqc9pq55cj.cloudfront.net/fit-in/700x700/filters:fill(FFFFFF):quality(90):format(webp)/_img_productos/mouse-inalambrico-genius-nx7000-foto.jpg" alt="Mouse Inalámbrico Logitech">
+          </div>
+          <div>
+            <h3>Mouse Inalámbrico Logitech</h3>
+            <p>Conexión Bluetooth</p>
+            <span class="precio">$800</span>
+            <button class="add-to-cart" onclick="agregarAlCarrito('Mouse Inalámbrico Logitech', 800, 1)">Agregar al carrito</button>
+          </div>
+        </div>
+
+        <div class="item" data-name="Teclado Mecánico Razer" data-price="1500">
+          <div class="item-container">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_818624-MLA99975530457_112025-O.webp" alt="Teclado Mecánico Razer">
+          </div>
+          <div>
+            <h3>Teclado Gamer Mecánico G413</h3>
+            <p>Teclado Gamer Mecánico Logitech G413 Tkl Se</p>
+            <span class="precio">$1500</span>
+            <button class="add-to-cart" onclick="agregarAlCarrito('Teclado Gamer Mecánico G413', 1500, 1)">Agregar al carrito</button>
+          </div>
+        </div>
+
+        <div class="item" data-name="Monitor LED 24''" data-price="4840">
+          <div class="item-container">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_886481-MLA108064136737_032026-F.webp" alt="Monitor LED 24''">
+          </div>
+          <div>
+            <h3>Monitor LED 24''</h3>
+            <p>Monitor Teros Te-2417s, 24 FHD IPS, 144hz</p>
+            <span class="precio">$4840</span>
+            <button class="add-to-cart" onclick="agregarAlCarrito('Monitor LED 24\'\'', 4840, 1)">Agregar al carrito</button>
+          </div>
+        </div>
+
+        <div class="item" data-name="Cámara Web Logitech" data-price="1300">
+          <div class="item-container">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_881142-MLU76806091540_062024-F.webp" alt="Cámara Web Logitech">
+          </div>
+          <div>
+            <h3>Cámara Web Logitech</h3>
+            <p>1080p HD</p>
+            <span class="precio">$1300</span>
+            <button class="add-to-cart" onclick="agregarAlCarrito('Cámara Web Logitech', 1300, 1)">Agregar al carrito</button>
+          </div>
+        </div>
+
+        <div class="item" data-name="VELAS de Miel" data-price="40" data-has-quantity="true">
+          <div class="item-container">
+            <span class="encargalo">cuantos?</span>
+            <img src="https://m.media-amazon.com/images/I/615K47iXUvL.jpg" alt="VELAS">
+          </div>
+          <div>
+            <h3>VELAS de Miel</h3>
+            <p>Aromáticas</p>
+            <span class="precio">$40</span>
+            <div style="text-align: center; margin-bottom: 5px;">
+              <label for="cant-velas">Cant:</label>
+              <input type="number" id="cant-velas" class="cantidad-input" value="1" min="1">
+            </div>
+            <button class="add-to-cart" onclick="agregarAlCarrito('VELAS de Miel', 40, document.getElementById('cant-velas').value)">Agregar al carrito</button>
+          </div>
+        </div>
+
+        <div class="item" data-name="MATERA de MADERA" data-price="300">
+          <div class="item-container">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_889341-MLU75766193658_042024-O.webp" alt="Matera de Madera">
+          </div>
+          <div>
+            <h3>Matera de madera</h3>
+            <p>Artesanal</p>
+            <span class="precio">$300</span>
+            <button class="add-to-cart" onclick="agregarAlCarrito('MATERA de MADERA', 300, 1)">Agregar al carrito</button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- SECCIÓN DEL CARRITO DE COMPRAS -->
+      <div class="carrito-seccion">
+        <h3>🛒 Tu Carrito de Compras</h3>
+        <ul id="carrito-lista" class="carrito-lista">
+          <p style="color:#7F8C8D;font-size:12px;" id="carrito-vacio-msg">El carrito está vacío.</p>
+        </ul>
+        <div style="font-weight: bold; font-size: 16px; margin: 10px 0;">Total: $<span id="carrito-total">0</span></div>
+        <button class="btn-whatsapp-pedir" onclick="enviarPedidoWhatsApp()">📲 Pedira al WhatsApp</button></div> </section>
+
+    <!-- SECCIÓN PROTOCOLOS -->
+    <section id="seccion-protocolos" class="portal-section">
+      <h2>📋 Protocolos y Manual del Guardia</h2>
+      <p style="margin-bottom:15px;font-size:13px;">Recordá siempre seguir estos procedimientos básicos para garantizar tu seguridad y la de los demás.</p>
+      
+      <div class="protocolo-card">
+        <h4>🚶‍♂️ Rondas y Patrullaje</h4>
+        <p>Realiza las rondas en los horarios establecidos. Varía ligeramente el recorrido y los horarios si es posible. Presta atención a puertas forzadas, ruidos extraños, luces apagadas fuera de lo normal u objetos abandonados. Registra todo en el libro de novedades.</p>
+      </div>
+
+      <div class="protocolo-card">
+        <h4>📻 Uso Correcto de la Radio</h4>
+        <p>Mantén el canal despejado. Sé breve y conciso. Usa el alfabeto radiofónico si es necesario. Ejemplo: "Base, base, soy Guardia 1, novedad en portón sur, cambio". No uses la radio para conversaciones personales.</p>
+      </div>
+
+      <div class="protocolo-card">
+        <h4>🤝 Trato con el Público</h4>
+        <p>Mantén siempre una actitud respetuosa, firme y servicial. No discutas con visitantes o clientes. Si hay un altercado, mantén la calma, no respondas a provocaciones y llama a tu supervisor o a la policía si la situación escala.</p>
+      </div>
+
+      <div class="protocolo-card">
+        <h4>📝 Registro de Novedades (Cuaderno)</h4>
+        <p>Es tu principal herramienta legal. Anota siempre la hora exacta, el lugar, las personas involucradas y los hechos de forma objetiva. No escribas opiniones personales, solo lo que viste, escuchaste o hiciste.</p>
+      </div>
+    </section>
+
+    <!-- SECCIÓN SUGERENCIAS -->
+    <section id="seccion-sugerencias" class="portal-section">
+      <h2><b>📩 Envía Sugerencia Info Reporte Imagen</b></h2>
+      <b><p style="margin-bottom:15px;font-size:13px;color:#7F8C8D;">Para publicar en esta web.</p></b>
+
+      <form class="form-sugerencias" action="https://formsubmit.co/Martinsampayo9@gmail.com" method="POST" enctype="multipart/form-data">
+        <input type="hidden" name="_subject" value="¡Nueva Sugerencia / Reporte en TINMARUY!">
+        <input type="hidden" name="_captcha" value="false">
+
+        <div class="campo">
+          <label for="sugNombre">Tu Nombre (opcional):</label>
+          <input type="text" id="sugNombre" name="Nombre" placeholder="Ej. Juan Pérez">
+        </div>
+
+        <div class="campo">
+          <label for="sugEmail">Tu Correo Electrónico *:</label>
+          <input type="email" id="sugEmail" name="Correo" placeholder="tu@email.com" required>
+        </div>
+
+        <div class="campo">
+          <label for="sugMensaje">Sugerencia Info Comentario *:</label>
+          <textarea id="sugMensaje" name="Sugerencia_o_Reporte" rows="3" placeholder="Escribe aquí tu mensaje o reporte..." required></textarea>
+        </div>
+
+        <div class="campo">
+          <label for="sugImagen">Adjuntar Imagen (Opcional):</label>
+          <input type="file" id="sugImagen" name="Adjunto" accept="image/*">
+        </div>
+
+        <button type="submit" class="btn-sugerencia"><b>🚀 ENVIAR</b></button>
+      </form>
+    </section>
+
+    <!-- SECCIÓN SOLICITAR WEB -->
+    <section id="seccion-solicitarweb" class="portal-section">
+      <h2>🌐 SOLICITÁ TU WEB</h2>
+      <p style="margin-bottom:15px;font-size:13px;color:#7F8C8D;">Completá todas las opciones para solicitar tu página web.</p>
+
+      <form class="form-sugerencias" id="formWeb" action="https://formsubmit.co/Martinsampayo9@gmail.com" method="POST">
+        <input type="hidden" name="_subject" value="¡Nueva Solicitud de Página Web en TINMARUY!">
+        <input type="hidden" name="_captcha" value="false">
+
+        <div class="sw-fila">
+          <div class="campo">
+            <label>Nombre *</label>
+            <input type="text" name="Nombre_Cliente" placeholder="Ej. Juan Pérez" required>
+          </div>
+          <div class="campo">
+            <label>Correo Electrónico *</label>
+            <input type="email" name="Correo_Cliente" placeholder="tu@email.com" required>
+          </div>
+        </div>
+
+        <div class="campo">
+          <label>Nombre del Negocio *</label>
+          <input type="text" name="Negocio" placeholder="Nombre de tu negocio" required>
+        </div>
+
+        <div class="sw-select" id="select-tipo">
+          <button type="button" class="sw-select-btn">
+            💻 <span>Tipo de web *</span> <b>⬇️</b>
+          </button>
+          <div class="sw-opciones">
+            <label><input type="radio" name="Tipo_de_Web" value="Página para negocio"> 🏪 Página para negocio</label>
+            <label><input type="radio" name="Tipo_de_Web" value="Tienda online"> 🛒 Tienda online</label>
+            <label><input type="radio" name="Tipo_de_Web" value="Web profesional"> 💼 Web profesional</label>
+            <label><input type="radio" name="Tipo_de_Web" value="Web empresarial"> 🏢 Web empresarial</label>
+            <label><input type="radio" name="Tipo_de_Web" value="Web de servicios"> 🔧 Web de servicios</label>
+            <label><input type="radio" name="Tipo_de_Web" value="Web gastronómica"> 🍔 Web gastronómica</label>
+            <label><input type="radio" name="Tipo_de_Web" value="Portafolio"> 👨‍💻 Portafolio</label>
+            <label><input type="radio" name="Tipo_de_Web" value="Landing Page"> 📄 Landing Page</label>
+            <label><input type="radio" name="Tipo_de_Web" value="Otra"> ✨ Otra</label>
+          </div>
+        </div>
+
+        <div class="sw-select" id="select-funciones">
+          <button type="button" class="sw-select-btn">
+            ⚙️ <span>Funciones para tu web *</span> <b>⬇️</b>
+          </button>
+          <div class="sw-opciones">
+            <label><input type="checkbox" name="Funciones[]" value="WhatsApp"> 📱 WhatsApp</label>
+            <label><input type="checkbox" name="Funciones[]" value="Formulario"> 📝 Formulario</label>
+            <label><input type="checkbox" name="Funciones[]" value="Carrito de compra"> 🛒 Carrito de compra</label>
+            <label><input type="checkbox" name="Funciones[]" value="Catálogo"> 📦 Catálogo</label>
+            <label><input type="checkbox" name="Funciones[]" value="Chatbot"> 🤖 Chatbot</label>
+            <label><input type="checkbox" name="Funciones[]" value="Galería de fotos"> 🖼️ Galería</label>
+            <label><input type="checkbox" name="Funciones[]" value="Google Maps"> 📍 Google Maps</label>
+            <label><input type="checkbox" name="Funciones[]" value="Redes sociales"> 📲 Redes sociales</label>
+          </div>
+        </div>
+
+        <div class="sw-select" id="select-diseno">
+          <button type="button" class="sw-select-btn">
+            🎨 <span>Estilo de diseño *</span> <b>⬇️</b>
+          </button>
+          <div class="sw-opciones">
+            <label><input type="radio" name="Diseno" value="Moderno"> Moderno</label>
+            <label><input type="radio" name="Diseno" value="Minimalista"> Minimalista</label>
+            <label><input type="radio" name="Diseno" value="Elegante"> Elegante</label>
+            <label><input type="radio" name="Diseno" value="Profesional"> Profesional</label>
+            <label><input type="radio" name="Diseno" value="Colorido"> Colorido</label>
+            <label><input type="radio" name="Diseno" value="No estoy seguro"> No estoy seguro</label>
+          </div>
+        </div>
+
+        <div class="sw-select" id="select-dominio">
+          <button type="button" class="sw-select-btn">
+            🌎 <span>Dominio *</span> <b>⬇️</b>
+          </button>
+          <div class="sw-opciones">
+            <label><input type="radio" name="Dominio" value="Quiero un dominio .com"> 🌐 Quiero un dominio .com</label>
+            <label><input type="radio" name="Dominio" value="Ya tengo dominio"> ✔️ Ya tengo dominio</label>
+            <label><input type="radio" name="Dominio" value="No estoy seguro"> ❓ No estoy seguro</label>
+          </div>
+        </div>
+
+        <div class="campo">
+          <label>Secciones que necesitás *</label>
+          <input type="text" name="Secciones" placeholder="Ej. Inicio, Servicios, Contacto" required>
+        </div>
+
+        <div class="campo">
+          <label>Contame tu idea *</label>
+          <textarea rows="3" name="Idea_Principal" placeholder="Describe tu idea..." required></textarea>
+        </div>
+
+        <button type="submit" class="btn-sugerencia"><b>📲 ENVIAR SOLICITUD AL CORREO</b></button>
+      </form>
+    </section>
+
+  </div>
+  
+  <div class="toast" id="toast"></div>
+
+  <!-- CHATBOT -->
+  <div id="chat-widget">
+    <div id="chat-window">
+      <div class="chat-header">
+        <span>🤖 Asistente TINMARUY</span>
+        <button onclick="toggleChat()">✕</button>
+      </div>
+      <div class="chat-body" id="chatBody">
+        <div class="chat-msg bot">¡Hola! 👋 Soy tu asistente virtual de TINMARUY.</div>
+      </div>
+      <div class="chat-input-area">
+        <input type="text" id="chatInput" placeholder="Escribe un mensaje..." onkeypress="if(event.key==='Enter') enviarMensajeChat()">
+        <button onclick="enviarMensajeChat()">➤</button>
+      </div>
+    </div>
+    <button id="chat-toggle" onclick="toggleChat()">🤖</button>
+  </div>
+</div>
+
+<!-- ========== IFRAME URULEYES ========== -->
+<div id="uruleyesFullscreen">
+  <header class="uruleyes-header">
+    <h1>👋 <a href="#" onclick="cerrarUruleyes(event)" style="color:inherit; text-decoration:none;"><span style="color:#ffffff;">TIN</span><span style="color:#d4af37;">MAR</span></a></h1>
+    <nav>
+      <a onclick="cerrarUruleyes(event)">← Volver al Inicio</a>
+    </nav>
+  </header>
+  <div class="uruleyes-frame-container">
+    <iframe src="https://uruleyes.com" title="UruLeyes - Buscador de Leyes"></iframe>
+  </div>
+</div>
+
+<!-- SCRIPT DE SEGURIDAD (DESACTIVA CLIC DERECHO, F1-F12 Y VER CÓDIGO FUENTE) -->
+<script>
+  document.addEventListener('contextmenu', function(e) {
+    e.preventDefault();
+    alert("Clic derecho deshabilitado");
+  });
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === "F12") {
+      e.preventDefault();
+      alert("🔒 Inspección bloqueada");
+    }
+    if (e.ctrlKey && e.shiftKey && (e.key === "I" || e.key === "C" || e.key === "J")) {
+      e.preventDefault();
+      alert("🚫 Atajo bloqueado");
+    }
+    if (e.ctrlKey && e.key.toLowerCase() === "u") {
+      e.preventDefault();
+      alert("🚫 Ver código fuente deshabilitado");
+    }
+    if (e.ctrlKey && (e.key === 's' || e.key === 'S')) {
+      e.preventDefault();
+      return false;
+    }
+  });
+</script>
+
+<!-- SCRIPTS DE FUNCIONALIDAD GENERAL -->
+<script> 
+(function() { 
+  const reloj = document.getElementById("reloj-lluvia"); 
+  if (!reloj) return; 
+  const horaEl = reloj.querySelector("#hora"); 
+  const fechaEl = reloj.querySelector("#fecha"); 
+  const canvas = reloj.querySelector(".fondo-lluvia"); 
+  const ctx = canvas.getContext("2d"); 
+  const dias = ["domingo","lunes","martes","miércoles","jueves","viernes","sábado"]; 
+  const meses = ["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"]; 
+  
+  function actualizarHora() { 
+    const ahora = new Date(); 
+    const h = String(ahora.getHours()).padStart(2, "0"); 
+    const m = String(ahora.getMinutes()).padStart(2, "0"); 
+    const s = String(ahora.getSeconds()).padStart(2, "0"); 
+    horaEl.textContent = h + ":" + m + ":" + s; 
+    fechaEl.textContent = dias[ahora.getDay()] + ", " + ahora.getDate() + " de " + meses[ahora.getMonth()] + " de " + ahora.getFullYear(); 
+  } 
+  actualizarHora(); 
+  setInterval(actualizarHora, 1000); 
+  
+  let gotas = []; 
+  let salpicaduras = []; 
+  
+  function ajustarTamaño() { 
+    const rect = canvas.getBoundingClientRect(); 
+    canvas.width = rect.width; 
+    canvas.height = rect.height; 
+    const cantidad = Math.max(20, Math.floor(rect.width / 10)); 
+    gotas = []; 
+    for (let i = 0; i < cantidad; i++) gotas.push(nuevaGota(true)); 
+  } 
+  
+  function nuevaGota(inicial = false) { 
+    return { x: Math.random() * canvas.width, y: inicial ? Math.random() * canvas.height : -20, largo: 6 + Math.random() * 10, velocidad: 1.5 + Math.random() * 2.5, grosor: 0.4 + Math.random() * 0.7, opacidad: 0.15 + Math.random() * 0.25, inclinacion: 0.5 + Math.random() * 1 }; 
+  } 
+  
+  function nuevaSalpicadura(x, y) { 
+    return { x: x, y: y, vx: (Math.random() - .5) * 1.2, vy: -0.6 - Math.random() * 1, vida: 1, tamaño: 0.5 + Math.random() * 1 }; 
+  } 
+  
+  function animarLluvia() { 
+    ctx.clearRect(0, 0, canvas.width, canvas.height); 
+    for (const g of gotas) { 
+      ctx.globalAlpha = g.opacidad * 0.25; 
+      ctx.strokeStyle = "#001f29"; 
+      ctx.lineWidth = g.grosor + 1; 
+      ctx.lineCap = "round"; 
+      ctx.beginPath(); 
+      ctx.moveTo(g.x + 1, g.y); 
+      ctx.lineTo(g.x + g.inclinacion + 1, g.y + g.largo); 
+      ctx.stroke(); 
+      ctx.globalAlpha = g.opacidad; 
+      ctx.strokeStyle = "#7eefff"; 
+      ctx.lineWidth = g.grosor; 
+      ctx.beginPath(); 
+      ctx.moveTo(g.x, g.y); 
+      ctx.lineTo(g.x + g.inclinacion, g.y + g.largo); 
+      ctx.stroke(); 
+      ctx.globalAlpha = g.opacidad * 0.5; 
+      ctx.strokeStyle = "#ffffff"; 
+      ctx.lineWidth = Math.max(0.2, g.grosor * 0.3); 
+      ctx.beginPath(); 
+      ctx.moveTo(g.x, g.y); 
+      ctx.lineTo(g.x + g.inclinacion * 0.6, g.y + g.largo * 0.5); 
+      ctx.stroke(); 
+      g.y += g.velocidad; 
+      g.x += 0.3; 
+      if (g.y > canvas.height) { 
+        if (Math.random() < 0.35) salpicaduras.push(nuevaSalpicadura(g.x, canvas.height - 2)); 
+        Object.assign(g, nuevaGota(false)); 
+      } 
+      if (g.x > canvas.width + 10) { 
+        g.x = -10; 
+        g.y = Math.random() * canvas.height; 
+      } 
+    } 
+    for (let i = salpicaduras.length - 1; i >= 0; i--) { 
+      const s = salpicaduras[i]; 
+      ctx.globalAlpha = s.vida * 0.5; 
+      ctx.strokeStyle = "#7eefff"; 
+      ctx.lineWidth = 0.5; 
+      ctx.beginPath(); 
+      ctx.arc(s.x, s.y, s.tamaño * (2 - s.vida), 0, Math.PI * 2); 
+      ctx.stroke(); 
+      s.x += s.vx; 
+      s.y += s.vy; 
+      s.vy += 0.05; 
+      s.vida -= 0.025; 
+      if (s.vida <= 0) salpicaduras.splice(i, 1); 
+    } 
+    ctx.globalAlpha = 1; 
+    requestAnimationFrame(animarLluvia); 
+  } 
+  ajustarTamaño(); 
+  animarLluvia(); 
+  window.addEventListener("resize", ajustarTamaño); 
+})(); 
+</script>
+
+<script> 
+if (!customElements.get("radio-player")) { 
+  customElements.define("radio-player", class extends HTMLElement { 
+    constructor() { super(); this.attachShadow({ mode: "open" }); } 
+    connectedCallback() { 
+      this.shadowRoot.innerHTML = ` 
+      <style> 
+      :host{display:block;width:100%;height:100%;} 
+      * { box-sizing: border-box; } 
+      .radio-container { width: 100%; height: 100%; padding: 10px 8px; background: linear-gradient(180deg, #082530, #073b48); border: 1px solid #197b8b; border-radius: 16px; box-shadow: 0 5px 20px rgba(0,0,0,.25); font-family: Arial, sans-serif; text-align: center; display: flex; flex-direction: column; justify-content: space-evenly; align-items: center; } 
+      .radio-screen { width: 100%; min-height: 28px; display: flex; align-items: center; justify-content: center; padding: 4px; background: rgba(255,255,255,.08); border: 1px solid rgba(100,230,245,.35); border-radius: 8px; color: #70efff; font-size: 11px; font-weight: bold; text-shadow: 0 0 7px rgba(0,230,255,.6); } 
+      .radio-song { min-height: 16px; display: flex; align-items: center; justify-content: center; color: #c6f8ff; font-size: 10px; font-weight: 600; margin: 2px 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 100%; } 
+      .play-button { width: 38px; height: 38px; margin: 2px auto; border: none; border-radius: 50%; background: #c8f7fc; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 0 15px rgba(0,220,240,.35); transition: .2s ease; } 
+      .play-button:hover { transform: scale(1.06); background: #ffffff; } 
+      .play-button:active { transform: scale(.93); } 
+      .play-icon { width: 0; height: 0; border-top: 6px solid transparent; border-bottom: 6px solid transparent; border-left: 9px solid #087f89; margin-left: 2px; } 
+      .pause-icon { display: none; width: 10px; height: 12px; border-left: 3px solid #087f89; border-right: 3px solid #087f89; } 
+      .playing .play-icon { display: none; } 
+      .playing .pause-icon { display: block; } 
+      .radio-info { color: #9bd6df; font-size: 8px; } 
+      .live { color: #6df1ff; font-size: 8px; font-weight: bold; } 
+      audio { display: none; } 
+      </style> 
+      <div class="radio-container"> 
+        <div class="radio-screen"><span id="status">📻 RADIO ONLINE</span></div> 
+        <div class="radio-song" id="song">🎶 SALUDOS A LOS ESCUCHAS</div> 
+        <button class="play-button" id="play" type="button"> 
+          <div class="play-icon"></div> 
+          <div class="pause-icon"></div> 
+        </button> 
+        <div class="live" id="live">● PAUSADO</div> 
+        <div class="radio-info" id="info">TOCÁ PARA ESCUCHAR EN VIVO</div> 
+        <audio id="audio" preload="none" playsinline crossorigin="anonymous"> 
+          <source src="https://stream.zeno.fm/8wup8yd9dm0uv" type="audio/mpeg"> 
+        </audio> 
+      </div>`; 
+      this.iniciarRadio(); 
+    } 
+    iniciarRadio() { 
+      const root = this.shadowRoot; 
+      const container = root.querySelector(".radio-container"); 
+      const button = root.querySelector("#play"); 
+      const audio = root.querySelector("#audio"); 
+      const status = root.querySelector("#status"); 
+      const info = root.querySelector("#info"); 
+      const live = root.querySelector("#live"); 
+      const song = root.querySelector("#song"); 
+      const canciones = ["🎶 Sonando ahora: Remix Night 🔥","🎵 DJ Flow Session 😎","🔥 Música activa 24/7","🎧 Trap Latino Mix","⚡ Radio Online Non Stop"]; 
+      let actual = 0; 
+      setInterval(() => { actual = (actual + 1) % canciones.length; song.textContent = canciones[actual]; }, 4000); 
+      
+      button.addEventListener("click", async () => { 
+        if (audio.paused) { 
+          try { 
+            status.textContent = "⏳ CONECTANDO..."; 
+            live.textContent = "● CONECTANDO"; 
+            info.textContent = "CONECTANDO RADIO..."; 
+            audio.load(); 
+            await audio.play(); 
+            container.classList.add("playing"); 
+            status.textContent = "⚡ ONLINE EN VIVO"; 
+            live.textContent = "● EN VIVO"; 
+            info.textContent = "🔊 REPRODUCIENDO"; 
+          } catch (error) { 
+            container.classList.remove("playing"); 
+            status.textContent = "⚠️ SIN SEÑAL"; 
+            live.textContent = "● ERROR"; 
+            info.textContent = "TOCÁ DE NUEVO"; 
+          } 
+        } else { 
+          audio.pause(); 
+          container.classList.remove("playing"); 
+          status.textContent = "📻 PAUSADA"; 
+          live.textContent = "● PAUSADO"; 
+          info.textContent = "TOCÁ PARA ESCUCHAR";
+        } 
+      }); 
+      
+      audio.addEventListener("playing", () => { container.classList.add("playing"); status.textContent = "⚡ ONLINE EN VIVO"; live.textContent = "● EN VIVO"; info.textContent = "🔊 REPRODUCIENDO"; }); 
+      audio.addEventListener("pause", () => { if (!audio.ended) { container.classList.remove("playing"); status.textContent = "📻 PAUSADA"; live.textContent = "● PAUSADO"; info.textContent = "TOCÁ PARA ESCUCHAR"; } }); 
+      audio.addEventListener("waiting", () => { status.text = "⏳ CARGANDO..."; live.textContent = "● CONECTANDO"; }); 
+      audio.addEventListener("error", () => { container.classList.remove("playing"); status.textContent = "⚠️ ERROR"; live.textContent = "● ERROR"; info.textContent = "TOCÁ DE NUEVO"; }); 
+    } 
+  }); 
+} 
+</script>
+
+<script>
+const MI_CORREO_ADMIN = "Martinsampayo9@gmail.com";
+const CLAVE_MAESTRA = "852963";
+
+function abrirModalAuth(){ document.getElementById("modalAuth").classList.add("active"); }
+function cerrarModalAuth(){ document.getElementById("modalAuth").classList.remove("active"); }
+function mostrarPasoCodigo(){
+  document.getElementById("pasoPedirCodigo").style.display = "none";
+  document.getElementById("pasoIngresarCodigo").style.display = "block";
+}
+function mostrarPasoPedir(){
+  document.getElementById("pasoPedirCodigo").style.display = "block";
+  document.getElementById("pasoIngresarCodigo").style.display = "none";
+}
+
+function generarCodigoUnico(){
+  return Math.floor(100000 + Math.random() * 900000).toString();
+}
+
+async function solicitarCodigoPersonal(){
+  const nombre = document.getElementById("regNombre").value.trim();
+  const email = document.getElementById("regEmail").value.trim();
+  
+  if(!nombre || !email) {
+    return mostrarToast("⚠️ Completa todos los campos obligatorios", "error");
+  }
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    return mostrarToast("❌ Ingresa un correo electrónico válido", "error");
+  }
+
+  const codigoGenerado = generarCodigoUnico();
+  localStorage.setItem("codigo_esperado_usuario", codigoGenerado);
+  localStorage.setItem("nombre_usuario_registrado", nombre);
+
+  mostrarToast("⏳ Enviando notificación...", "warning");
+
+  try {
+    const respuesta = await fetch(`https://formsubmit.co/ajax/${MI_CORREO_ADMIN}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Accept": "application/json" },
+      body: JSON.stringify({
+        _subject: `SOLICITUD CÓDIGO GUARDIA - ${nombre}`,
+        Mensaje: "Un guardia de seguridad solicita acceso al Portal TINMARUY.",
+        Nombre_Guardia: nombre,
+        Correo_Contacto: email,
+        CODIGO_ASIGNADO: codigoGenerado
+      })
+    });
+
+    if(respuesta.ok) {
+      document.getElementById("infoUsuarioAviso").innerHTML = `¡Hola ${nombre}!<br>Solicitud enviada. El administrador te dará tu código.`;
+      mostrarToast("✅ Enviado. Revisa tu correo o SPAM.", "success");
+      mostrarPasoCodigo();
+    } else {
+      throw new Error("Error al enviar solicitud");
+    }
+  } catch(e) {
+    mostrarToast("⚠️ Error al enviar. Revisa tu conexión.", "error");
+  }
+}
+
+function validarCodigoUsuario(){
+  const codigoIngresado = document.getElementById("inputCodigoValidar").value.trim();
+  const codigoEsperado = localStorage.getItem("codigo_esperado_usuario");
+  const nombre = localStorage.getItem("nombre_usuario_registrado") || "Guardia";
+
+  if(codigoIngresado === codigoEsperado || codigoIngresado === CLAVE_MAESTRA){
+    localStorage.setItem("stock_autorizado", "1");
+    localStorage.setItem("usuario_activo", nombre);
+    desbloquearApp(nombre);
+    cerrarModalAuth();
+    mostrarToast(`✅ Bienvenido, ${nombre}`, "success");
+  } else {
+    mostrarToast("❌ Código incorrecto. Consulta con el administrador.", "error");
+  }
+}
+
+function bloquearApp(){
+  const app = document.getElementById("appContainer");
+  app.classList.add("bloqueado");
+  document.getElementById("avisoBloqueo").classList.add("visible");
+  document.getElementById("userNombre").textContent = "Invitado";
+  document.getElementById("userAvatar").textContent = "?";
+  const btn = document.getElementById("btnAccionUser");
+  btn.textContent = "🔑 Ingresar";
+  btn.className = "btn-ingresar";
+  btn.onclick = abrirModalAuth;
+}
+
+function desbloquearApp(nombreCompleto){
+  const nombre = nombreCompleto || localStorage.getItem("usuario_activo") || "Guardia";
+  const app = document.getElementById("appContainer");
+  app.classList.remove("bloqueado");
+  document.getElementById("avisoBloqueo").classList.remove("visible");
+  document.getElementById("userNombre").textContent = nombre;
+  document.getElementById("userAvatar").textContent = nombre.charAt(0).toUpperCase();
+  const btn = document.getElementById("btnAccionUser");
+  btn.textContent = "🚪 Salir";
+  btn.className = "";
+  btn.onclick = cerrarSesion;
+}
+
+function cerrarSesion(){
+  if(confirm("¿Estás seguro que quieres cerrar sesión?")){
+    localStorage.removeItem("stock_autorizado");
+    localStorage.removeItem("codigo_esperado_usuario");
+    localStorage.removeItem("usuario_activo");
+    bloquearApp();
+    mostrarToast("🚪 Sesión cerrada", "warning");
+  }
+}
+
+function accionUsuario(){
+  if(localStorage.getItem("stock_autorizado") === "1") {
+    cerrarSesion();
+  } else {
+    abrirModalAuth();
+  }
+}
+
+function cambiarPortal(id, btn){
+  cerrarUruleyes();
+  document.querySelectorAll('.portal-section').forEach(sec => sec.classList.remove('active'));
+  document.getElementById('seccion-' + id).classList.add('active');
+  
+  document.querySelectorAll('.portal-nav button').forEach(b => b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+}
+
+/* LÓGICA DEL CARRITO DE COMPRAS Y WHATSAPP */
+let carrito = [];
+
+function agregarAlCarrito(nombre, precio, cantidad) {
+  cant = parseInt(cantidad) || 1;
+  const existe = carrito.find(item => item.nombre === nombre);
+  if (existe) {
+    existe.cantidad += cant;
+  } else {
+    carrito.push({ nombre, precio, cantidad: cant });
+  }
+  actualizarCarritoUI();
+  mostrarToast(`🛒 ${nombre} agregado al carrito`, "success");
+}
+
+function eliminarDelCarrito(index) {
+  carrito.splice(index, 1);
+  actualizarCarritoUI();
+}
+
+function actualizarCarritoUI() {
+  const lista = document.getElementById("carrito-lista");
+  const totalEl = document.getElementById("carrito-total");
+  lista.innerHTML = "";
+
+  if (carrito.length === 0) {
+    lista.innerHTML = `<p style="color:#7F8C8D;font-size:12px;" id="carrito-vacio-msg">El carrito está vacío.</p>`;
+    totalEl.textContent = "0";
+    return;
+  }
+
+  let total = 0;
+  carrito.forEach((item, index) => {
+    const subtotal = item.precio * item.cantidad;
+    total += subtotal;
+    const li = document.createElement("li");
+    li.innerHTML = `
+      <span><strong>${item.nombre}</strong> (x${item.cantidad}) - $${subtotal}</span>
+      <button class="btn-eliminar" onclick="eliminarDelCarrito(${index})">✕</button>
+    `;
+    lista.appendChild(li);
+  });
+
+  totalEl.textContent = total;
+}
+
+function enviarPedidoWhatsApp() {
+  if (carrito.length === 0) {
+    return mostrarToast("⚠️ Tu carrito está vacío. Agrega productos primero.", "warning");
+  }
+
+  let mensaje = "👋 ¡Hola! Quisiera realizar el siguiente pedido en *TINMARUY*:\n\n";
+  let total = 0;
+
+  carrito.forEach(item => {
+    const subtotal = item.precio * item.cantidad;
+    total += subtotal;
+    mensaje += `• *${item.nombre}* (Cant: ${item.cantidad}) - $${subtotal}\n`;
+  });
+
+  mensaje += `\n💰 *Total a pagar:* $${total}\n\nQuedo a la espera de confirmación. ¡Muchas gracias!`;
+
+  const url = `https://wa.me/59899295848?text=${encodeURIComponent(mensaje)}`;
+  window.open(url, "_blank");
+}
+
+function abrirUruleyes() {
+  document.getElementById("uruleyesFullscreen").classList.add("active");
+  document.body.style.overflow = "hidden";
+}
+
+function cerrarUruleyes(e) {
+  if(e) e.preventDefault();
+  document.getElementById("uruleyesFullscreen").classList.remove("active");
+  document.body.style.overflow = "";
+}
+
+async function cargarClima(){
+  const contenedor = document.getElementById("climaContenedor");
+  if(!contenedor) return;
+
+  try {
+    const lat = -34.90;
+    const lon = -56.16;
+    
+    const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,wind_speed_10m&timezone=America/Montevideo`);
+    
+    if (!res.ok) throw new Error("Error en API");
+    
+    const data = await res.json();
+    const actual = data.current;
+
+    const codigo = actual.weather_code;
+    let icono = "☀️", texto = "Despejado";
+    if (codigo >= 1 && codigo <= 3) { icono = "⛅"; texto = "Parcialmente nublado"; }
+    else if (codigo >= 45 && codigo <= 48) { icono = "🌫️"; texto = "Niebla"; }
+    else if (codigo >= 51 && codigo <= 67) { icono = "🌧️"; texto = "Lluvia"; }
+    else if (codigo >= 71 && codigo <= 77) { icono = "❄️"; texto = "Nieve"; }
+    else if (codigo >= 80 && codigo <= 82) { icono = "🌦️"; texto = "Chaparrones"; }
+    else if (codigo >= 95 && codigo <= 99) { icono = "⛈️"; texto = "Tormenta"; }
+
+    const horaAct = new Date().toLocaleTimeString('es-UY', {hour: '2-digit', minute:'2-digit'});
+
+    contenedor.innerHTML = `
+      <div class="clima-body">
+        <div>
+          <div class="clima-temp">${Math.round(actual.temperature_2m)}°C</div>
+          <div style="font-size:13px;color:#4a5568;margin-top:4px;">${texto}</div>
+        </div>
+        <div class="clima-icon">${icono}</div>
+      </div>
+      <div class="clima-detalles">
+        <div>💨 Viento: ${actual.wind_speed_10m} km/h</div>
+        <div>💧 Humedad: ${actual.relative_humidity_2m}%</div>
+        <div>🌡️ Sensación: ${Math.round(actual.apparent_temperature)}°C</div>
+        <div>🕒 Act: ${horaAct} hs</div>
+      </div>
+    `;
+
+  } catch (error) {
+    contenedor.innerHTML = `<div class="clima-error">⚠️ No se pudo actualizar el clima.<br>Verifica tu conexión a internet.</div>`;
+  }
+}
+
+function verificarMensajeSistema(){
+  const msg = localStorage.getItem("aviso_sistema_actualizacion");
+  const contenedor = document.getElementById("contenidoMensajeSistema");
+  if(msg){
+    contenedor.textContent = msg;
+    document.getElementById("sobreBadge").classList.add("activo");
+  } else {
+    contenedor.textContent = "¡Bienvenido a TINMARUY! Revisa las secciones de Protocolos, Sugerencias y Uruleyes.";
+    document.getElementById("sobreBadge").classList.remove("activo");
+  }
+}
+
+function abrirModalMensaje(){
+  verificarMensajeSistema();
+  document.getElementById("modalMensajeSistema").classList.add("active");
+  document.getElementById("sobreBadge").classList.remove("activo");
+}
+
+function cerrarModalMensaje(){
+  document.getElementById("modalMensajeSistema").classList.remove("active");
+}
+
+function toggleAdminMensaje(){
+  const panel = document.getElementById("panelAdminMensaje");
+  if(panel.style.display === "none") {
+    const pass = prompt("🔐 Ingresa la clave de administrador:");
+    if(pass !== CLAVE_MAESTRA) return mostrarToast("❌ Clave incorrecta.", "error");
+  }
+  panel.style.display = panel.style.display === "none" ? "block" : "none";
+  if(panel.style.display === "block") {
+    document.getElementById("inputNuevoMensaje").value = localStorage.getItem("aviso_sistema_actualizacion") || "";
+  }
+}
+
+function guardarNuevoMensaje(){
+  const msg = document.getElementById("inputNuevoMensaje").value.trim();
+  if(!msg) return mostrarToast("⚠️ Escribe un mensaje", "warning");
+  localStorage.setItem("aviso_sistema_actualizacion", msg);
+  mostrarToast("✅ Mensaje actualizado", "success");
+  toggleAdminMensaje();
+  verificarMensajeSistema();
+}
+
+function mostrarToast(msg, tipo = "success"){
+  const toast = document.getElementById("toast");
+  toast.textContent = msg;
+  toast.className = "toast show " + tipo;
+  clearTimeout(toast._timer);
+  toast._timer = setTimeout(() => toast.className = "toast " + tipo, 3200);
+}
+
+function toggleChat() {
+  const win = document.getElementById("chat-window");
+  win.classList.toggle("active");
+  if(win.classList.contains("active")) {
+    document.getElementById("chatInput").focus();
+  }
+}
+
+function enviarMensajeChat() {
+  const input = document.getElementById("chatInput");
+  const texto = input.value.trim();
+  if(!texto) return;
+
+  agregarMensajeChat(texto, 'user');
+  input.value = '';
+
+  setTimeout(() => {
+    const respuesta = generarRespuestaBot(texto);
+    agregarMensajeChat(respuesta, 'bot');
+  }, 600);
+}
+
+function agregarMensajeChat(texto, tipo) {
+  const body = document.getElementById("chatBody");
+  const div = document.createElement("div");
+  div.className = "chat-msg " + tipo;
+  div.innerHTML = texto;
+  body.appendChild(div);
+  body.scrollTop = body.scrollHeight;
+}
+
+function generarRespuestaBot(texto) {
+  const lower = texto.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  const ahora = new Date();
+  const time = ahora.toLocaleTimeString('es-UY', {hour: '2-digit', minute:'2-digit'});
+  const diasSemana = ["domingo", "lunes", "martes", "miércoles", "jueves", "viernes", "sábado"];
+  const day = diasSemana[ahora.getDay()];
+  const date = ahora.toLocaleDateString('es-UY');
+
+  let respuesta = "";
+
+  if (lower.includes("hola")) { 
+    respuesta = "¡Hola! 👋 ¿En qué puedo ayudarte?"; 
+  } else if (lower.includes("qué hora es") || lower.includes("que hora es") || lower.includes("la hora por favor") || lower.includes("me dices la hora") || lower.includes("hora actual") || lower.includes("qué hora tienes")) { 
+    respuesta = `Son las ${time} ⏰`; 
+  } else if (lower.includes("qué día es") || lower.includes("que dia es") || lower.includes("hoy es") || lower.includes("que día es?") || lower.includes("fecha de hoy") || lower.includes("qué fecha es") || lower.includes("cual es la fecha") || lower.includes("qué día de la semana es") || lower.includes("en qué día estamos") || lower.includes("hoy qué día es")) { 
+    respuesta = `Hoy es ${day}, ${date} 📅`; 
+  } else if (lower.includes("garantía") || lower.includes("garantia")) { 
+    respuesta = "Todos nuestros productos tienen una garantía de 6 meses por defectos de fabricación. 🛡️"; 
+  } else if (lower.includes("gracias")) { 
+    respuesta = "¡De nada! 😊"; 
+  } else if (lower.includes("adiós") || lower.includes("adios") || lower.includes("chau")) { 
+    respuesta = "¡Hasta luego! 👋"; 
+  } else if (lower.includes("como estas") || lower.includes("estas bien?") || lower.includes("como te sientes") || lower.includes("te sientes bien") || lower.includes("cómo estás")) { 
+    respuesta = "¡Estoy muy bien, gracias por preguntar! 🤖"; 
+  } else if (lower.includes("día de entrega") || lower.includes("dia de entrega") || lower.includes("cuando me llega?") || lower.includes("cuando mandan") || lower.includes("demora") || lower.includes("cuanto demora en llegar")) { 
+    respuesta = "¡Depende del día de tu pedido,Futuras fechas de entrega dia Miércoles! 🤖"; 
+  } else if (lower.includes("que haces")) { 
+    respuesta = "espero tu chat ,tu consulta para responderte 🤖"; 
+  } else if (lower.includes("qué puedes hacer") || lower.includes("que puedes hacer")) { 
+    respuesta = "Puedo responder preguntas básicas y ayudarte con información. 📩"; 
+  } else if (lower.includes("precio")) { 
+    respuesta = "Los precios varían según el producto. ¿Tienes uno específico en mente? 🛒"; 
+  } else if (lower.includes("envio") || lower.includes("envío")) { 
+    respuesta = "Hacemos envíos a todo el país en 24 a 72 horas. 🚚"; 
+  } else if (lower.includes("horario")) { 
+    respuesta = "Nuestro horario de atención es de lunes a lunes las 24 horas ⏰"; 
+  } else if (lower.includes("contacto")) { 
+    respuesta = `Puedes escribirme por este chat, al correo <a href="mailto:martinsampayo9@gmail.com">martinsampayo9@gmail.com</a> o por WhatsApp: <a href="https://wa.me/59899295848" target="_blank">escríbeme aquí</a> 📧📱`; 
+  } else if (lower.includes("ubicación") || lower.includes("ubicacion") || lower.includes("direccion") || lower.includes("dirección") || lower.includes("donde estan") || lower.includes("dónde están")) { 
+    respuesta = "Estamos ubicados en **Montevideo, Uruguay**📍"; 
+  } else if (lower.includes("whatsapp") || lower.includes("wasap") || lower.includes("escribirte") || lower.includes("hablar") || lower.includes("mensaje") || lower.includes("comunicarme") || lower.includes("enviarte")) { 
+    respuesta = `¡Claro! Puedes escribirme directamente al WhatsApp: <a href="https://wa.me/59899295848" target="_blank">clic aquí</a> 📱`; 
+  } else if (lower.includes("la chupas") || lower.includes("la mamas") || lower.includes("sexo oral") || lower.includes("sos gay") || lower.includes("puto")) { 
+    respuesta = `¿A qué te referís? Si hablás de sexo, soy varón y me gustan los culos nalgones/as🍑.`; 
+  } else if (lower.includes("quien sos") || lower.includes("como te llamas") || lower.includes("nombre") || lower.includes("sos") || lower.includes("sos martin") || lower.includes("de quien es") || lower.includes("con quien ablo")) { 
+    respuesta = `"Soy Tinma para ayudarte en lo que necesites. 🤖📱`; 
+  } else if (lower.includes("formas de pago") || lower.includes("pago")) { 
+    respuesta = "Aceptamos efectivo, transferencias bancarias, pagos por MercadoPago y **Transferencia PREX** 💳"; 
+  } else if (lower.includes("trabajo") || lower.includes("empleo") || lower.includes("contratar")) { 
+    respuesta = "¡Gracias por tu interés! Puedes enviarnos tu CV al correo martinsampayo9@gmail.com 📄"; 
+  } else if (lower.includes("mascotas")) { 
+    respuesta = "Tenemos productos para perros, gatos y más 🐶🐱 ¿Buscas algo en particular?"; 
+  } else if (lower.includes("servicios")) { 
+    respuesta = "Ofrecemos servicios de entrega, asesoramiento y soporte técnico. ¿En qué podemos ayudarte?"; 
+  } else if (lower.includes("productos")) { 
+    respuesta = "Tenemos un amplio catálogo de productos. ¿De qué tipo estás buscando?"; 
+  } else if (lower.includes("devolución") || lower.includes("devolucion") || lower.includes("devolver")) { 
+    respuesta = "Aceptamos devoluciones dentro de los primeros 7 días con ticket de compra. 🧾"; 
+  } else if (lower.includes("musica") || lower.includes("música")) { 
+    respuesta = "Música 🎶, cual refieres la puedes pedir al WhatsApp y queda"; 
+  } else if (lower.includes("ofertas") || lower.includes("descuentos")) { 
+    respuesta = "¡Sí! Tenemos ofertas todas las semanas. Visita nuestra sección de promociones.💥"; 
+  } else if (lower.includes("catálogo") || lower.includes("catalogo") || lower.includes("ver productos")) { 
+    respuesta = 'Puedes ver nuestro catálogo completo <a href="https://sites.google.com/view/tiendatin" target="_blank">aquí</a> 📘'; 
+  } else if (lower.includes("abrir") && lower.includes("almacén")) { 
+    respuesta = '<a href="#almacen">Haz clic aquí para abrir la sección Almacén 🏪</a>'; 
+  } else if (lower.includes("quiero comprar") || lower.includes("cómo compro") || lower.includes("como compro")) { 
+    respuesta = "Para comprar, solo agrega productos al carrito y luego haz clic en 'Enviar por WhatsApp'. 🛒📲"; 
+  } else if (lower.includes("aceptan tarjeta")) { 
+    respuesta = "¡Claro! Aceptamos tarjetas de crédito y débito. 💳"; 
+  } else if (lower.includes("tiempo de entrega")) { 
+    respuesta = "El tiempo de entrega es entre 24 y 72 horas hábiles. 🚚📦"; 
+  } else if (lower.includes("emergencia") || lower.includes("911") || lower.includes("policia") || lower.includes("bombero") || lower.includes("ambulancia")) {
+    respuesta = "🚨 Teléfonos de Emergencia en Uruguay:\n• Policía / Emergencias: 911\n• Bomberos: 104\n• Ambulancia (SEM): 105\n• Policía Caminera: 109\n• Violencia Doméstica: 0800 5000";
+  } else if (lower.includes("protocolo") || lower.includes("ronda") || lower.includes("patrull") || lower.includes("radio")) {
+    respuesta = "📋 Puntos clave de protocolo:\n• Rondas: Varía los horarios de patrullaje y presta atención a accesos.\n• Radio: Sé breve, conciso y mantén el canal despejado.\n• Novedades: Anota siempre la hora exacta y hechos objetivos.";
+  } else if (lower.includes("licencia") || lower.includes("vacaciones") || lower.includes("no gozada") || lower.includes("no gosada")) {
+    respuesta = "🏖️ Licencia no gozada: En Uruguay, si finaliza la relación laboral y tienes días de licencia generados y no gozados, el empleador debe abonarlos en la liquidación final como compensación salarial.";
+  } else if (lower.includes("bps") || lower.includes("historia laboral")) {
+    respuesta = "🏛️ BPS (Banco de Previsión Social): Puedes consultar tu historia laboral registrada, aportes y jubilaciones ingresando con tu usuario personal BPS en bps.gub.uy.";
+  } else { 
+    const respuestasGenericas = [ 
+      "Lo siento, no entendí eso 🤖", 
+      "¿Podrías repetirlo? 🙈", 
+      "No estoy seguro de a qué te refieres 🤔", 
+      "Interesante... ¿puedes explicarlo mejor? 🤓" 
+    ]; 
+    respuesta = respuestasGenericas[Math.floor(Math.random() * respuestasGenericas.length)]; 
+  }
+
+  return respuesta;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  verificarMensajeSistema();
+  cargarClima();
+  setInterval(cargarClima, 1800000);
+
+  if(localStorage.getItem("stock_autorizado") === "1") {
+    desbloquearApp(localStorage.getItem("usuario_activo"));
+  } else {
+    bloquearApp();
+  }
+
+  // Desplegables de Solicitar Web
+  document.querySelectorAll(".sw-select-btn").forEach(function(boton) {
+    boton.addEventListener("click", function() {
+      const actual = this.parentElement;
+      document.querySelectorAll(".sw-select").forEach(function(item) {
+        if (item !== actual) item.classList.remove("abierto");
+      });
+      actual.classList.toggle("abierto");
+    });
+  });
+
+  document.querySelectorAll(".sw-opciones input").forEach(function(input) {
+    input.addEventListener("change", function() {
+      if (this.type === "radio") {
+        this.closest(".sw-select").classList.remove("abierto");
+      }
+      this.closest(".sw-select").classList.remove("sw-error");
+    });
+  });
+
+  document.getElementById("formWeb").addEventListener("submit", function(e) {
+    let valido = true;
+    document.querySelectorAll('.sw-select').forEach(el => el.classList.remove('sw-error'));
+
+    const tipo = document.querySelector('input[name="Tipo_de_Web"]:checked');
+    const funciones = document.querySelectorAll('input[name="Funciones[]"]:checked');
+    const diseno = document.querySelector('input[name="Diseno"]:checked');
+    const dominio = document.querySelector('input[name="Dominio"]:checked');
+
+    if (!tipo) {
+      marcarErrorSw('select-tipo', "⚠️ Seleccioná el tipo de web.");
+      valido = false;
+    } else if (funciones.length === 0) {
+      marcarErrorSw('select-funciones', "⚠️ Seleccioná al menos una función para tu web.");
+      valido = false;
+    } else if (!diseno) {
+      marcarErrorSw('select-diseno', "⚠️ Seleccioná un estilo de diseño.");
+      valido = false;
+    } else if (!dominio) {
+      marcarErrorSw('select-dominio', "⚠️ Seleccioná una opción de dominio.");
+      valido = false;
+    }
+
+    if (!valido) e.preventDefault();
+  });
+});
+
+function marcarErrorSw(idElemento, mensaje) {
+  const contenedor = document.getElementById(idElemento);
+  contenedor.classList.add("sw-error");
+  contenedor.classList.add("abierto");
+  contenedor.querySelector(".sw-select-btn").scrollIntoView({ behavior: "smooth", block: "center" });
+  alert(mensaje);
+}
+
+const listaAnuncios = [
+  { titulo: "📋 Protocolos", texto: "Repasa los protocolos de rondas y uso de radio." },
+  { titulo: "📩 Sugerencias", texto: "Envíanos comentarios o reportes con fotos desde la barra inferior." },
+  { titulo: "⚖️ Uruleyes", texto: "Consulta las leyes directamente en la pestaña inferior." },
+  { titulo: "🚨 Emergencias", texto: "Recordá los teléfonos: 911, 104, 105." },
+  { titulo: "☀️ Clima", texto: "Revisa el estado del tiempo antes de salir a patrullar." }
+];
+let idxAnuncio = 0;
+function mostrarSiguienteAnuncio(){
+  const el = document.getElementById("anuncioFlotante");
+  const tit = document.getElementById("anuncioTitulo");
+  const txt = document.getElementById("anuncioTexto");
+  const a = listaAnuncios[idxAnuncio];
+  tit.textContent = a.titulo;
+  txt.textContent = a.texto;
+  el.classList.add("mostrar");
+  setTimeout(() => el.classList.remove("mostrar"), 5000);
+  idxAnuncio = (idxAnuncio + 1) % listaAnuncios.length;
+}
+function cerrarAnuncioFlotante(){
+  document.getElementById("anuncioFlotante").classList.remove("mostrar");
+}
+setInterval(mostrarSiguienteAnuncio, 12000);
+</script>
+</body>
+</html>
