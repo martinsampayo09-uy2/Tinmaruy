@@ -5,8 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#1F4E78">
 <title>TINMARUY</title>
+<!-- FontAwesome para los íconos (incluyendo sol, luna, pulgar y puerta) -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
+ *{margin:0;padding:0;box-sizing:border-box}
 :root{--azul:#1F4E78;--azul-claro:#2E6FA8;--verde:#00B050;--amarillo:#E5A100;--rojo:#E53935;--gris-bg:#F0F2F5;--gris-borde:#DDE1E7;--texto:#2C3E50;--sombra:0 8px 30px rgba(0,0,0,.08)}
 body{font-family:'Segoe UI',Tahoma,Arial,sans-serif;background:var(--gris-bg);color:var(--texto);min-height:100vh;padding:15px 15px 100px;overflow-x:hidden}
 button,input,textarea,select{font-family:inherit}
@@ -38,9 +40,133 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible{
 .user-bar{display:flex;align-items:center;justify-content:flex-end;gap:8px;margin-bottom:10px;padding:8px 12px;background:#fff;border-radius:10px;box-shadow:0 2px 6px rgba(0,0,0,.05);font-size:13px;flex-wrap:wrap;position:relative;z-index:60}
 .avatar{width:36px;height:36px;border-radius:50%;background:var(--azul);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;flex-shrink:0}
 .nombre{font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:130px}
-.user-bar button:not(.sobre-notificacion-bar):not(.btn-tema-bar):not(.btn-compartir-bar){background:#F0F2F5;color:var(--texto);border:none;padding:8px 12px;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer}
+.user-bar button:not(.sobre-notificacion-bar):not(.btn-compartir-custom):not(.btn-salida-custom){background:#F0F2F5;color:var(--texto);border:none;padding:8px 12px;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer}
 .user-bar button.btn-ingresar{background:var(--azul);color:#fff}
 .btn-tienda-bar{background:#fff!important;color:var(--azul)!important;border:1.5px solid var(--azul)!important;font-weight:700!important;margin-right:auto;display:flex;align-items:center;gap:6px}
+
+/* ESTILOS DEL BOTÓN DE SALIDA PERSONALIZADO */
+.btn-salida-custom {
+  background-color: #00873e;
+  border: 2px solid #ffffff;
+  border-radius: 8px;
+  padding: 4px 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  transition: transform 0.2s, background-color 0.2s;
+}
+.btn-salida-custom:hover {
+  background-color: #006b31;
+  transform: scale(1.03);
+}
+.puerta-box {
+  background-color: #ffffff;
+  width: 22px;
+  height: 26px;
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.puerta-box .fa-person-running {
+  color: #00873e;
+  font-size: 16px;
+}
+.btn-salida-custom span {
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+/* ESTILOS DEL BOTÓN DE COMPARTIR PERSONALIZADO */
+.btn-compartir-custom {
+  background-color: #1877F2;
+  border: 2px solid #ffffff;
+  border-radius: 8px;
+  padding: 4px 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  transition: transform 0.2s, background-color 0.2s;
+}
+.btn-compartir-custom:hover {
+  background-color: #145dbf;
+  transform: scale(1.03);
+}
+.pulgar-box {
+  background-color: #ffffff;
+  width: 24px;
+  height: 26px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.pulgar-box .fa-thumbs-up {
+  color: #1877F2;
+  font-size: 14px;
+}
+.btn-compartir-custom span {
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+}
+
+/* INTERRUPTOR DE MODO CLARO / OSCURO ESTILO IMAGEN DE REFERENCIA */
+.theme-switch-container {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+  flex-shrink: 0;
+}
+.theme-switch {
+  width: 54px;
+  height: 28px;
+  background: linear-gradient(135deg, #f39c12, #e74c3c); /* Gradiente cálido para modo claro (Sol) */
+  border-radius: 30px;
+  position: relative;
+  transition: background 0.4s ease;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+  display: flex;
+  align-items: center;
+  padding: 2px;
+  border: 1.5px solid rgba(255,255,255,0.4);
+}
+:root[data-theme="dark"] .theme-switch {
+  background: linear-gradient(135deg, #1e3c72, #2a5298); /* Gradiente azul para modo oscuro (Luna) */
+}
+.theme-switch-handle {
+  width: 22px;
+  height: 22px;
+  background: #ffffff;
+  border-radius: 50%;
+  position: absolute;
+  left: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+  transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+:root[data-theme="dark"] .theme-switch-handle {
+  transform: translateX(26px);
+  background: linear-gradient(135deg, #00c6ff, #0072ff);
+}
+.theme-switch-handle i {
+  font-size: 11px;
+  color: #e67e22;
+  transition: color 0.3s ease;
+}
+:root[data-theme="dark"] .theme-switch-handle i {
+  color: #ffffff;
+}
+
 .portal-header{text-align:center;margin-bottom:20px;background:linear-gradient(135deg,#1a3d5c,var(--azul));color:#fff;padding:25px 15px;border-radius:15px;box-shadow:var(--sombra)}
 .portal-header h1{font-size:24px;margin-bottom:6px;letter-spacing:.5px}
 .portal-header p{font-size:13px;opacity:.85}
@@ -170,7 +296,7 @@ radio-player{flex:1;width:50%;height:140px;display:block;min-width:0}
 .chat-input-area input{flex:1;min-width:0;padding:9px 11px;border:1px solid var(--gris-borde);border-radius:20px;outline:none;font-size:13px}
 .chat-input-area button{background:var(--azul);color:#fff;border:none;width:36px;height:36px;border-radius:50%;margin-left:6px;cursor:pointer;font-size:15px;flex-shrink:0}
 @media(min-width:768px){.tienda-grid{grid-template-columns:repeat(auto-fit,minmax(190px,1fr))}.item img{height:150px}}
-@media(max-width:500px){body{padding:8px 8px 100px}.user-bar{gap:6px;padding:8px}.user-bar button:not(.sobre-notificacion-bar):not(.btn-tema-bar):not(.btn-compartir-bar){padding:8px}.nombre{max-width:90px}.portal-nav{left:8px;right:8px;bottom:8px}.portal-nav button{font-size:10px;padding:8px 2px}.nav-icon{font-size:17px}.portal-section{padding:14px}.portal-section h2{font-size:17px}#reloj-lluvia #hora{font-size:18px}#reloj-lluvia #fecha{font-size:9px}.carousel-container2 .slide img{max-width:220px;max-height:280px}.sw-fila{grid-template-columns:1fr}.tienda-controles{grid-template-columns:1fr}.carrito-botones{grid-template-columns:1fr}.clima-detalles{font-size:11px;gap:6px}.clima-temp{font-size:30px}}
+@media(max-width:500px){body{padding:8px 8px 100px}.user-bar{gap:6px;padding:8px}.user-bar button:not(.sobre-notificacion-bar):not(.btn-compartir-custom):not(.btn-salida-custom){padding:8px}.nombre{max-width:90px}.portal-nav{left:8px;right:8px;bottom:8px}.portal-nav button{font-size:10px;padding:8px 2px}.nav-icon{font-size:17px}.portal-section{padding:14px}.portal-section h2{font-size:17px}#reloj-lluvia #hora{font-size:18px}#reloj-lluvia #fecha{font-size:9px}.carousel-container2 .slide img{max-width:220px;max-height:280px}.sw-fila{grid-template-columns:1fr}.tienda-controles{grid-template-columns:1fr}.carrito-botones{grid-template-columns:1fr}.clima-detalles{font-size:11px;gap:6px}.clima-temp{font-size:30px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
 
 /* TEMA OSCURO */
@@ -187,7 +313,7 @@ radio-player{flex:1;width:50%;height:140px;display:block;min-width:0}
 }
 :root[data-theme="dark"] body{background:var(--gris-bg);color:var(--texto)}
 :root[data-theme="dark"] .user-bar{background:#1E293B;box-shadow:0 2px 6px rgba(0,0,0,.3)}
-:root[data-theme="dark"] .user-bar button:not(.sobre-notificacion-bar):not(.btn-tienda-bar):not(.btn-tema-bar):not(.btn-compartir-bar){background:#334155;color:var(--texto)}
+:root[data-theme="dark"] .user-bar button:not(.sobre-notificacion-bar):not(.btn-tienda-bar):not(.btn-compartir-custom):not(.btn-salida-custom){background:#334155;color:var(--texto)}
 :root[data-theme="dark"] .btn-tienda-bar{background:#1E293B!important;color:var(--azul-claro)!important;border-color:var(--azul-claro)!important}
 :root[data-theme="dark"] .portal-header{background:linear-gradient(135deg,#0B1F33,#1E3A5F)}
 :root[data-theme="dark"] .portal-section{background:#1E293B;color:var(--texto)}
@@ -247,13 +373,6 @@ radio-player{flex:1;width:50%;height:140px;display:block;min-width:0}
 :root[data-theme="dark"] .anuncio-header{color:var(--azul-claro)}
 :root[data-theme="dark"] .btn-solicita-web{background:#1E3A5F;color:#93C5FD;border-color:#2D5A8A}
 :root[data-theme="dark"] .aviso-bloqueo{background:linear-gradient(135deg,#0B1F33,#1E3A5F)}
-
-/* BOTONES TEMA Y COMPARTIR */
-.btn-tema-bar,.btn-compartir-bar{background:#F0F2F5;color:var(--texto);border:none;width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:transform .2s,background .2s}
-.btn-tema-bar:hover,.btn-compartir-bar:hover{transform:scale(1.1)}
-.btn-compartir-bar{color:var(--azul)}
-:root[data-theme="dark"] .btn-tema-bar{background:#334155;color:#FBBF24}
-:root[data-theme="dark"] .btn-compartir-bar{background:#334155;color:var(--azul-claro)}
 
 /* MODAL COMPARTIR */
 .share-modal{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;z-index:9999;padding:20px;backdrop-filter:blur(4px)}
@@ -342,8 +461,21 @@ radio-player{flex:1;width:50%;height:140px;display:block;min-width:0}
 <div class="user-bar" id="userBar">
   <button class="sobre-notificacion-bar" onclick="abrirModalMensaje()" title="Novedades del sistema" aria-label="Novedades">✉️<span class="sobre-badge" id="sobreBadge">1</span></button>
   <button type="button" class="btn-tienda-bar" onclick="cambiarPortal('tienda',null)">🛒 Tienda <span id="badgeTienda" class="carrito-contador" style="padding:2px 6px">0</span></button>
-  <button type="button" class="btn-tema-bar" id="btnTema" onclick="toggleTema()" title="Cambiar tema" aria-label="Cambiar tema">🌙</button>
-  <button type="button" class="btn-compartir-bar" onclick="abrirCompartir()" title="Compartir app" aria-label="Compartir app">📤</button>
+  
+  <!-- INTERRUPTOR DE MODO CLARO / OSCURO PERSONALIZADO -->
+  <div class="theme-switch-container" onclick="toggleTema()" title="Cambiar tema" aria-label="Cambiar tema">
+    <div class="theme-switch" id="themeSwitchTrack">
+      <div class="theme-switch-handle" id="themeSwitchHandle">
+        <i class="fa-solid fa-sun" id="themeSwitchIcon"></i>
+      </div>
+    </div>
+  </div>
+
+  <button type="button" class="btn-compartir-custom" onclick="abrirCompartir()" title="Compartir app" aria-label="Compartir app">
+    <div class="pulgar-box"><i class="fa-solid fa-thumbs-up"></i></div>
+    <span>COMPARTIR</span>
+  </button>
+
   <div class="avatar" id="userAvatar">?</div>
   <div class="nombre" id="userNombre">Invitado</div>
   <button type="button" id="btnAccionUser" class="btn-ingresar" onclick="accionUsuario()">🔑 Ingresar</button>
@@ -373,8 +505,10 @@ radio-player{flex:1;width:50%;height:140px;display:block;min-width:0}
 <div class="carrito-seccion" id="carritoSeccion"><div class="carrito-cabecera"><h3>🛒 Tu carrito de compras</h3><span class="carrito-contador" id="carritoContador">0 artículos</span></div><ul id="carrito-lista" class="carrito-lista" aria-live="polite"><li style="color:#7F8C8D">El carrito está vacío.</li></ul><div class="carrito-total-fila"><span>Total del pedido</span><span id="carrito-total">$ 0</span></div><div class="carrito-botones"><button class="btn-whatsapp-pedir" onclick="enviarPedidoWhatsApp()">📲 Pedir por WhatsApp</button><button class="btn-vaciar-carrito" onclick="vaciarCarrito()">🗑 Vaciar carrito</button></div><p class="carrito-nota">Precios en pesos uruguayos. El pedido se envía por WhatsApp para confirmar disponibilidad, entrega y forma de pago. El envío no está incluido en el total.</p></div></section>
 <section id="seccion-protocolos" class="portal-section"><h2>📋 Protocolos y Manual del Guardia</h2><p style="margin-bottom:15px;font-size:13px">Recordá seguir los procedimientos de tu empresa y las indicaciones de tu supervisor.</p><div class="protocolo-card"><h4>🚶‍♂️ Rondas y Patrullaje</h4><p>Realiza las rondas en los horarios establecidos. Presta atención a puertas forzadas, ruidos extraños, luces apagadas fuera de lo normal u objetos abandonados. Registra las novedades de forma objetiva.</p></div><div class="protocolo-card"><h4>📻 Uso Correcto de la Radio</h4><p>Mantén el canal despejado. Sé breve y conciso. Usa el alfabeto radiofónico si es necesario. No uses la radio para conversaciones personales.</p></div><div class="protocolo-card"><h4>🤝 Trato con el Público</h4><p>Mantén una actitud respetuosa, firme y servicial. Si hay un altercado, conserva la calma y avisa a tu supervisor o a los servicios de emergencia cuando corresponda.</p></div><div class="protocolo-card"><h4>📝 Registro de Novedades</h4><p>Anota la hora, el lugar, las personas involucradas y los hechos de forma objetiva. No escribas opiniones personales; registra lo que viste, escuchaste o hiciste.</p></div></section>
 
-<section id="seccion-novedades" class="portal-section"><h2>📰 Novedades y Avisos</h2><p style="margin-bottom:15px;font-size:13px;color:#7F8C8D">Últimas noticias, avisos importantes y contenido destacado del portal.</p>
-<div class="aviso-destacado" id="avisoDestacado"><div class="aviso-destacado-icono">📢</div><div class="aviso-destacado-texto"><h4 id="avisoDestacadoTitulo">Aviso importante</h4><p id="avisoDestacadoCuerpo">Revisa los protocolos actualizados antes de tu próximo turno.</p></div><button class="aviso-destacado-cerrar" onclick="ocultarAvisoDestacado()" aria-label="Cerrar aviso">✕</button></div>
+<section id="seccion-novedades" class="portal-section"><h2>📰 Novedades y Avisos</h2> 
+
+<div class="aviso-destacado" id="avisoDestacado"><div class="aviso-destacado-icono">📢</div><div class="aviso-destacado-texto"><h4 id="avisoDestacadoTitulo">Aviso importante</h4><p id="avisoDestacadoCuerpo">Revisa los protocolos updated antes de tu próximo turno.</p></div><button class="aviso-destacado-cerrar" onclick="ocultarAvisoDestacado()" aria-label="Cerrar aviso">X</button></div>
+
 <div class="novedades-filtros"><button class="filtro-btn active" data-filtro="todas" onclick="filtrarNovedades('todas',this)">Todas</button><button class="filtro-btn" data-filtro="aviso" onclick="filtrarNovedades('aviso',this)">⚠️ Avisos</button><button class="filtro-btn" data-filtro="noticia" onclick="filtrarNovedades('noticia',this)">📰 Noticias</button><button class="filtro-btn" data-filtro="guia" onclick="filtrarNovedades('guia',this)">📚 Guías</button></div>
 <div class="novedades-grid" id="novedadesGrid">
 <div class="novedad-card" data-categoria="aviso"><div class="novedad-etiqueta etiqueta-aviso">⚠️ Aviso</div><h4>Actualización de protocolos</h4><p>Revisa la sección de Protocolos. Se actualizaron las pautas de rondas y registro de novedades.</p><span class="novedad-fecha">📅 Hoy</span></div>
@@ -397,10 +531,9 @@ radio-player{flex:1;width:50%;height:140px;display:block;min-width:0}
 <div class="campo"><label for="webSecciones">Secciones que necesitás *</label><input id="webSecciones" type="text" name="Secciones" placeholder="Ej. Inicio, Servicios, Contacto" required></div><div class="campo"><label for="webIdea">Contame tu idea *</label><textarea id="webIdea" rows="3" name="Idea_Principal" placeholder="Describe tu idea..." required></textarea></div><button type="submit" class="btn-sugerencia">📲 ENVIAR SOLICITUD</button></form></section>
 </div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
-<div id="chat-widget"><div id="chat-window" role="dialog" aria-label="Asistente virtual TINMARUY" aria-hidden="true"><div class="chat-header"><div><b><h2>🤖 Asistente TINMARUY</h2></b> <span class="chat-estado"></span></div><button onclick="toggleChat(false)" aria-label="Cerrar chat">✕</button></div><div class="chat-body" id="chatBody" aria-live="polite"><div class="chat-msg bot">¡Hola! 👋 Soy el asistente TINMARUY</div></div><form class="chat-input-area" id="chatForm"><input type="text" id="chatInput" placeholder="Escribe tu consulta..." autocomplete="off" maxlength="500" aria-label="Escribe tu consulta"><button type="submit" aria-label="Enviar mensaje">➤</button></form></div><button id="chat-toggle" onclick="toggleChat()" aria-label="Abrir asistente virtual" aria-expanded="false">🤖</button></div>
+<div id="chat-widget"><div id="chat-window" role="dialog" aria-label="Asistente virtual TINMARUY" aria-hidden="true"><div class="chat-header"><div><b><h2>🤖 Asistente TINMARUY</h2></b> <span class="chat-estado"></span></div><button onclick="toggleChat(false)" aria-label="Cerrar chat">✕</button></div><div class="chat-body" id="chatBody" aria-live="polite"><div class="chat-msg bot"><b>¡Hola! 👋 Soy el asistente TINMARUY</b></div></div><form class="chat-input-area" id="chatForm"><input type="text" id="chatInput" placeholder="Escribe tu consulta..." autocomplete="off" maxlength="500" aria-label="Escribe tu consulta"><button type="submit" aria-label="Enviar mensaje">➤</button></form></div><button id="chat-toggle" onclick="toggleChat()" aria-label="Abrir asistente virtual" aria-expanded="false">🤖</button></div>
 </div>
 <div id="uruleyesFullscreen"><header class="uruleyes-header"><h1>👋 <a href="#" onclick="cerrarUruleyes(event)" style="color:inherit;text-decoration:none"><span style="color:#fff">TIN</span><span style="color:#d4af37">MAR</span></a></h1><nav><a href="#" onclick="cerrarUruleyes(event)">⬅️ Volver al Inicio</a></nav></header><div class="uruleyes-frame-container"><iframe src="https://uruleyes.com" title="UruLeyes - Buscador de Leyes" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe></div></div>
-
 <script>
 "use strict";
 const MI_CORREO_ADMIN="Martinsampayo9@gmail.com";
@@ -411,7 +544,6 @@ let carrito=[];
 let timerAnuncio=null;
 let anuncioTimer=null;
 let indiceAnuncio=0;
-
 function escaparHTML(valor){return String(valor).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
 function normalizar(texto){return String(texto).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").trim()}
 function mostrarToast(msg,tipo="success"){const toast=document.getElementById("toast");toast.textContent=msg;toast.className="toast show "+tipo;clearTimeout(toast._timer);toast._timer=setTimeout(()=>toast.className="toast "+tipo,3200)}
@@ -422,7 +554,19 @@ function mostrarPasoPedir(){document.getElementById("pasoPedirCodigo").style.dis
 async function solicitarCodigoPersonal(){const nombre=document.getElementById("regNombre").value.trim();const email=document.getElementById("regEmail").value.trim();if(!nombre||!email)return mostrarToast("Completa el nombre y el correo electrónico.","error");if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))return mostrarToast("Ingresa un correo válido.","error");const boton=document.querySelector("#pasoPedirCodigo .btn-auth-submit");if(boton.disabled)return;boton.disabled=true;boton.textContent="Enviando solicitud...";mostrarToast("Enviando solicitud de acceso...","warning");try{const respuesta=await fetch("https://formsubmit.co/ajax/"+encodeURIComponent(MI_CORREO_ADMIN),{method:"POST",headers:{"Content-Type":"application/json","Accept":"application/json"},body:JSON.stringify({_subject:"SOLICITUD CÓDIGO GUARDIA - "+nombre,Mensaje:"Un guardia solicita acceso al Portal TINMARUY. El administrador debe asignar el código de acceso.",Nombre_Guardia:nombre,Correo_Contacto:email})});if(!respuesta.ok)throw new Error("No se pudo enviar");document.getElementById("infoUsuarioAviso").textContent="¡Hola "+nombre+"! La solicitud fue enviada. El administrador debe proporcionarte el código de acceso.";document.getElementById("regNombre").dataset.nombre=nombre;document.getElementById("regEmail").dataset.email=email;mostrarPasoCodigo();mostrarToast("Solicitud enviada. Espera el código del administrador.","success")}catch(e){mostrarToast("No se pudo enviar. Comprueba tu conexión e inténtalo otra vez.","error")}finally{boton.disabled=false;boton.textContent="✉️ Solicitar mi Código"}}
 function validarCodigoUsuario(){const codigo=document.getElementById("inputCodigoValidar").value.trim();const nombre=document.getElementById("regNombre").dataset.nombre||localStorage.getItem("nombre_usuario_registrado")||"Guardia";if(codigo===CLAVE_MAESTRA){localStorage.setItem("stock_autorizado","1");localStorage.setItem("usuario_activo",nombre);desbloquearApp(nombre);cerrarModalAuth();mostrarToast("Bienvenido, "+nombre,"success");return}mostrarToast("El acceso requiere un código válido asignado por el administrador. La validación de códigos personales necesita un servidor seguro.","error")}
 function bloquearApp(){const app=document.getElementById("appContainer");app.classList.add("bloqueado");document.getElementById("avisoBloqueo").classList.add("visible");document.getElementById("userNombre").textContent="Invitado";document.getElementById("userAvatar").textContent="?";const btn=document.getElementById("btnAccionUser");btn.textContent="🔑 Ingresar";btn.className="btn-ingresar";btn.onclick=abrirModalAuth}
-function desbloquearApp(nombreCompleto){const nombre=nombreCompleto||localStorage.getItem("usuario_activo")||"Guardia";const app=document.getElementById("appContainer");app.classList.remove("bloqueado");document.getElementById("avisoBloqueo").classList.remove("visible");document.getElementById("userNombre").textContent=nombre;document.getElementById("userAvatar").textContent=nombre.charAt(0).toUpperCase();const btn=document.getElementById("btnAccionUser");btn.textContent="🚪 Salir";btn.className="";btn.onclick=cerrarSesion}
+function desbloquearApp(nombreCompleto){
+  const nombre=nombreCompleto||localStorage.getItem("usuario_activo")||"Guardia";
+  const app=document.getElementById("appContainer");
+  app.classList.remove("bloqueado");
+  document.getElementById("avisoBloqueo").classList.remove("visible");
+  document.getElementById("userNombre").textContent=nombre;
+  document.getElementById("userAvatar").textContent=nombre.charAt(0).toUpperCase();
+  const btn=document.getElementById("btnAccionUser");
+  btn.className="btn-salida-custom";
+  btn.innerHTML=`<div class="puerta-box"><i class="fa-solid fa-person-running"></i></div><span>Salida</span>`;
+  btn.title="Cerrar sesión";
+  btn.onclick=cerrarSesion;
+}
 function cerrarSesion(){if(confirm("¿Estás seguro de que quieres cerrar sesión?")){localStorage.removeItem("stock_autorizado");localStorage.removeItem("usuario_activo");bloquearApp();mostrarToast("Sesión cerrada","warning")}}
 function accionUsuario(){if(localStorage.getItem("stock_autorizado")==="1")cerrarSesion();else abrirModalAuth()}
 function cambiarPortal(id,btn){cerrarUruleyes();const destino=document.getElementById("seccion-"+id);if(!destino)return;document.querySelectorAll(".portal-section").forEach(sec=>sec.classList.remove("active"));destino.classList.add("active");document.querySelectorAll(".portal-nav button").forEach(b=>b.classList.toggle("active",b.dataset.section===id));if(btn&&btn.dataset.section===id)btn.classList.add("active");if(id==="tienda")actualizarCarritoUI();window.scrollTo({top:0,behavior:"smooth"})}
@@ -449,19 +593,16 @@ function agregarMensajeChat(texto,tipo){const body=document.getElementById("chat
 function consultaRapida(texto){document.getElementById("chatInput").value=texto;enviarMensajeChat()}
 function enviarMensajeChat(){const input=document.getElementById("chatInput");const texto=input.value.trim();if(!texto)return;if(texto.length>500)return mostrarToast("El mensaje es demasiado largo.","warning");agregarMensajeChat(texto,"user");input.value="";const espera=document.createElement("div");espera.className="chat-msg bot";espera.textContent="Escribiendo...";espera.id="chatEscribiendo";document.getElementById("chatBody").appendChild(espera);document.getElementById("chatBody").scrollTop=document.getElementById("chatBody").scrollHeight;window.setTimeout(()=>{espera.remove();agregarMensajeChat(generarRespuestaBot(texto),"bot")},250)}
 function abrirSeccionDesdeChat(id){if(id==="tienda"||id==="inicio"||id==="protocolos"||id==="novedades"||id==="sugerencias"||id==="solicitarweb")cambiarPortal(id,document.querySelector('[data-section="'+id+'"]'))}
-
 function generarRespuestaBot(texto){
   const t = normalizar(texto);
   const ahora = new Date();
   const hora = ahora.toLocaleTimeString("es-UY",{hour:"2-digit",minute:"2-digit",timeZone:"America/Montevideo"});
   const fecha = ahora.toLocaleDateString("es-UY",{weekday:"long",day:"numeric",month:"long",year:"numeric",timeZone:"America/Montevideo"});
   const diaSemana = ahora.toLocaleDateString("es-UY",{weekday:"long",timeZone:"America/Montevideo"});
-
-  // SALUDOS Y CORTESÍA
-  if(/\b(hola|buenas|buenos dias|buenas tardes|buenas noches|que tal)\b/.test(t))
-    return "¡Hola! 👋 Bienvenido a TINMARUY. ¿Qué necesitas? Puedes consultar productos, precios, pedidos, protocolos o páginas web.";
+if(/\b(hola|buenas|buenos dias|buenas tardes|buenas noches|que tal)\b/.test(t))
+return "¡Hola! 👋 Bienvenido a TINMARUY. ¿Qué necesitas? .";
   if(t.includes("como estas")||t.includes("estas bien")||t.includes("como te sientes")||t.includes("te sientes bien")||t.includes("cómo estás"))
-    return "¡Estoy muy bien, gracias por preguntar! 🤖 ¿En qué te ayudo?";
+return "¡Estoy muy bien, gracias por preguntar! 🤖 ¿En qué te ayudo?";
   if(t.includes("gracias"))
     return "¡De nada! 😊 Estoy para ayudarte.";
   if(/\b(chau|adios|adiós|hasta luego|nos vemos)\b/.test(t))
@@ -470,29 +611,21 @@ function generarRespuestaBot(texto){
     return "Espero tu consulta para responderte 🤖. ¿Qué necesitas?";
   if(t.includes("que puedes hacer")||t.includes("qué puedes hacer")||t.includes("opciones"))
     return "Puedo responder preguntas básicas y ayudarte con información. 📩";
-
-  // HORA Y FECHA
-  if(t.includes("hora")||t.includes("qué hora es")||t.includes("que hora es")||t.includes("la hora por favor")||t.includes("me dices la hora")||t.includes("hora actual")||t.includes("qué hora tienes"))
+if(t.includes("hora")||t.includes("qué hora es")||t.includes("que hora es")||t.includes("la hora por favor")||t.includes("me dices la hora")||t.includes("hora actual")||t.includes("qué hora tienes"))
     return "En Uruguay son las "+hora+" ⏰.";
   if(t.includes("fecha")||t.includes("qué día es")||t.includes("que dia es")||t.includes("hoy es")||t.includes("fecha de hoy")||t.includes("qué fecha es")||t.includes("cual es la fecha")||t.includes("qué día de la semana es")||t.includes("en qué día estamos")||t.includes("hoy qué día es"))
-    return "Hoy es "+diaSemana+", "+fecha+" 📅.";
-
-  // IDENTIDAD
-  if(t.includes("quien sos")||t.includes("quién sos")||t.includes("como te llamas")||t.includes("cómo te llamas")||t.includes("nombre")||t.includes("sos")||t.includes("sos martin")||t.includes("de quien es")||t.includes("de quién es")||t.includes("con quien ablo")||t.includes("con quién hablo"))
-    return "Soy Tinma, tu asistente virtual de TINMARUY 🤖📱. Te ayudo en lo que necesites.";
+return "Hoy es "+diaSemana+", "+fecha+" 📅.";
+if(t.includes("quien sos")||t.includes("quién sos")||t.includes("como te llamas")||t.includes("cómo te llamas")||t.includes("nombre")||t.includes("sos")||t.includes("sos martin")||t.includes("de quien es")||t.includes("de quién es")||t.includes("con quien ablo")||t.includes("con quién hablo"))
+    return "Soy Tinma, tu asistente virtual de TINMARUY 🤖📱. Te ayudo en lo que necetés.";
   if(t.includes("la chupas")||t.includes("la mamas")||t.includes("sexo oral")||t.includes("sos gay")||t.includes("puto"))
     return "¿A qué te referís? Si hablás de sexo, soy varón y me gustan los culos nalgones/as 🍑.";
-
-  // CARRITO Y TIENDA
-  if(t.includes("carrito")){
-    const total=carrito.reduce((s,x)=>s+x.precio*x.cantidad,0);
+if(t.includes("carrito")){
+const total=carrito.reduce((s,x)=>s+x.precio*x.cantidad,0);
     if(!carrito.length) return "Tu carrito está vacío. Entra a la tienda, elige productos y toca Agregar al carrito.";
-    return "Tu carrito tiene "+carrito.reduce((s,x)=>s+x.cantidad,0)+" artículo(s), con un total de "+formatoUY.format(total)+". Puedes revisar cantidades y eliminar artículos en la sección Tienda.";
-  }
+    return "Tu carrito tiene "+carrito.reduce((s,x)=>s+x.cantidad,0)+" artículo(s), con un total de "+formatoUY.format(total)+". Puedes revisar cantidades y eliminar artículos en la sección Tienda."; }
   if(t.includes("producto")||t.includes("productos")||t.includes("catalogo")||t.includes("catálogo")||t.includes("tienda")||t.includes("comprar")||t.includes("compra")||t.includes("oferta")||t.includes("que venden")){
     abrirSeccionDesdeChat("tienda");
-    return "🛍 Abrí la sección Tienda para ti. Tenemos parlante JBL ($ 2.000), cargador Samsung ($ 1.000), auriculares oraimo ($ 500), auriculares JBL ($ 2.000), mouse ($ 800), teclado gamer ($ 1.500), monitor ($ 4.840), cámara web ($ 1.300), velas ($ 40) y matera ($ 300). Precios en pesos uruguayos. Agrega tus productos al carrito y envía el pedido por WhatsApp.";
-  }
+    return "🛍 Abrí la sección Tienda para ti. Tenemos parlante JBL ($ 2.000), cargador Samsung ($ 1.000), auriculares oraimo ($ 500), auriculares JBL ($ 2.000), mouse ($ 800), teclado gamer ($ 1.500), monitor ($ 4.840), cámara web ($ 1.300), velas ($ 40) y matera ($ 300). Precios en pesos uruguayos. Agrega tus productos al carrito y envía el pedido por WhatsApp.";  }
   if(t.includes("quiero comprar")||t.includes("como compro")||t.includes("cómo compro"))
     return "Para comprar, solo agrega productos al carrito y luego haz clic en 'Enviar por WhatsApp'. 🛒📲";
   if(t.includes("precio")||t.includes("cuanto cuesta")||t.includes("cuánto cuesta")||t.includes("cuanto sale")){
@@ -505,24 +638,19 @@ function generarRespuestaBot(texto){
   }
   if(t.includes("abrir")&&t.includes("almacen"))
     return '<a href="#" onclick="cambiarPortal(\'tienda\',null);return false">Haz clic aquí para abrir la sección Almacén 🏪</a>';
-
-  // GARANTÍA, ENVÍO, PAGO
-  if(t.includes("garantia")||t.includes("garantía"))
+ if(t.includes("garantia")||t.includes("garantía"))
     return "Todos nuestros productos tienen una garantía de 6 meses por defectos de fabricación. 🛡️";
   if(t.includes("envio")||t.includes("envío")||t.includes("entrega")||t.includes("demora")||t.includes("cuanto demora")||t.includes("cuánto demora")){
     if(t.includes("dia de entrega")||t.includes("día de entrega")||t.includes("cuando me llega")||t.includes("cuándo me llega")||t.includes("cuando mandan"))
       return "¡Depende del día de tu pedido! Futuras fechas de entrega: día miércoles. 🤖";
     if(t.includes("tiempo de entrega"))
       return "El tiempo de entrega es entre 24 y 72 horas hábiles. 🚚📦";
-    return "Hacemos envíos a todo el país en 24 a 72 horas. 🚚";
-  }
+    return "Hacemos envíos a todo el país en 24 a 72 horas. 🚚";  }
   if(t.includes("formas de pago")||t.includes("pago")||t.includes("tarjeta")||t.includes("mercadopago")||t.includes("prex")||t.includes("aceptan tarjeta"))
     return "Aceptamos efectivo, transferencias bancarias, pagos por MercadoPago y Transferencia PREX 💳.";
   if(t.includes("devolucion")||t.includes("devolución")||t.includes("devolver")||t.includes("reembolso"))
     return "Aceptamos devoluciones dentro de los primeros 7 días con ticket de compra. 🧾";
-
-  // CONTACTO, UBICACIÓN, WHATSAPP
-  if(t.includes("whatsapp")||t.includes("wasap")||t.includes("escribirte")||t.includes("hablar")||t.includes("mensaje")||t.includes("comunicarme")||t.includes("enviarte"))
+ if(t.includes("whatsapp")||t.includes("wasap")||t.includes("escribirte")||t.includes("hablar")||t.includes("mensaje")||t.includes("comunicarme")||t.includes("enviarte"))
     return 'Puedes contactar a TINMARUY por WhatsApp: <a href="https://wa.me/'+WHATSAPP_TINMARUY+'" target="_blank" rel="noopener noreferrer">Abrir WhatsApp</a>, llamar al <a href="tel:+59899295848">099 295 848</a> o escribir a <a href="mailto:'+MI_CORREO_ADMIN+'">'+MI_CORREO_ADMIN+'</a>.';
   if(t.includes("contacto")||t.includes("telefono")||t.includes("teléfono"))
     return 'Puedes escribirme por este chat, al correo <a href="mailto:'+MI_CORREO_ADMIN+'">'+MI_CORREO_ADMIN+'</a> o por WhatsApp: <a href="https://wa.me/'+WHATSAPP_TINMARUY+'" target="_blank" rel="noopener noreferrer">escríbeme aquí</a> 📧📱.';
@@ -530,45 +658,30 @@ function generarRespuestaBot(texto){
     return "Estamos ubicados en **Montevideo, Uruguay** 📍. Para coordinar una entrega, consulta por WhatsApp.";
   if(t.includes("horario")||t.includes("a que hora abren")||t.includes("a qué hora abren")||t.includes("cuando abren"))
     return "Nuestro horario de atención es de lunes a lunes, las 24 horas ⏰.";
-
-  // SECCIONES DEL PORTAL
-  if(t.includes("web")||t.includes("pagina")||t.includes("página")||t.includes("sitio")||t.includes("diseno")||t.includes("diseño")){
+ if(t.includes("web")||t.includes("pagina")||t.includes("página")||t.includes("sitio")||t.includes("diseno")||t.includes("diseño")){
     abrirSeccionDesdeChat("solicitarweb");
-    return "🌐 Abrí la sección Solicitar Web. Completa tus datos, el tipo de página, las funciones, el diseño y la idea de tu proyecto para enviar la solicitud.";
-  }
+    return "🌐 Abrí la sección Solicitar Web. Completa tus datos, el tipo de página, las funciones, el diseño y la idea de tu proyecto para enviar la solicitud.";  }
   if(t.includes("sugerencia")||t.includes("reporte")||t.includes("imagen adjunta")){
     abrirSeccionDesdeChat("sugerencias");
-    return "📩 Abrí la sección Sugerencias. Puedes escribir tu mensaje y adjuntar una imagen opcional.";
-  }
+    return "📩 Abrí la sección Sugerencias. Puedes escribir tu mensaje y adjuntar una imagen opcional.";  }
   if(t.includes("protocolo")||t.includes("ronda")||t.includes("patrull")||t.includes("guardia")){
     abrirSeccionDesdeChat("protocolos");
-    return "📋 Abrí la sección Protocolos. Allí encontrarás orientaciones sobre rondas, uso de radio, trato con el público y registro de novedades. Sigue siempre los procedimientos de tu empresa y las indicaciones de tu supervisor.";
-  }
+    return "📋 Abrí la sección Protocolos. Allí encontrarás orientaciones sobre rondas, uso de radio, trato con el público y registro de novedades. Sigue siempre los procedimientos de tu empresa y las indicaciones de tu supervisor.";  }
   if(t.includes("novedad")||t.includes("aviso")||t.includes("noticia")){
     abrirSeccionDesdeChat("novedades");
-    return "📰 Abrí la sección Novedades. Allí encontrarás avisos importantes, noticias y guías rápidas.";
-  }
-
-  // CLIMA, RADIO, MÚSICA
-  if(t.includes("clima")||t.includes("temperatura")||t.includes("lluvia")||t.includes("tiempo")){
+    return "📰 Abrí la sección Novedades. Allí encontrarás avisos importantes, noticias y guías rápidas."; }
+ if(t.includes("clima")||t.includes("temperatura")||t.includes("lluvia")||t.includes("tiempo")){
     abrirSeccionDesdeChat("inicio");
-    return "☀️ En Inicio encontrarás el clima actual de Montevideo, con temperatura, humedad, viento y sensación térmica.";
-  }
+    return "☀️ En Inicio encontrarás el clima actual de Montevideo, con temperatura, humedad, viento y sensación térmica.";  }
   if(t.includes("musica")||t.includes("música"))
     return "Música 🎶, cual refieres la puedes pedir al WhatsApp y queda.";
   if(t.includes("radio"))
     return "📻 En Inicio puedes tocar el botón de reproducción del reproductor para escuchar la radio online.";
-
-  // URULeyes Y LEGAL
-  if(t.includes("uruleyes")||t.includes("ley")||t.includes("legal"))
-    return "⚖️ Puedes abrir UruLeyes desde el botón de la barra inferior para consultar legislación. Si el sitio no permite mostrarse dentro de esta página, ábrelo directamente desde el navegador.";
-
-  // EMERGENCIAS
-  if(t.includes("emergencia")||t.includes("911")||t.includes("policia")||t.includes("policía")||t.includes("bombero")||t.includes("ambulancia"))
+ if(t.includes("uruleyes")||t.includes("ley")||t.includes("legal"))
+    return "⚖️ Puedes abrir UruLeyes desde el botón de la barra inferior para consultar legislación leyes consulta como lo dirias normal ";
+ if(t.includes("emergencia")||t.includes("911")||t.includes("policia")||t.includes("policía")||t.includes("bombero")||t.includes("ambulancia"))
     return "🚨 En Uruguay: Policía 911, Bomberos 104 y emergencia médica 105. En una situación urgente, llama al servicio correspondiente.";
-
-  // TRABAJO, SERVICIOS, MASCOTAS, OFERTAS
-  if(t.includes("trabajo")||t.includes("empleo")||t.includes("contratar"))
+ if(t.includes("trabajo")||t.includes("empleo")||t.includes("contratar"))
     return "¡Gracias por tu interés! Puedes enviarnos tu CV al correo <a href=\"mailto:"+MI_CORREO_ADMIN+"\">"+MI_CORREO_ADMIN+"</a> 📄.";
   if(t.includes("servicios"))
     return "Ofrecemos servicios de entrega, asesoramiento y soporte técnico. ¿En qué podemos ayudarte? 🔧";
@@ -578,17 +691,12 @@ function generarRespuestaBot(texto){
     return "¡Sí! Tenemos ofertas todas las semanas. Visita nuestra sección de promociones. 💥";
   if(t.includes("catalogo")||t.includes("catálogo")||t.includes("ver productos"))
     return 'Puedes ver nuestro catálogo completo <a href="https://sites.google.com/view/tiendatin" target="_blank">aquí</a> 📘.';
-
-  // RESPUESTA POR DEFECTO
-  const genericas=[
+const genericas=[
     "Lo siento, no entendí eso 🤖",
     "¿Podrías repetirlo? 🙈",
     "No estoy seguro de a qué te refieres 🤔",
-    "Interesante... ¿puedes explicarlo mejor? 🤓"
-  ];
-  return genericas[Math.floor(Math.random()*genericas.length)];
-}
-
+"Interesante... ¿puedes explicarlo mejor? 🤓" ];
+ return genericas[Math.floor(Math.random()*genericas.length)];}
 // EVENTOS
 document.getElementById("chatForm").addEventListener("submit",function(e){e.preventDefault();enviarMensajeChat()});
 document.getElementById("buscarProducto").addEventListener("input",filtrarProductos);
@@ -603,33 +711,42 @@ function verificarMensajeSistemaAlInicio(){verificarMensajeSistema();if(localSto
 const listaAnuncios=[{titulo:"📋 Protocolos",texto:"Repasa los protocolos de rondas y uso de radio."},{titulo:"📩 Sugerencias",texto:"Envía comentarios o reportes desde la sección inferior."},{titulo:"⚖️ UruLeyes",texto:"Consulta las leyes desde la pestaña inferior."},{titulo:"🚨 Emergencias",texto:"Recordá los teléfonos de emergencia: 911, 104 y 105."},{titulo:"☀️ Clima",texto:"Revisa el estado del tiempo antes de salir."},{titulo:"🛒 Tienda",texto:"Busca artículos, modifica cantidades y envía el pedido por WhatsApp."},{titulo:"📰 Novedades",texto:"Consulta los avisos y noticias nuevas del portal."}];
 function mostrarSiguienteAnuncio(){const el=document.getElementById("anuncioFlotante");if(el.dataset.cerrado==="1")return;const a=listaAnuncios[indiceAnuncio];document.getElementById("anuncioTitulo").textContent=a.titulo;document.getElementById("anuncioTexto").textContent=a.texto;el.classList.add("mostrar");clearTimeout(timerAnuncio);timerAnuncio=setTimeout(()=>el.classList.remove("mostrar"),5000);indiceAnuncio=(indiceAnuncio+1)%listaAnuncios.length}
 function cerrarAnuncioFlotante(){const el=document.getElementById("anuncioFlotante");el.classList.remove("mostrar");el.dataset.cerrado="1";clearTimeout(timerAnuncio)}
-
 // BLOQUEO DE INSPECCIÓN
 document.addEventListener("keydown",(e)=>{if(e.key==="F12"){e.preventDefault();alert("🔒 Inspección bloqueada")}if(e.ctrlKey&&e.shiftKey&&(e.key==="I"||e.key==="C"||e.key==="J")){e.preventDefault();alert("🚫 Atajo bloqueado")}if(e.ctrlKey&&e.key.toLowerCase()==="u"){e.preventDefault();alert("🚫 Ver código fuente deshabilitado")}});
 document.addEventListener("contextmenu",(e)=>{e.preventDefault();alert("Clic derecho deshabilitado")});
-
-// TEMA CLARO/OSCURO
-function aplicarTema(tema){const root=document.documentElement;const btn=document.getElementById("btnTema");const meta=document.querySelector('meta[name="theme-color"]');if(tema==="dark"){root.setAttribute("data-theme","dark");if(btn){btn.textContent="☀️";btn.title="Cambiar a tema claro";}if(meta)meta.setAttribute("content","#0F172A");}else{root.removeAttribute("data-theme");if(btn){btn.textContent="🌙";btn.title="Cambiar a tema oscuro";}if(meta)meta.setAttribute("content","#1F4E78");}}
+// TEMA CLARO/OSCURO CON ICONO DINÁMICO
+function aplicarTema(tema){
+  const root=document.documentElement;
+  const icon=document.getElementById("themeSwitchIcon");
+  const meta=document.querySelector('meta[name="theme-color"]');
+  if(tema==="dark"){
+    root.setAttribute("data-theme","dark");
+    if(icon){
+ icon.className="fa-solid fa-moon";  }
+ if(meta)meta.setAttribute("content","#0F172A");
+  }else{
+    root.removeAttribute("data-theme");
+    if(icon){
+      icon.className="fa-solid fa-sun";  }
+if(meta)meta.setAttribute("content","#1F4E78");}
+}
 function toggleTema(){const actual=document.documentElement.getAttribute("data-theme");const nuevo=actual==="dark"?"light":"dark";aplicarTema(nuevo);try{localStorage.setItem("tinmaruy_tema",nuevo);}catch(e){}mostrarToast(nuevo==="dark"?"🌙 Modo oscuro activado":"☀️ Modo claro activado","success");}
 function iniciarTema(){let tema=null;try{tema=localStorage.getItem("tinmaruy_tema");}catch(e){}if(!tema){tema=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";}aplicarTema(tema);}
 if(window.matchMedia){window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change",function(e){let guardado=null;try{guardado=localStorage.getItem("tinmaruy_tema");}catch(err){}if(!guardado)aplicarTema(e.matches?"dark":"light");});}
-
 // COMPARTIR APP
-const DATOS_COMPARTIR={titulo:"TINMARUY - Portal y Tienda",texto:"Descubrí TINMARUY: protocolos, tienda, sugerencias y solicitud de páginas web. ¡Todo en un solo lugar!",url:window.location.href.split("?")[0].split("#")[0]};
+const DATOS_COMPARTIR={titulo:"TINMARUY - Portal y Tienda",texto:"Descubrí TINMARUY: protocolos, tienda, envia tu sugerencias y solicitud de páginas web. ¡Todo en un solo lugar!",url:window.location.href.split("?")[0].split("#")[0]};
 async function abrirCompartir(){if(navigator.share){try{await navigator.share({title:DATOS_COMPARTIR.titulo,text:DATOS_COMPARTIR.texto,url:DATOS_COMPARTIR.url});mostrarToast("✅ ¡Gracias por compartir TINMARUY!","success");return;}catch(err){if(err.name==="AbortError")return;}}document.getElementById("shareModal").classList.add("active");}
 function cerrarCompartir(){document.getElementById("shareModal").classList.remove("active");}
 function compartirEn(red){const url=encodeURIComponent(DATOS_COMPARTIR.url);const texto=encodeURIComponent(DATOS_COMPARTIR.texto);const titulo=encodeURIComponent(DATOS_COMPARTIR.titulo);let enlace="";switch(red){case "whatsapp":enlace=`https://wa.me/?text=${texto}%0A${url}`;break;case "telegram":enlace=`https://t.me/share/url?url=${url}&text=${texto}`;break;case "facebook":enlace=`https://www.facebook.com/sharer/sharer.php?u=${url}`;break;case "twitter":enlace=`https://twitter.com/intent/tweet?text=${texto}&url=${url}`;break;case "email":enlace=`mailto:?subject=${titulo}&body=${texto}%0A%0A${url}`;break;case "copiar":copiarLink();return;}if(enlace){window.open(enlace,"_blank","noopener,noreferrer");cerrarCompartir();}}
 async function copiarLink(){const url=DATOS_COMPARTIR.url;try{if(navigator.clipboard&&window.isSecureContext){await navigator.clipboard.writeText(url);}else{const ta=document.createElement("textarea");ta.value=url;ta.style.position="fixed";ta.style.opacity="0";document.body.appendChild(ta);ta.select();document.execCommand("copy");document.body.removeChild(ta);}mostrarToast("🔗 Link copiado al portapapeles","success");cerrarCompartir();}catch(e){mostrarToast("No se pudo copiar. Copiá manualmente: "+url,"warning");}}
 document.addEventListener("click",function(e){const modal=document.getElementById("shareModal");if(e.target===modal)cerrarCompartir();});
-
 // NOVEDADES
-const consejosGuardia=["Mantén tu radio en el canal asignado y evita conversaciones personales durante el servicio.","Registra las novedades de forma objetiva: hora, lugar, personas y hechos. Sin opiniones.","Antes de cada ronda, verifica que tu linterna y radio tengan batería suficiente.","Si detectas una puerta forzada, no entres solo: avisa a tu supervisor y a la Policía (911).","Mantén una actitud respetuosa y firme. La calma resuelve más que la confrontación.","Conoce las salidas de emergencia y los puntos de reunión de tu puesto.","No abandones tu puesto sin ser relevado. Si surge una urgencia, informa de inmediato."];
+const consejosGuardia=["Colega tu radio en el canal asignado y evita conversaciones personales durante el servicio.","Registra las novedades de forma objetiva: hora, lugar, personas y hechos. Sin opiniones.","Antes de cada ronda, verifica que tu linterna y radio tengan batería suficiente.","Si detectas una puerta forzada, no entres solo: avisa a tu supervisor y a la Policía (911).","Mantén una actitud respetuosa y firme. La calma resuelve más que la confrontación.","Conoce las salidas de emergencia y los puntos de reunión de tu puesto.","No abandones tu puesto sin ser relevado. Si surge una urgencia, informa de inmediato."];
 let indiceConsejo=Math.floor(Math.random()*consejosGuardia.length);
 function nuevoConsejo(){indiceConsejo=(indiceConsejo+1)%consejosGuardia.length;const el=document.getElementById("consejoDelDia");if(el){el.style.opacity="0";setTimeout(()=>{el.textContent=consejosGuardia[indiceConsejo];el.style.opacity="1"},150)}mostrarToast("💡 Nuevo consejo cargado","success");}
 function filtrarNovedades(categoria,btn){document.querySelectorAll(".novedades-filtros .filtro-btn").forEach(b=>b.classList.toggle("active",b.dataset.filtro===categoria));let visibles=0;document.querySelectorAll("#novedadesGrid .novedad-card").forEach(card=>{const coincide=categoria==="todas"||card.dataset.categoria===categoria;card.style.display=coincide?"":"none";if(coincide)visibles++;});const sin=document.getElementById("sinNovedades");if(sin)sin.style.display=visibles?"none":"block";}
 function ocultarAvisoDestacado(){const aviso=document.getElementById("avisoDestacado");if(aviso)aviso.classList.add("oculto");try{localStorage.setItem("tinmaruy_aviso_oculto","1");}catch(e){}}
 function iniciarNovedades(){const el=document.getElementById("consejoDelDia");if(el)el.textContent=consejosGuardia[indiceConsejo];try{if(localStorage.getItem("tinmaruy_aviso_oculto")==="1"){const aviso=document.getElementById("avisoDestacado");if(aviso)aviso.classList.add("oculto");}}catch(e){}}
-
 document.addEventListener("keydown",function(e){if(e.key==="Escape"){cerrarModalAuth();cerrarModalMensaje();cerrarUruleyes();toggleChat(false);cerrarCompartir();document.querySelectorAll(".sw-select").forEach(el=>el.classList.remove("abierto"))}});
 document.addEventListener("DOMContentLoaded",function(){iniciarTema();iniciarNovedades();verificarMensajeSistemaAlInicio();cargarCarrito();cargarClima();setInterval(cargarClima,1800000);anuncioTimer=setTimeout(mostrarSiguienteAnuncio,12000);setInterval(mostrarSiguienteAnuncio,30000)});
 (function(){const reloj=document.getElementById("reloj-lluvia");if(!reloj)return;const horaEl=reloj.querySelector("#hora"),fechaEl=reloj.querySelector("#fecha"),canvas=reloj.querySelector(".fondo-lluvia"),ctx=canvas.getContext("2d");const dias=["domingo","lunes","martes","miércoles","jueves","viernes","sábado"],meses=["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"];function actualizarHora(){const ahora=new Date();horaEl.textContent=[ahora.getHours(),ahora.getMinutes(),ahora.getSeconds()].map(x=>String(x).padStart(2,"0")).join(":");fechaEl.textContent=dias[ahora.getDay()]+", "+ahora.getDate()+" de "+meses[ahora.getMonth()]+" de "+ahora.getFullYear()}actualizarHora();setInterval(actualizarHora,1000);let gotas=[],salpicaduras=[];let ancho=0,alto=0;function nuevaGota(inicial=false){return{x:Math.random()*ancho,y:inicial?Math.random()*alto:-20,largo:6+Math.random()*10,velocidad:1.5+Math.random()*2.5,grosor:.4+Math.random()*.7,opacidad:.15+Math.random()*.25,inclinacion:.5+Math.random()}}function ajustarTamaño(){const rect=canvas.getBoundingClientRect();const dpr=Math.min(window.devicePixelRatio||1,2);ancho=rect.width;alto=rect.height;canvas.width=Math.round(ancho*dpr);canvas.height=Math.round(alto*dpr);ctx.setTransform(dpr,0,0,dpr,0,0);gotas=Array.from({length:Math.max(20,Math.floor(ancho/10))},()=>nuevaGota(true))}function animar(){ctx.clearRect(0,0,ancho,alto);for(const g of gotas){ctx.globalAlpha=g.opacidad*.25;ctx.strokeStyle="#001f29";ctx.lineWidth=g.grosor+1;ctx.beginPath();ctx.moveTo(g.x+1,g.y);ctx.lineTo(g.x+g.inclinacion+1,g.y+g.largo);ctx.stroke();ctx.globalAlpha=g.opacidad;ctx.strokeStyle="#7eefff";ctx.lineWidth=g.grosor;ctx.beginPath();ctx.moveTo(g.x,g.y);ctx.lineTo(g.x+g.inclinacion,g.y+g.largo);ctx.stroke();g.y+=g.velocidad;g.x+=.3;if(g.y>alto)Object.assign(g,nuevaGota(false));if(g.x>ancho+10){g.x=-10;g.y=Math.random()*alto}}ctx.globalAlpha=1;requestAnimationFrame(animar)}ajustarTamaño();animar();window.addEventListener("resize",ajustarTamaño)})();
