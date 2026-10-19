@@ -560,8 +560,7 @@ radio-player {
   
   <div class="portal-header">
     <h1><b>👋 <span style="color:#2E6FA8;">TIN</span><span style="color:#E5A100;">MAR</span></b></h1>
-    <p>Info útil para tu día a día</p> 
-  </div>
+    <p></p>  </div>
 
     <!-- NAVEGACIÓN INFERIOR TIPO APP -->
     <div class="portal-nav">
@@ -654,12 +653,12 @@ radio-player {
 
     <!-- SECCIÓN TIENDA VARIEDAD -->
     <section id="seccion-tienda" class="portal-section">
-      <h2 style="text-align: center;">VARIEDAD 📦 🛍</h2>
+<h2 style="text-align: center;">VARIEDAD 📦 🛍</h2>
       <p style="margin-bottom:15px;font-size:13px;color:#7F8C8D;text-align:center;">Agrega tus artículos al carrito y haz tu pedido directamente por WhatsApp.</p>
 
       <div class="tienda-grid">
         
-        <div class="item" data-name="PARLANTE JBL Flip 6" data-price="2000">
+<div class="item" data-name="PARLANTE JBL Flip 6" data-price="2000">
           <div class="item-container">
             <span class="encargalo">JBL</span>
             <img src="https://f.fcdn.app/imgs/674292/www.zonatecno.com.uy/zoteuy/2a8f/original/catalogo/107531_107531_1/1500-1500/parlante-portatil-jbl-flip-7-waterproof-bluetooth-negro-parlante-portatil-jbl-flip-7-waterproof-bluetooth-negro.jpg" alt="PARLANTE JBL">
@@ -872,7 +871,7 @@ radio-player {
     <!-- SECCIÓN SOLICITAR WEB -->
     <section id="seccion-solicitarweb" class="portal-section">
       <h2>🌐 SOLICITÁ TU WEB</h2>
-      <p style="margin-bottom:15px;font-size:13px;color:#7F8C8D;">Completá todas las opciones para solicitar tu página web.</p>
+      <p style="margin-bottom:15px;font-size:13px;color:#7F8C8D;">Completá para tu web.</p>
 
       <form class="form-sugerencias" id="formWeb" action="https://formsubmit.co/Martinsampayo9@gmail.com" method="POST">
         <input type="hidden" name="_subject" value="¡Nueva Solicitud de Página Web en TINMARUY!">
@@ -953,7 +952,7 @@ radio-player {
         </div>
 
         <div class="campo">
-          <label>Secciones que necesitás *</label>
+ <label>Secciones que necesitás *</label>
           <input type="text" name="Secciones" placeholder="Ej. Inicio, Servicios, Contacto" required>
         </div>
 
@@ -962,12 +961,10 @@ radio-player {
           <textarea rows="3" name="Idea_Principal" placeholder="Describe tu idea..." required></textarea>
         </div>
 
-        <button type="submit" class="btn-sugerencia"><b>📲 ENVIAR SOLICITUD AL CORREO</b></button>
-      </form>
+<button type="submit" class="btn-sugerencia"><b>📲 ENVIAR SOLICITUD</b></button> </form>
     </section>
 
   </div>
-  
   <div class="toast" id="toast"></div>
 
   <!-- CHATBOT -->
@@ -975,14 +972,14 @@ radio-player {
     <div id="chat-window">
       <div class="chat-header">
         <span>🤖 Asistente TINMARUY</span>
-        <button onclick="toggleChat()">✕</button>
+  <button onclick="toggleChat()">✕</button>
       </div>
       <div class="chat-body" id="chatBody">
         <div class="chat-msg bot">¡Hola! 👋 Soy tu asistente virtual de TINMARUY.</div>
       </div>
       <div class="chat-input-area">
         <input type="text" id="chatInput" placeholder="Escribe un mensaje..." onkeypress="if(event.key==='Enter') enviarMensajeChat()">
-        <button onclick="enviarMensajeChat()">➤</button>
+<button onclick="enviarMensajeChat()">➤</button>
       </div>
     </div>
     <button id="chat-toggle" onclick="toggleChat()">🤖</button>
@@ -994,8 +991,7 @@ radio-player {
   <header class="uruleyes-header">
     <h1>👋 <a href="#" onclick="cerrarUruleyes(event)" style="color:inherit; text-decoration:none;"><span style="color:#ffffff;">TIN</span><span style="color:#d4af37;">MAR</span></a></h1>
     <nav>
-      <a onclick="cerrarUruleyes(event)">← Volver al Inicio</a>
-    </nav>
+<a onclick="cerrarUruleyes(event)"><b>⬅️ Volver al Inicio</b></a> </nav>
   </header>
   <div class="uruleyes-frame-container">
     <iframe src="https://uruleyes.com" title="UruLeyes - Buscador de Leyes"></iframe>
@@ -1006,8 +1002,7 @@ radio-player {
 <script>
   document.addEventListener('contextmenu', function(e) {
     e.preventDefault();
-    alert("Clic derecho deshabilitado");
-  });
+    alert("Clic derecho deshabilitado");  });
 
   document.addEventListener('keydown', function(e) {
     if (e.key === "F12") {
@@ -1138,7 +1133,7 @@ if (!customElements.get("radio-player")) {
     connectedCallback() { 
       this.shadowRoot.innerHTML = ` 
       <style> 
-      :host{display:block;width:100%;height:100%;} 
+ :host{display:block;width:100%;height:100%;} 
       * { box-sizing: border-box; } 
       .radio-container { width: 100%; height: 100%; padding: 10px 8px; background: linear-gradient(180deg, #082530, #073b48); border: 1px solid #197b8b; border-radius: 16px; box-shadow: 0 5px 20px rgba(0,0,0,.25); font-family: Arial, sans-serif; text-align: center; display: flex; flex-direction: column; justify-content: space-evenly; align-items: center; } 
       .radio-screen { width: 100%; min-height: 28px; display: flex; align-items: center; justify-content: center; padding: 4px; background: rgba(255,255,255,.08); border: 1px solid rgba(100,230,245,.35); border-radius: 8px; color: #70efff; font-size: 11px; font-weight: bold; text-shadow: 0 0 7px rgba(0,230,255,.6); } 
@@ -1150,7 +1145,7 @@ if (!customElements.get("radio-player")) {
       .pause-icon { display: none; width: 10px; height: 12px; border-left: 3px solid #087f89; border-right: 3px solid #087f89; } 
       .playing .play-icon { display: none; } 
       .playing .pause-icon { display: block; } 
-      .radio-info { color: #9bd6df; font-size: 8px; } 
+.radio-info { color: #9bd6df; font-size: 8px; } 
       .live { color: #6df1ff; font-size: 8px; font-weight: bold; } 
       audio { display: none; } 
       </style> 
@@ -1161,7 +1156,7 @@ if (!customElements.get("radio-player")) {
           <div class="play-icon"></div> 
           <div class="pause-icon"></div> 
         </button> 
-        <div class="live" id="live">● PAUSADO</div> 
+   <div class="live" id="live">● PAUSADO</div> 
         <div class="radio-info" id="info">TOCÁ PARA ESCUCHAR EN VIVO</div> 
         <audio id="audio" preload="none" playsinline crossorigin="anonymous"> 
           <source src="https://stream.zeno.fm/8wup8yd9dm0uv" type="audio/mpeg"> 
@@ -1182,21 +1177,21 @@ if (!customElements.get("radio-player")) {
       let actual = 0; 
       setInterval(() => { actual = (actual + 1) % canciones.length; song.textContent = canciones[actual]; }, 4000); 
       
-      button.addEventListener("click", async () => { 
+button.addEventListener("click", async () => { 
         if (audio.paused) { 
           try { 
-            status.textContent = "⏳ CONECTANDO..."; 
+status.textContent = "⏳ CONECTANDO..."; 
             live.textContent = "● CONECTANDO"; 
-            info.textContent = "CONECTANDO RADIO..."; 
+info.textContent = "CONECTANDO RADIO..."; 
             audio.load(); 
             await audio.play(); 
             container.classList.add("playing"); 
-            status.textContent = "⚡ ONLINE EN VIVO"; 
+status.textContent = "⚡ ONLINE EN VIVO"; 
             live.textContent = "● EN VIVO"; 
-            info.textContent = "🔊 REPRODUCIENDO"; 
+info.textContent = "🔊 REPRODUCIENDO"; 
           } catch (error) { 
             container.classList.remove("playing"); 
-            status.textContent = "⚠️ SIN SEÑAL"; 
+    status.textContent = "⚠️ SIN SEÑAL"; 
             live.textContent = "● ERROR"; 
             info.textContent = "TOCÁ DE NUEVO"; 
           } 
@@ -1697,8 +1692,7 @@ document.addEventListener('DOMContentLoaded', () => {
       valido = false;
     } else if (!dominio) {
       marcarErrorSw('select-dominio', "⚠️ Seleccioná una opción de dominio.");
-      valido = false;
-    }
+      valido = false;  }
 
     if (!valido) e.preventDefault();
   });
@@ -1708,17 +1702,14 @@ function marcarErrorSw(idElemento, mensaje) {
   const contenedor = document.getElementById(idElemento);
   contenedor.classList.add("sw-error");
   contenedor.classList.add("abierto");
-  contenedor.querySelector(".sw-select-btn").scrollIntoView({ behavior: "smooth", block: "center" });
-  alert(mensaje);
-}
-
+contenedor.querySelector(".sw-select-btn").scrollIntoView({ behavior: "smooth", block: "center" });
+  alert(mensaje); }
 const listaAnuncios = [
   { titulo: "📋 Protocolos", texto: "Repasa los protocolos de rondas y uso de radio." },
   { titulo: "📩 Sugerencias", texto: "Envíanos comentarios o reportes con fotos desde la barra inferior." },
   { titulo: "⚖️ Uruleyes", texto: "Consulta las leyes directamente en la pestaña inferior." },
   { titulo: "🚨 Emergencias", texto: "Recordá los teléfonos: 911, 104, 105." },
-  { titulo: "☀️ Clima", texto: "Revisa el estado del tiempo antes de salir a patrullar." }
-];
+  { titulo: "☀️ Clima", texto: "Revisa el estado del tiempo antes de salir a patrullar." } ];
 let idxAnuncio = 0;
 function mostrarSiguienteAnuncio(){
   const el = document.getElementById("anuncioFlotante");
@@ -1729,11 +1720,9 @@ function mostrarSiguienteAnuncio(){
   txt.textContent = a.texto;
   el.classList.add("mostrar");
   setTimeout(() => el.classList.remove("mostrar"), 5000);
-  idxAnuncio = (idxAnuncio + 1) % listaAnuncios.length;
-}
+  idxAnuncio = (idxAnuncio + 1) % listaAnuncios.length;}
 function cerrarAnuncioFlotante(){
-  document.getElementById("anuncioFlotante").classList.remove("mostrar");
-}
+document.getElementById("anuncioFlotante").classList.remove("mostrar");}
 setInterval(mostrarSiguienteAnuncio, 12000);
 </script>
 </body>
