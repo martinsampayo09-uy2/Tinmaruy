@@ -543,11 +543,10 @@ radio-player {
   
   <div class="user-bar" id="userBar">
     <button class="sobre-notificacion-bar" onclick="abrirModalMensaje()" title="Novedades del sistema">✉️<span class="sobre-badge" id="sobreBadge">1</span></button>
-    <button type="button" class="btn-tienda-bar" onclick="cambiarPortal('tienda', null)">🏪 Tienda</button>
+    <button type="button" class="btn-tienda-bar" onclick="cambiarPortal('tienda', null)">🛒 Tienda</button>
     <div class="avatar" id="userAvatar">?</div>
     <div class="nombre" id="userNombre">Invitado</div>
-    <button type="button" id="btnAccionUser" class="btn-ingresar" onclick="accionUsuario()">🔑 Ingresar</button>
-  </div>
+    <button type="button" id="btnAccionUser" class="btn-ingresar" onclick="accionUsuario()">🔑 Ingresar</button> </div>
   
   <div class="aviso-bloqueo visible" id="avisoBloqueo">
     <h3>🔒 Portal Bloqueado</h3>
@@ -592,23 +591,23 @@ radio-player {
       
       <div class="fila-widgets"> 
         <div id="reloj-lluvia"> 
-          <canvas class="fondo-lluvia"></canvas> 
+  <canvas class="fondo-lluvia"></canvas> 
           <div class="contenido-reloj"> 
             <div id="hora">00:00:00</div> 
-            <div id="fecha">Cargando fecha...</div> 
+  <div id="fecha">Cargando fecha...</div> 
           </div> 
         </div> 
         <radio-player></radio-player> 
       </div>
 
-      <div class="grid-cards" style="margin-bottom: 20px;">
+<div class="grid-cards" style="margin-bottom: 20px;">
         <div class="clima-card">
           <div class="clima-header">
             <h3>☀️ Clima Actual</h3>
-            <span class="ubicacion" id="climaUbicacion">Montevideo, UY</span>
+ <span class="ubicacion" id="climaUbicacion">Montevideo, UY</span>
           </div>
           <div id="climaContenedor">
-            <div class="clima-loading">⏳ Cargando clima...</div>
+<div class="clima-loading">⏳ Cargando clima...</div>
           </div>
         </div>
 
@@ -623,11 +622,10 @@ radio-player {
           <p class="info-icon">✉️ <strong>Email:</strong> <a href="mailto:Martinsampayo9@gmail.com" style="color: var(--rojo); text-decoration: none; font-weight: 600;">Enviar correo</a></p>
         </div>
       </div>
-
-      <!-- CARRUSEL INFINITO QUE NUNCA SE DETIENE -->
+<!-- CARRUSEL INFINITO QUE NUNCA SE DETIENE -->
       <div class="carousel-wrapper"> 
         <div class="carousel-container2" id="carouselContainer2"> 
-          <div class="carousel-slide2" id="carouselSlide2"> 
+    <div class="carousel-slide2" id="carouselSlide2"> 
             <!-- BLOQUE 1 DE IMÁGENES -->
             <div class="slide"><img src="https://i.ibb.co/BHXwnMsH/IMG-20260819-225326.jpg" alt="CUADRO"></div>
             <div class="slide"><img src="https://i.ibb.co/23kt61qF/IMG-20260914-182826.jpg" alt="abigado"></div>
@@ -636,7 +634,7 @@ radio-player {
             <div class="slide"><img src="https://i.ibb.co/rGRwzQXF/IMG-20260914-133953.jpg" alt="buen"></div>
             <div class="slide"><img src="https://i.ibb.co/1t2h9fcW/IMG-20260914-181328.jpg" alt="buen"></div>
             <div class="slide"><img src="https://i.ibb.co/XZzggbCL/IMG-20260918-031138.jpg" alt="app"></div>
-            <!-- BLOQUE 2 DUPLICADO PARA BUCLE INFINITO FLUIDO -->
+<!-- BLOQUE 2 DUPLICADO PARA BUCLE INFINITO FLUIDO -->
             <div class="slide"><img src="https://i.ibb.co/BHXwnMsH/IMG-20260819-225326.jpg" alt="CUADRO"></div>
             <div class="slide"><img src="https://i.ibb.co/23kt61qF/IMG-20260914-182826.jpg" alt="abigado"></div>
             <div class="slide"><img src="https://i.ibb.co/Kc7fWd9X/IMG-20260914-035047.jpg" alt="tinmar"></div>
@@ -696,9 +694,9 @@ radio-player {
             <h3>Auriculares oraimo USB-C</h3>
             <p>Alta fidelidad</p>
             <span class="precio">$500</span>
-            <div style="text-align: center; margin-bottom: 5px;">
-              <label for="cant-auri">Cant:</label>
-              <input type="number" id="cant-auri" class="cantidad-input" value="1" min="1">
+<div style="text-align: center; margin-bottom: 5px;">
+ <label for="cant-auri">Cant:</label>
+ <input type="number" id="cant-auri" class="cantidad-input" value="1" min="1">
             </div>
             <button class="add-to-cart" onclick="agregarAlCarrito('Auriculares oraimo USB-C', 500, document.getElementById('cant-auri').value)">Agregar al carrito</button>
           </div>
@@ -738,8 +736,8 @@ radio-player {
             <img src="https://http2.mlstatic.com/D_NQ_NP_818624-MLA99975530457_112025-O.webp" alt="Teclado Mecánico Razer">
           </div>
           <div>
-            <h3>Teclado Gamer Mecánico G413</h3>
-            <p>Teclado Gamer Mecánico Logitech G413 Tkl Se</p>
+      <h3>Teclado Gamer Mecánico G413</h3>
+<p>Teclado Gamer Mecánico Logitech G413 Tkl</p>
             <span class="precio">$1500</span>
             <button class="add-to-cart" onclick="agregarAlCarrito('Teclado Gamer Mecánico G413', 1500, 1)">Agregar al carrito</button>
           </div>
