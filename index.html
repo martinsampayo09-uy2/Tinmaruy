@@ -399,6 +399,7 @@ radio-player{flex:1;width:50%;height:140px;display:block;min-width:0}
 <div id="chat-widget"><div id="chat-window" role="dialog" aria-label="Asistente virtual TINMARUY" aria-hidden="true"><div class="chat-header"><div>🤖 Asistente TINMARUY<span class="chat-estado">En línea · Ayuda con el portal y la tienda</span></div><button onclick="toggleChat(false)" aria-label="Cerrar chat">✕</button></div><div class="chat-body" id="chatBody" aria-live="polite"><div class="chat-msg bot">¡Hola! 👋 Soy el asistente TINMARUY</div></div><form class="chat-input-area" id="chatForm"><input type="text" id="chatInput" placeholder="Escribe tu consulta..." autocomplete="off" maxlength="500" aria-label="Escribe tu consulta"><button type="submit" aria-label="Enviar mensaje">➤</button></form></div><button id="chat-toggle" onclick="toggleChat()" aria-label="Abrir asistente virtual" aria-expanded="false">🤖</button></div>
 </div>
 <div id="uruleyesFullscreen"><header class="uruleyes-header"><h1>👋 <a href="#" onclick="cerrarUruleyes(event)" style="color:inherit;text-decoration:none"><span style="color:#fff">TIN</span><span style="color:#d4af37">MAR</span></a></h1><nav><a href="#" onclick="cerrarUruleyes(event)">⬅️ Volver al Inicio</a></nav></header><div class="uruleyes-frame-container"><iframe src="https://uruleyes.com" title="UruLeyes - Buscador de Leyes" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe></div></div>
+
 <script>
 "use strict";
 const MI_CORREO_ADMIN="Martinsampayo9@gmail.com";
@@ -409,6 +410,7 @@ let carrito=[];
 let timerAnuncio=null;
 let anuncioTimer=null;
 let indiceAnuncio=0;
+
 function escaparHTML(valor){return String(valor).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
 function normalizar(texto){return String(texto).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").trim()}
 function mostrarToast(msg,tipo="success"){const toast=document.getElementById("toast");toast.textContent=msg;toast.className="toast show "+tipo;clearTimeout(toast._timer);toast._timer=setTimeout(()=>toast.className="toast "+tipo,3200)}
@@ -416,7 +418,6 @@ function abrirModalAuth(){document.getElementById("modalAuth").classList.add("ac
 function cerrarModalAuth(){document.getElementById("modalAuth").classList.remove("active")}
 function mostrarPasoCodigo(){document.getElementById("pasoPedirCodigo").style.display="none";document.getElementById("pasoIngresarCodigo").style.display="block";document.getElementById("inputCodigoValidar").focus()}
 function mostrarPasoPedir(){document.getElementById("pasoPedirCodigo").style.display="block";document.getElementById("pasoIngresarCodigo").style.display="none"}
-function generarCodigoUnico(){return String(Math.floor(100000+Math.random()*900000))}
 async function solicitarCodigoPersonal(){const nombre=document.getElementById("regNombre").value.trim();const email=document.getElementById("regEmail").value.trim();if(!nombre||!email)return mostrarToast("Completa el nombre y el correo electrónico.","error");if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))return mostrarToast("Ingresa un correo válido.","error");const boton=document.querySelector("#pasoPedirCodigo .btn-auth-submit");if(boton.disabled)return;boton.disabled=true;boton.textContent="Enviando solicitud...";mostrarToast("Enviando solicitud de acceso...","warning");try{const respuesta=await fetch("https://formsubmit.co/ajax/"+encodeURIComponent(MI_CORREO_ADMIN),{method:"POST",headers:{"Content-Type":"application/json","Accept":"application/json"},body:JSON.stringify({_subject:"SOLICITUD CÓDIGO GUARDIA - "+nombre,Mensaje:"Un guardia solicita acceso al Portal TINMARUY. El administrador debe asignar el código de acceso.",Nombre_Guardia:nombre,Correo_Contacto:email})});if(!respuesta.ok)throw new Error("No se pudo enviar");document.getElementById("infoUsuarioAviso").textContent="¡Hola "+nombre+"! La solicitud fue enviada. El administrador debe proporcionarte el código de acceso.";document.getElementById("regNombre").dataset.nombre=nombre;document.getElementById("regEmail").dataset.email=email;mostrarPasoCodigo();mostrarToast("Solicitud enviada. Espera el código del administrador.","success")}catch(e){mostrarToast("No se pudo enviar. Comprueba tu conexión e inténtalo otra vez.","error")}finally{boton.disabled=false;boton.textContent="✉️ Solicitar mi Código"}}
 function validarCodigoUsuario(){const codigo=document.getElementById("inputCodigoValidar").value.trim();const nombre=document.getElementById("regNombre").dataset.nombre||localStorage.getItem("nombre_usuario_registrado")||"Guardia";if(codigo===CLAVE_MAESTRA){localStorage.setItem("stock_autorizado","1");localStorage.setItem("usuario_activo",nombre);desbloquearApp(nombre);cerrarModalAuth();mostrarToast("Bienvenido, "+nombre,"success");return}mostrarToast("El acceso requiere un código válido asignado por el administrador. La validación de códigos personales necesita un servidor seguro.","error")}
 function bloquearApp(){const app=document.getElementById("appContainer");app.classList.add("bloqueado");document.getElementById("avisoBloqueo").classList.add("visible");document.getElementById("userNombre").textContent="Invitado";document.getElementById("userAvatar").textContent="?";const btn=document.getElementById("btnAccionUser");btn.textContent="🔑 Ingresar";btn.className="btn-ingresar";btn.onclick=abrirModalAuth}
@@ -447,7 +448,147 @@ function agregarMensajeChat(texto,tipo){const body=document.getElementById("chat
 function consultaRapida(texto){document.getElementById("chatInput").value=texto;enviarMensajeChat()}
 function enviarMensajeChat(){const input=document.getElementById("chatInput");const texto=input.value.trim();if(!texto)return;if(texto.length>500)return mostrarToast("El mensaje es demasiado largo.","warning");agregarMensajeChat(texto,"user");input.value="";const espera=document.createElement("div");espera.className="chat-msg bot";espera.textContent="Escribiendo...";espera.id="chatEscribiendo";document.getElementById("chatBody").appendChild(espera);document.getElementById("chatBody").scrollTop=document.getElementById("chatBody").scrollHeight;window.setTimeout(()=>{espera.remove();agregarMensajeChat(generarRespuestaBot(texto),"bot")},250)}
 function abrirSeccionDesdeChat(id){if(id==="tienda"||id==="inicio"||id==="protocolos"||id==="novedades"||id==="sugerencias"||id==="solicitarweb")cambiarPortal(id,document.querySelector('[data-section="'+id+'"]'))}
-function generarRespuestaBot(texto){const t=normalizar(texto);const ahora=new Date();const hora=ahora.toLocaleTimeString("es-UY",{hour:"2-digit",minute:"2-digit",timeZone:"America/Montevideo"});const fecha=ahora.toLocaleDateString("es-UY",{timeZone:"America/Montevideo"});if(/\b(hola|buenas|buenos dias|buenas tardes|buenas noches|que tal)\b/.test(t))return"¡Hola! 👋 Bienvenido a TINMARUY. ¿Qué necesitas? Puedes consultar productos, precios, pedidos, protocolos o páginas web.";if(t.includes("hora"))return"En Uruguay son las "+hora+" ⏰.";if(t.includes("fecha")||t.includes("que dia")||t.includes("dia de hoy"))return"Hoy es "+fecha+" 📅.";if(t.includes("gracias"))return"¡De nada! 😊 Estoy para ayudarte.";if(/\b(chau|adios|hasta luego)\b/.test(t))return"¡Hasta luego! 👋 Gracias por visitar TINMARUY.";if(t.includes("carrito")){const total=carrito.reduce((s,x)=>s+x.precio*x.cantidad,0);if(!carrito.length)return"Tu carrito está vacío. Entra a la tienda, elige productos y toca Agregar al carrito.";return"Tu carrito tiene "+carrito.reduce((s,x)=>s+x.cantidad,0)+" artículo(s), con un total de "+formatoUY.format(total)+". Puedes revisar cantidades y eliminar artículos en la sección Tienda."}if(t.includes("producto")||t.includes("catalogo")||t.includes("tienda")||t.includes("comprar")||t.includes("compra")||t.includes("oferta")){abrirSeccionDesdeChat("tienda");return"🛍 Abrí la sección Tienda para ti. Tenemos parlante JBL ($ 2.000), cargador Samsung ($ 1.000), auriculares oraimo ($ 500), auriculares JBL ($ 2.000), mouse ($ 800), teclado gamer ($ 1.500), monitor ($ 4.840), cámara web ($ 1.300), velas ($ 40) y matera ($ 300). Precios en pesos uruguayos. Agrega tus productos al carrito y envía el pedido por WhatsApp."}if(t.includes("precio")||t.includes("cuanto cuesta")||t.includes("cuanto sale")){const productos=[...document.querySelectorAll(".item")];const coincidencias=productos.filter(p=>normalizar(p.dataset.name+" "+p.querySelector("h3").textContent).split(" ").some(palabra=>palabra.length>3&&t.includes(palabra)));if(coincidencias.length){return"Estos son los productos que coinciden:\n"+coincidencias.slice(0,5).map(p=>"• "+p.querySelector("h3").textContent+": "+formatoUY.format(Number(p.dataset.price))).join("\n")+"\nPuedes verlos en la Tienda."}return"Los precios están expresados en pesos uruguayos. En la Tienda puedes buscar por nombre y ver el precio actualizado de cada artículo. ¿Qué producto buscas?"}if(t.includes("garantia"))return"Para confirmar la garantía aplicable, consulta antes de comprar. La cobertura depende del producto y de las condiciones del vendedor.";if(t.includes("envio")||t.includes("entrega")||t.includes("demora"))return"El costo y plazo de entrega deben confirmarse por WhatsApp según el producto y la ubicación. Puedes enviar el carrito para consultar disponibilidad y entrega.";if(t.includes("pago")||t.includes("tarjeta")||t.includes("mercadopago")||t.includes("prex"))return"Consulta por WhatsApp las formas de pago disponibles para tu pedido. El carrito prepara la lista y el total, pero el pago se coordina directamente.";if(t.includes("devolucion")||t.includes("devolver")||t.includes("reembolso"))return"Las devoluciones dependen de las condiciones de compra y de la normativa aplicable. Contacta por WhatsApp con los detalles del producto para recibir información.";if(t.includes("whatsapp")||t.includes("contacto")||t.includes("telefono")||t.includes("hablar con alguien")||t.includes("comunicarme"))return'Puedes contactar a TINMARUY por WhatsApp: <a href="https://wa.me/'+WHATSAPP_TINMARUY+'" target="_blank" rel="noopener noreferrer">Abrir WhatsApp</a>, llamar al <a href="tel:+59899295848">099 295 848</a> o escribir a <a href="mailto:'+MI_CORREO_ADMIN+'">'+MI_CORREO_ADMIN+'</a>.';if(t.includes("ubicacion")||t.includes("direccion")||t.includes("donde estan"))return"TINMARUY indica Montevideo, Uruguay como ubicación de contacto. Para coordinar una entrega, consulta por WhatsApp.";if(t.includes("web")||t.includes("pagina")||t.includes("sitio")||t.includes("diseno")||t.includes("diseño")){abrirSeccionDesdeChat("solicitarweb");return"🌐 Abrí la sección Solicitar Web. Completa tus datos, el tipo de página, las funciones, el diseño y la idea de tu proyecto para enviar la solicitud."}if(t.includes("sugerencia")||t.includes("reporte")||t.includes("imagen adjunta")){abrirSeccionDesdeChat("sugerencias");return"📩 Abrí la sección Sugerencias. Puedes escribir tu mensaje y adjuntar una imagen opcional."}if(t.includes("protocolo")||t.includes("ronda")||t.includes("patrull")||t.includes("radio")||t.includes("guardia")){abrirSeccionDesdeChat("protocolos");return"📋 Abrí la sección Protocolos. Allí encontrarás orientaciones sobre rondas, uso de radio, trato con el público y registro de novedades. Sigue siempre los procedimientos de tu empresa y las indicaciones de tu supervisor."}if(t.includes("novedad")||t.includes("aviso")||t.includes("noticia")){abrirSeccionDesdeChat("novedades");return"📰 Abrí la sección Novedades. Allí encontrarás avisos importantes, noticias y guías rápidas."}if(t.includes("clima")||t.includes("temperatura")||t.includes("lluvia")||t.includes("tiempo")){abrirSeccionDesdeChat("inicio");return"☀️ En Inicio encontrarás el clima actual de Montevideo, con temperatura, humedad, viento y sensación térmica."}if(t.includes("radio")||t.includes("musica")||t.includes("música"))return"📻 En Inicio puedes tocar el botón de reproducción del reproductor para intentar escuchar la radio online.";if(t.includes("uruleyes")||t.includes("ley")||t.includes("legal"))return"⚖️ Puedes abrir UruLeyes desde el botón de la barra inferior para consultar legislación. Si el sitio no permite mostrarse dentro de esta página, ábrelo directamente desde el navegador.";if(t.includes("emergencia")||t.includes("911")||t.includes("policia")||t.includes("bombero")||t.includes("ambulancia"))return"🚨 En Uruguay: Policía 911, Bomberos 104 y emergencia médica 105. En una situación urgente, llama al servicio correspondiente.";if(t.includes("trabajo")||t.includes("empleo")||t.includes("contratar"))return"Para consultas de trabajo o propuestas puedes escribir a <a href=\"mailto:"+MI_CORREO_ADMIN+"\">"+MI_CORREO_ADMIN+"</a>.";if(t.includes("quien sos")||t.includes("como te llamas")||t.includes("nombre del asistente"))return"Soy el asistente virtual de TINMARUY 🤖. Te ayudo a encontrar productos, revisar el carrito y conocer las secciones del portal.";if(t.includes("ayuda")||t.includes("que puedes hacer")||t.includes("opciones"))return"Puedo ayudarte con:\n• Productos, precios y carrito 🛒\n• Pedidos por WhatsApp 📲\n• Solicitud de páginas web 🌐\n• Protocolos del guardia 📋\n• Novedades y avisos 📰\n• Clima y radio 📻\n• Contacto ✉️";return"No estoy seguro de haber entendido tu consulta. 🤔 Puedes preguntarme por productos, precios, carrito, pedidos, WhatsApp, clima, protocolos, novedades o páginas web."}
+
+function generarRespuestaBot(texto){
+  const t = normalizar(texto);
+  const ahora = new Date();
+  const hora = ahora.toLocaleTimeString("es-UY",{hour:"2-digit",minute:"2-digit",timeZone:"America/Montevideo"});
+  const fecha = ahora.toLocaleDateString("es-UY",{weekday:"long",day:"numeric",month:"long",year:"numeric",timeZone:"America/Montevideo"});
+  const diaSemana = ahora.toLocaleDateString("es-UY",{weekday:"long",timeZone:"America/Montevideo"});
+
+  // SALUDOS Y CORTESÍA
+  if(/\b(hola|buenas|buenos dias|buenas tardes|buenas noches|que tal)\b/.test(t))
+    return "¡Hola! 👋 Bienvenido a TINMARUY. ¿Qué necesitas? Puedes consultar productos, precios, pedidos, protocolos o páginas web.";
+  if(t.includes("como estas")||t.includes("estas bien")||t.includes("como te sientes")||t.includes("te sientes bien")||t.includes("cómo estás"))
+    return "¡Estoy muy bien, gracias por preguntar! 🤖 ¿En qué te ayudo?";
+  if(t.includes("gracias"))
+    return "¡De nada! 😊 Estoy para ayudarte.";
+  if(/\b(chau|adios|adiós|hasta luego|nos vemos)\b/.test(t))
+    return "¡Hasta luego! 👋 Gracias por visitar TINMARUY.";
+  if(t.includes("que haces")||t.includes("qué haces"))
+    return "Espero tu consulta para responderte 🤖. ¿Qué necesitas?";
+  if(t.includes("que puedes hacer")||t.includes("qué puedes hacer")||t.includes("opciones"))
+    return "Puedo responder preguntas básicas y ayudarte con información. 📩";
+
+  // HORA Y FECHA
+  if(t.includes("hora")||t.includes("qué hora es")||t.includes("que hora es")||t.includes("la hora por favor")||t.includes("me dices la hora")||t.includes("hora actual")||t.includes("qué hora tienes"))
+    return "En Uruguay son las "+hora+" ⏰.";
+  if(t.includes("fecha")||t.includes("qué día es")||t.includes("que dia es")||t.includes("hoy es")||t.includes("fecha de hoy")||t.includes("qué fecha es")||t.includes("cual es la fecha")||t.includes("qué día de la semana es")||t.includes("en qué día estamos")||t.includes("hoy qué día es"))
+    return "Hoy es "+diaSemana+", "+fecha+" 📅.";
+
+  // IDENTIDAD
+  if(t.includes("quien sos")||t.includes("quién sos")||t.includes("como te llamas")||t.includes("cómo te llamas")||t.includes("nombre")||t.includes("sos")||t.includes("sos martin")||t.includes("de quien es")||t.includes("de quién es")||t.includes("con quien ablo")||t.includes("con quién hablo"))
+    return "Soy Tinma, tu asistente virtual de TINMARUY 🤖📱. Te ayudo en lo que necesites.";
+  if(t.includes("la chupas")||t.includes("la mamas")||t.includes("sexo oral")||t.includes("sos gay")||t.includes("puto"))
+    return "¿A qué te referís? Si hablás de sexo, soy varón y me gustan los culos nalgones/as 🍑.";
+
+  // CARRITO Y TIENDA
+  if(t.includes("carrito")){
+    const total=carrito.reduce((s,x)=>s+x.precio*x.cantidad,0);
+    if(!carrito.length) return "Tu carrito está vacío. Entra a la tienda, elige productos y toca Agregar al carrito.";
+    return "Tu carrito tiene "+carrito.reduce((s,x)=>s+x.cantidad,0)+" artículo(s), con un total de "+formatoUY.format(total)+". Puedes revisar cantidades y eliminar artículos en la sección Tienda.";
+  }
+  if(t.includes("producto")||t.includes("productos")||t.includes("catalogo")||t.includes("catálogo")||t.includes("tienda")||t.includes("comprar")||t.includes("compra")||t.includes("oferta")||t.includes("que venden")){
+    abrirSeccionDesdeChat("tienda");
+    return "🛍 Abrí la sección Tienda para ti. Tenemos parlante JBL ($ 2.000), cargador Samsung ($ 1.000), auriculares oraimo ($ 500), auriculares JBL ($ 2.000), mouse ($ 800), teclado gamer ($ 1.500), monitor ($ 4.840), cámara web ($ 1.300), velas ($ 40) y matera ($ 300). Precios en pesos uruguayos. Agrega tus productos al carrito y envía el pedido por WhatsApp.";
+  }
+  if(t.includes("quiero comprar")||t.includes("como compro")||t.includes("cómo compro"))
+    return "Para comprar, solo agrega productos al carrito y luego haz clic en 'Enviar por WhatsApp'. 🛒📲";
+  if(t.includes("precio")||t.includes("cuanto cuesta")||t.includes("cuánto cuesta")||t.includes("cuanto sale")){
+    const productos=[...document.querySelectorAll(".item")];
+    const coincidencias=productos.filter(p=>normalizar(p.dataset.name+" "+p.querySelector("h3").textContent).split(" ").some(palabra=>palabra.length>3&&t.includes(palabra)));
+    if(coincidencias.length){
+      return "Estos son los productos que coinciden:\n"+coincidencias.slice(0,5).map(p=>"• "+p.querySelector("h3").textContent+": "+formatoUY.format(Number(p.dataset.price))).join("\n")+"\nPuedes verlos en la Tienda.";
+    }
+    return "Los precios varían según el producto. ¿Tienes uno específico en mente? 🛒";
+  }
+  if(t.includes("abrir")&&t.includes("almacen"))
+    return '<a href="#" onclick="cambiarPortal(\'tienda\',null);return false">Haz clic aquí para abrir la sección Almacén 🏪</a>';
+
+  // GARANTÍA, ENVÍO, PAGO
+  if(t.includes("garantia")||t.includes("garantía"))
+    return "Todos nuestros productos tienen una garantía de 6 meses por defectos de fabricación. 🛡️";
+  if(t.includes("envio")||t.includes("envío")||t.includes("entrega")||t.includes("demora")||t.includes("cuanto demora")||t.includes("cuánto demora")){
+    if(t.includes("dia de entrega")||t.includes("día de entrega")||t.includes("cuando me llega")||t.includes("cuándo me llega")||t.includes("cuando mandan"))
+      return "¡Depende del día de tu pedido! Futuras fechas de entrega: día miércoles. 🤖";
+    if(t.includes("tiempo de entrega"))
+      return "El tiempo de entrega es entre 24 y 72 horas hábiles. 🚚📦";
+    return "Hacemos envíos a todo el país en 24 a 72 horas. 🚚";
+  }
+  if(t.includes("formas de pago")||t.includes("pago")||t.includes("tarjeta")||t.includes("mercadopago")||t.includes("prex")||t.includes("aceptan tarjeta"))
+    return "Aceptamos efectivo, transferencias bancarias, pagos por MercadoPago y Transferencia PREX 💳.";
+  if(t.includes("devolucion")||t.includes("devolución")||t.includes("devolver")||t.includes("reembolso"))
+    return "Aceptamos devoluciones dentro de los primeros 7 días con ticket de compra. 🧾";
+
+  // CONTACTO, UBICACIÓN, WHATSAPP
+  if(t.includes("whatsapp")||t.includes("wasap")||t.includes("escribirte")||t.includes("hablar")||t.includes("mensaje")||t.includes("comunicarme")||t.includes("enviarte"))
+    return 'Puedes contactar a TINMARUY por WhatsApp: <a href="https://wa.me/'+WHATSAPP_TINMARUY+'" target="_blank" rel="noopener noreferrer">Abrir WhatsApp</a>, llamar al <a href="tel:+59899295848">099 295 848</a> o escribir a <a href="mailto:'+MI_CORREO_ADMIN+'">'+MI_CORREO_ADMIN+'</a>.';
+  if(t.includes("contacto")||t.includes("telefono")||t.includes("teléfono"))
+    return 'Puedes escribirme por este chat, al correo <a href="mailto:'+MI_CORREO_ADMIN+'">'+MI_CORREO_ADMIN+'</a> o por WhatsApp: <a href="https://wa.me/'+WHATSAPP_TINMARUY+'" target="_blank" rel="noopener noreferrer">escríbeme aquí</a> 📧📱.';
+  if(t.includes("ubicacion")||t.includes("ubicación")||t.includes("direccion")||t.includes("dirección")||t.includes("donde estan")||t.includes("dónde están"))
+    return "Estamos ubicados en **Montevideo, Uruguay** 📍. Para coordinar una entrega, consulta por WhatsApp.";
+  if(t.includes("horario")||t.includes("a que hora abren")||t.includes("a qué hora abren")||t.includes("cuando abren"))
+    return "Nuestro horario de atención es de lunes a lunes, las 24 horas ⏰.";
+
+  // SECCIONES DEL PORTAL
+  if(t.includes("web")||t.includes("pagina")||t.includes("página")||t.includes("sitio")||t.includes("diseno")||t.includes("diseño")){
+    abrirSeccionDesdeChat("solicitarweb");
+    return "🌐 Abrí la sección Solicitar Web. Completa tus datos, el tipo de página, las funciones, el diseño y la idea de tu proyecto para enviar la solicitud.";
+  }
+  if(t.includes("sugerencia")||t.includes("reporte")||t.includes("imagen adjunta")){
+    abrirSeccionDesdeChat("sugerencias");
+    return "📩 Abrí la sección Sugerencias. Puedes escribir tu mensaje y adjuntar una imagen opcional.";
+  }
+  if(t.includes("protocolo")||t.includes("ronda")||t.includes("patrull")||t.includes("guardia")){
+    abrirSeccionDesdeChat("protocolos");
+    return "📋 Abrí la sección Protocolos. Allí encontrarás orientaciones sobre rondas, uso de radio, trato con el público y registro de novedades. Sigue siempre los procedimientos de tu empresa y las indicaciones de tu supervisor.";
+  }
+  if(t.includes("novedad")||t.includes("aviso")||t.includes("noticia")){
+    abrirSeccionDesdeChat("novedades");
+    return "📰 Abrí la sección Novedades. Allí encontrarás avisos importantes, noticias y guías rápidas.";
+  }
+
+  // CLIMA, RADIO, MÚSICA
+  if(t.includes("clima")||t.includes("temperatura")||t.includes("lluvia")||t.includes("tiempo")){
+    abrirSeccionDesdeChat("inicio");
+    return "☀️ En Inicio encontrarás el clima actual de Montevideo, con temperatura, humedad, viento y sensación térmica.";
+  }
+  if(t.includes("musica")||t.includes("música"))
+    return "Música 🎶, cual refieres la puedes pedir al WhatsApp y queda.";
+  if(t.includes("radio"))
+    return "📻 En Inicio puedes tocar el botón de reproducción del reproductor para escuchar la radio online.";
+
+  // URULeyes Y LEGAL
+  if(t.includes("uruleyes")||t.includes("ley")||t.includes("legal"))
+    return "⚖️ Puedes abrir UruLeyes desde el botón de la barra inferior para consultar legislación. Si el sitio no permite mostrarse dentro de esta página, ábrelo directamente desde el navegador.";
+
+  // EMERGENCIAS
+  if(t.includes("emergencia")||t.includes("911")||t.includes("policia")||t.includes("policía")||t.includes("bombero")||t.includes("ambulancia"))
+    return "🚨 En Uruguay: Policía 911, Bomberos 104 y emergencia médica 105. En una situación urgente, llama al servicio correspondiente.";
+
+  // TRABAJO, SERVICIOS, MASCOTAS, OFERTAS
+  if(t.includes("trabajo")||t.includes("empleo")||t.includes("contratar"))
+    return "¡Gracias por tu interés! Puedes enviarnos tu CV al correo <a href=\"mailto:"+MI_CORREO_ADMIN+"\">"+MI_CORREO_ADMIN+"</a> 📄.";
+  if(t.includes("servicios"))
+    return "Ofrecemos servicios de entrega, asesoramiento y soporte técnico. ¿En qué podemos ayudarte? 🔧";
+  if(t.includes("mascota")||t.includes("mascotas"))
+    return "Tenemos productos para perros, gatos y más 🐶🐱. ¿Buscas algo en particular?";
+  if(t.includes("oferta")||t.includes("ofertas")||t.includes("descuento")||t.includes("descuentos")||t.includes("promocion")||t.includes("promoción"))
+    return "¡Sí! Tenemos ofertas todas las semanas. Visita nuestra sección de promociones. 💥";
+  if(t.includes("catalogo")||t.includes("catálogo")||t.includes("ver productos"))
+    return 'Puedes ver nuestro catálogo completo <a href="https://sites.google.com/view/tiendatin" target="_blank">aquí</a> 📘.';
+
+  // RESPUESTA POR DEFECTO
+  const genericas=[
+    "Lo siento, no entendí eso 🤖",
+    "¿Podrías repetirlo? 🙈",
+    "No estoy seguro de a qué te refieres 🤔",
+    "Interesante... ¿puedes explicarlo mejor? 🤓"
+  ];
+  return genericas[Math.floor(Math.random()*genericas.length)];
+}
+
+// EVENTOS
 document.getElementById("chatForm").addEventListener("submit",function(e){e.preventDefault();enviarMensajeChat()});
 document.getElementById("buscarProducto").addEventListener("input",filtrarProductos);
 document.getElementById("ordenProductos").addEventListener("change",ordenarProductos);
@@ -462,142 +603,31 @@ const listaAnuncios=[{titulo:"📋 Protocolos",texto:"Repasa los protocolos de r
 function mostrarSiguienteAnuncio(){const el=document.getElementById("anuncioFlotante");if(el.dataset.cerrado==="1")return;const a=listaAnuncios[indiceAnuncio];document.getElementById("anuncioTitulo").textContent=a.titulo;document.getElementById("anuncioTexto").textContent=a.texto;el.classList.add("mostrar");clearTimeout(timerAnuncio);timerAnuncio=setTimeout(()=>el.classList.remove("mostrar"),5000);indiceAnuncio=(indiceAnuncio+1)%listaAnuncios.length}
 function cerrarAnuncioFlotante(){const el=document.getElementById("anuncioFlotante");el.classList.remove("mostrar");el.dataset.cerrado="1";clearTimeout(timerAnuncio)}
 
-/* TEMA CLARO/OSCURO */
-function aplicarTema(tema){
-  const root=document.documentElement;
-  const btn=document.getElementById("btnTema");
-  const meta=document.querySelector('meta[name="theme-color"]');
-  if(tema==="dark"){
-    root.setAttribute("data-theme","dark");
-    if(btn){btn.textContent="☀️";btn.title="Cambiar a tema claro";}
-    if(meta)meta.setAttribute("content","#0F172A");
-  }else{
-    root.removeAttribute("data-theme");
-    if(btn){btn.textContent="🌙";btn.title="Cambiar a tema oscuro";}
-    if(meta)meta.setAttribute("content","#1F4E78");
-  }
-}
-function toggleTema(){
-  const actual=document.documentElement.getAttribute("data-theme");
-  const nuevo=actual==="dark"?"light":"dark";
-  aplicarTema(nuevo);
-  try{localStorage.setItem("tinmaruy_tema",nuevo);}catch(e){}
-  mostrarToast(nuevo==="dark"?"🌙 Modo oscuro activado":"☀️ Modo claro activado","success");
-}
-function iniciarTema(){
-  let tema=null;
-  try{tema=localStorage.getItem("tinmaruy_tema");}catch(e){}
-  if(!tema){
-    tema=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";
-  }
-  aplicarTema(tema);
-}
-if(window.matchMedia){
-  window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change",function(e){
-    let guardado=null;
-    try{guardado=localStorage.getItem("tinmaruy_tema");}catch(err){}
-    if(!guardado)aplicarTema(e.matches?"dark":"light");
-  });
-}
+// BLOQUEO DE INSPECCIÓN
+document.addEventListener("keydown",(e)=>{if(e.key==="F12"){e.preventDefault();alert("🔒 Inspección bloqueada")}if(e.ctrlKey&&e.shiftKey&&(e.key==="I"||e.key==="C"||e.key==="J")){e.preventDefault();alert("🚫 Atajo bloqueado")}if(e.ctrlKey&&e.key.toLowerCase()==="u"){e.preventDefault();alert("🚫 Ver código fuente deshabilitado")}});
+document.addEventListener("contextmenu",(e)=>{e.preventDefault();alert("Clic derecho deshabilitado")});
 
-/* COMPARTIR APP */
-const DATOS_COMPARTIR={
-  titulo:"TINMARUY - Portal y Tienda",
-  texto:"Descubrí TINMARUY: protocolos, tienda, sugerencias y solicitud de páginas web. ¡Todo en un solo lugar!",
-  url:window.location.href.split("?")[0].split("#")[0]
-};
-async function abrirCompartir(){
-  if(navigator.share){
-    try{
-      await navigator.share({title:DATOS_COMPARTIR.titulo,text:DATOS_COMPARTIR.texto,url:DATOS_COMPARTIR.url});
-      mostrarToast("✅ ¡Gracias por compartir TINMARUY!","success");
-      return;
-    }catch(err){
-      if(err.name==="AbortError")return;
-    }
-  }
-  document.getElementById("shareModal").classList.add("active");
-}
+// TEMA CLARO/OSCURO
+function aplicarTema(tema){const root=document.documentElement;const btn=document.getElementById("btnTema");const meta=document.querySelector('meta[name="theme-color"]');if(tema==="dark"){root.setAttribute("data-theme","dark");if(btn){btn.textContent="☀️";btn.title="Cambiar a tema claro";}if(meta)meta.setAttribute("content","#0F172A");}else{root.removeAttribute("data-theme");if(btn){btn.textContent="🌙";btn.title="Cambiar a tema oscuro";}if(meta)meta.setAttribute("content","#1F4E78");}}
+function toggleTema(){const actual=document.documentElement.getAttribute("data-theme");const nuevo=actual==="dark"?"light":"dark";aplicarTema(nuevo);try{localStorage.setItem("tinmaruy_tema",nuevo);}catch(e){}mostrarToast(nuevo==="dark"?"🌙 Modo oscuro activado":"☀️ Modo claro activado","success");}
+function iniciarTema(){let tema=null;try{tema=localStorage.getItem("tinmaruy_tema");}catch(e){}if(!tema){tema=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";}aplicarTema(tema);}
+if(window.matchMedia){window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change",function(e){let guardado=null;try{guardado=localStorage.getItem("tinmaruy_tema");}catch(err){}if(!guardado)aplicarTema(e.matches?"dark":"light");});}
+
+// COMPARTIR APP
+const DATOS_COMPARTIR={titulo:"TINMARUY - Portal y Tienda",texto:"Descubrí TINMARUY: protocolos, tienda, sugerencias y solicitud de páginas web. ¡Todo en un solo lugar!",url:window.location.href.split("?")[0].split("#")[0]};
+async function abrirCompartir(){if(navigator.share){try{await navigator.share({title:DATOS_COMPARTIR.titulo,text:DATOS_COMPARTIR.texto,url:DATOS_COMPARTIR.url});mostrarToast("✅ ¡Gracias por compartir TINMARUY!","success");return;}catch(err){if(err.name==="AbortError")return;}}document.getElementById("shareModal").classList.add("active");}
 function cerrarCompartir(){document.getElementById("shareModal").classList.remove("active");}
-function compartirEn(red){
-  const url=encodeURIComponent(DATOS_COMPARTIR.url);
-  const texto=encodeURIComponent(DATOS_COMPARTIR.texto);
-  const titulo=encodeURIComponent(DATOS_COMPARTIR.titulo);
-  let enlace="";
-  switch(red){
-    case "whatsapp":enlace=`https://wa.me/?text=${texto}%0A${url}`;break;
-    case "telegram":enlace=`https://t.me/share/url?url=${url}&text=${texto}`;break;
-    case "facebook":enlace=`https://www.facebook.com/sharer/sharer.php?u=${url}`;break;
-    case "twitter":enlace=`https://twitter.com/intent/tweet?text=${texto}&url=${url}`;break;
-    case "email":enlace=`mailto:?subject=${titulo}&body=${texto}%0A%0A${url}`;break;
-    case "copiar":copiarLink();return;
-  }
-  if(enlace){window.open(enlace,"_blank","noopener,noreferrer");cerrarCompartir();}
-}
-async function copiarLink(){
-  const url=DATOS_COMPARTIR.url;
-  try{
-    if(navigator.clipboard&&window.isSecureContext){
-      await navigator.clipboard.writeText(url);
-    }else{
-      const ta=document.createElement("textarea");
-      ta.value=url;ta.style.position="fixed";ta.style.opacity="0";
-      document.body.appendChild(ta);ta.select();document.execCommand("copy");document.body.removeChild(ta);
-    }
-    mostrarToast("🔗 Link copiado al portapapeles","success");
-    cerrarCompartir();
-  }catch(e){
-    mostrarToast("No se pudo copiar. Copiá manualmente: "+url,"warning");
-  }
-}
-document.addEventListener("click",function(e){
-  const modal=document.getElementById("shareModal");
-  if(e.target===modal)cerrarCompartir();
-});
+function compartirEn(red){const url=encodeURIComponent(DATOS_COMPARTIR.url);const texto=encodeURIComponent(DATOS_COMPARTIR.texto);const titulo=encodeURIComponent(DATOS_COMPARTIR.titulo);let enlace="";switch(red){case "whatsapp":enlace=`https://wa.me/?text=${texto}%0A${url}`;break;case "telegram":enlace=`https://t.me/share/url?url=${url}&text=${texto}`;break;case "facebook":enlace=`https://www.facebook.com/sharer/sharer.php?u=${url}`;break;case "twitter":enlace=`https://twitter.com/intent/tweet?text=${texto}&url=${url}`;break;case "email":enlace=`mailto:?subject=${titulo}&body=${texto}%0A%0A${url}`;break;case "copiar":copiarLink();return;}if(enlace){window.open(enlace,"_blank","noopener,noreferrer");cerrarCompartir();}}
+async function copiarLink(){const url=DATOS_COMPARTIR.url;try{if(navigator.clipboard&&window.isSecureContext){await navigator.clipboard.writeText(url);}else{const ta=document.createElement("textarea");ta.value=url;ta.style.position="fixed";ta.style.opacity="0";document.body.appendChild(ta);ta.select();document.execCommand("copy");document.body.removeChild(ta);}mostrarToast("🔗 Link copiado al portapapeles","success");cerrarCompartir();}catch(e){mostrarToast("No se pudo copiar. Copiá manualmente: "+url,"warning");}}
+document.addEventListener("click",function(e){const modal=document.getElementById("shareModal");if(e.target===modal)cerrarCompartir();});
 
-/* NOVEDADES */
-const consejosGuardia=[
-  "Mantén tu radio en el canal asignado y evita conversaciones personales durante el servicio.",
-  "Registra las novedades de forma objetiva: hora, lugar, personas y hechos. Sin opiniones.",
-  "Antes de cada ronda, verifica que tu linterna y radio tengan batería suficiente.",
-  "Si detectas una puerta forzada, no entres solo: avisa a tu supervisor y a la Policía (911).",
-  "Mantén una actitud respetuosa y firme. La calma resuelve más que la confrontación.",
-  "Conoce las salidas de emergencia y los puntos de reunión de tu puesto.",
-  "No abandones tu puesto sin ser relevado. Si surge una urgencia, informa de inmediato."
-];
+// NOVEDADES
+const consejosGuardia=["Mantén tu radio en el canal asignado y evita conversaciones personales durante el servicio.","Registra las novedades de forma objetiva: hora, lugar, personas y hechos. Sin opiniones.","Antes de cada ronda, verifica que tu linterna y radio tengan batería suficiente.","Si detectas una puerta forzada, no entres solo: avisa a tu supervisor y a la Policía (911).","Mantén una actitud respetuosa y firme. La calma resuelve más que la confrontación.","Conoce las salidas de emergencia y los puntos de reunión de tu puesto.","No abandones tu puesto sin ser relevado. Si surge una urgencia, informa de inmediato."];
 let indiceConsejo=Math.floor(Math.random()*consejosGuardia.length);
-function nuevoConsejo(){
-  indiceConsejo=(indiceConsejo+1)%consejosGuardia.length;
-  const el=document.getElementById("consejoDelDia");
-  if(el){el.style.opacity="0";setTimeout(()=>{el.textContent=consejosGuardia[indiceConsejo];el.style.opacity="1"},150)}
-  mostrarToast("💡 Nuevo consejo cargado","success");
-}
-function filtrarNovedades(categoria,btn){
-  document.querySelectorAll(".novedades-filtros .filtro-btn").forEach(b=>b.classList.toggle("active",b.dataset.filtro===categoria));
-  let visibles=0;
-  document.querySelectorAll("#novedadesGrid .novedad-card").forEach(card=>{
-    const coincide=categoria==="todas"||card.dataset.categoria===categoria;
-    card.style.display=coincide?"":"none";
-    if(coincide)visibles++;
-  });
-  const sin=document.getElementById("sinNovedades");
-  if(sin)sin.style.display=visibles?"none":"block";
-}
-function ocultarAvisoDestacado(){
-  const aviso=document.getElementById("avisoDestacado");
-  if(aviso)aviso.classList.add("oculto");
-  try{localStorage.setItem("tinmaruy_aviso_oculto","1");}catch(e){}
-}
-function iniciarNovedades(){
-  const el=document.getElementById("consejoDelDia");
-  if(el)el.textContent=consejosGuardia[indiceConsejo];
-  try{
-    if(localStorage.getItem("tinmaruy_aviso_oculto")==="1"){
-      const aviso=document.getElementById("avisoDestacado");
-      if(aviso)aviso.classList.add("oculto");
-    }
-  }catch(e){}
-}
+function nuevoConsejo(){indiceConsejo=(indiceConsejo+1)%consejosGuardia.length;const el=document.getElementById("consejoDelDia");if(el){el.style.opacity="0";setTimeout(()=>{el.textContent=consejosGuardia[indiceConsejo];el.style.opacity="1"},150)}mostrarToast("💡 Nuevo consejo cargado","success");}
+function filtrarNovedades(categoria,btn){document.querySelectorAll(".novedades-filtros .filtro-btn").forEach(b=>b.classList.toggle("active",b.dataset.filtro===categoria));let visibles=0;document.querySelectorAll("#novedadesGrid .novedad-card").forEach(card=>{const coincide=categoria==="todas"||card.dataset.categoria===categoria;card.style.display=coincide?"":"none";if(coincide)visibles++;});const sin=document.getElementById("sinNovedades");if(sin)sin.style.display=visibles?"none":"block";}
+function ocultarAvisoDestacado(){const aviso=document.getElementById("avisoDestacado");if(aviso)aviso.classList.add("oculto");try{localStorage.setItem("tinmaruy_aviso_oculto","1");}catch(e){}}
+function iniciarNovedades(){const el=document.getElementById("consejoDelDia");if(el)el.textContent=consejosGuardia[indiceConsejo];try{if(localStorage.getItem("tinmaruy_aviso_oculto")==="1"){const aviso=document.getElementById("avisoDestacado");if(aviso)aviso.classList.add("oculto");}}catch(e){}}
 
 document.addEventListener("keydown",function(e){if(e.key==="Escape"){cerrarModalAuth();cerrarModalMensaje();cerrarUruleyes();toggleChat(false);cerrarCompartir();document.querySelectorAll(".sw-select").forEach(el=>el.classList.remove("abierto"))}});
 document.addEventListener("DOMContentLoaded",function(){iniciarTema();iniciarNovedades();verificarMensajeSistemaAlInicio();cargarCarrito();cargarClima();setInterval(cargarClima,1800000);anuncioTimer=setTimeout(mostrarSiguienteAnuncio,12000);setInterval(mostrarSiguienteAnuncio,30000)});
