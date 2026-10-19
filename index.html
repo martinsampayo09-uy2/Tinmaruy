@@ -38,7 +38,7 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible{
 .user-bar{display:flex;align-items:center;justify-content:flex-end;gap:8px;margin-bottom:10px;padding:8px 12px;background:#fff;border-radius:10px;box-shadow:0 2px 6px rgba(0,0,0,.05);font-size:13px;flex-wrap:wrap;position:relative;z-index:60}
 .avatar{width:36px;height:36px;border-radius:50%;background:var(--azul);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;flex-shrink:0}
 .nombre{font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:130px}
-.user-bar button:not(.sobre-notificacion-bar){background:#F0F2F5;color:var(--texto);border:none;padding:8px 12px;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer}
+.user-bar button:not(.sobre-notificacion-bar):not(.btn-tema-bar):not(.btn-compartir-bar){background:#F0F2F5;color:var(--texto);border:none;padding:8px 12px;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer}
 .user-bar button.btn-ingresar{background:var(--azul);color:#fff}
 .btn-tienda-bar{background:#fff!important;color:var(--azul)!important;border:1.5px solid var(--azul)!important;font-weight:700!important;margin-right:auto;display:flex;align-items:center;gap:6px}
 .portal-header{text-align:center;margin-bottom:20px;background:linear-gradient(135deg,#1a3d5c,var(--azul));color:#fff;padding:25px 15px;border-radius:15px;box-shadow:var(--sombra)}
@@ -170,8 +170,105 @@ radio-player{flex:1;width:50%;height:140px;display:block;min-width:0}
 .chat-input-area input{flex:1;min-width:0;padding:9px 11px;border:1px solid var(--gris-borde);border-radius:20px;outline:none;font-size:13px}
 .chat-input-area button{background:var(--azul);color:#fff;border:none;width:36px;height:36px;border-radius:50%;margin-left:6px;cursor:pointer;font-size:15px;flex-shrink:0}
 @media(min-width:768px){.tienda-grid{grid-template-columns:repeat(auto-fit,minmax(190px,1fr))}.item img{height:150px}}
-@media(max-width:500px){body{padding:8px 8px 100px}.user-bar{gap:6px;padding:8px}.user-bar button:not(.sobre-notificacion-bar){padding:8px}.nombre{max-width:90px}.portal-nav{left:8px;right:8px;bottom:8px}.portal-nav button{font-size:10px;padding:8px 2px}.nav-icon{font-size:17px}.portal-section{padding:14px}.portal-section h2{font-size:17px}#reloj-lluvia #hora{font-size:18px}#reloj-lluvia #fecha{font-size:9px}.carousel-container2 .slide img{max-width:220px;max-height:280px}.sw-fila{grid-template-columns:1fr}.tienda-controles{grid-template-columns:1fr}.carrito-botones{grid-template-columns:1fr}.clima-detalles{font-size:11px;gap:6px}.clima-temp{font-size:30px}}
+@media(max-width:500px){body{padding:8px 8px 100px}.user-bar{gap:6px;padding:8px}.user-bar button:not(.sobre-notificacion-bar):not(.btn-tema-bar):not(.btn-compartir-bar){padding:8px}.nombre{max-width:90px}.portal-nav{left:8px;right:8px;bottom:8px}.portal-nav button{font-size:10px;padding:8px 2px}.nav-icon{font-size:17px}.portal-section{padding:14px}.portal-section h2{font-size:17px}#reloj-lluvia #hora{font-size:18px}#reloj-lluvia #fecha{font-size:9px}.carousel-container2 .slide img{max-width:220px;max-height:280px}.sw-fila{grid-template-columns:1fr}.tienda-controles{grid-template-columns:1fr}.carrito-botones{grid-template-columns:1fr}.clima-detalles{font-size:11px;gap:6px}.clima-temp{font-size:30px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
+
+/* ⬅️ NUEVO: TEMA OSCURO */
+:root[data-theme="dark"]{
+  --azul:#3B82C4;
+  --azul-claro:#5A9BD8;
+  --verde:#22C55E;
+  --amarillo:#F5B800;
+  --rojo:#EF4444;
+  --gris-bg:#0F172A;
+  --gris-borde:#2D3748;
+  --texto:#E2E8F0;
+  --sombra:0 8px 30px rgba(0,0,0,.4);
+}
+:root[data-theme="dark"] body{background:var(--gris-bg);color:var(--texto)}
+:root[data-theme="dark"] .user-bar{background:#1E293B;box-shadow:0 2px 6px rgba(0,0,0,.3)}
+:root[data-theme="dark"] .user-bar button:not(.sobre-notificacion-bar):not(.btn-tienda-bar):not(.btn-tema-bar):not(.btn-compartir-bar){background:#334155;color:var(--texto)}
+:root[data-theme="dark"] .btn-tienda-bar{background:#1E293B!important;color:var(--azul-claro)!important;border-color:var(--azul-claro)!important}
+:root[data-theme="dark"] .portal-header{background:linear-gradient(135deg,#0B1F33,#1E3A5F)}
+:root[data-theme="dark"] .portal-section{background:#1E293B;color:var(--texto)}
+:root[data-theme="dark"] .portal-section h2{color:var(--azul-claro);border-color:var(--gris-borde)}
+:root[data-theme="dark"] #seccion-inicio.portal-section{background:transparent}
+:root[data-theme="dark"] .portal-nav{background:rgba(30,41,59,.96);border-color:rgba(45,55,72,.8);box-shadow:0 10px 30px rgba(0,0,0,.5)}
+:root[data-theme="dark"] .portal-nav button{color:#94A3B8}
+:root[data-theme="dark"] .portal-nav button.active{background:var(--azul);color:#fff}
+:root[data-theme="dark"] .item{background:#0F172A;border-color:var(--gris-borde)}
+:root[data-theme="dark"] .item h3{color:var(--azul-claro)}
+:root[data-theme="dark"] .item p{color:#94A3B8}
+:root[data-theme="dark"] .item img{background:#1E293B}
+:root[data-theme="dark"] .cantidad-input,
+:root[data-theme="dark"] .tienda-controles input,
+:root[data-theme="dark"] .tienda-controles select{background:#1E293B;color:var(--texto);border-color:var(--gris-borde)}
+:root[data-theme="dark"] .carrito-seccion{background:#1E293B;border-color:var(--azul-claro)}
+:root[data-theme="dark"] .carrito-seccion h3{color:var(--azul-claro)}
+:root[data-theme="dark"] .carrito-lista li{border-color:var(--gris-borde)}
+:root[data-theme="dark"] .btn-cantidad{background:#334155;color:var(--azul-claro)}
+:root[data-theme="dark"] .clima-card,
+:root[data-theme="dark"] .contact-card{background:linear-gradient(145deg,#1E293B,#0F172A);border-color:var(--gris-borde)}
+:root[data-theme="dark"] .clima-header,
+:root[data-theme="dark"] .contact-header{border-color:var(--gris-borde)}
+:root[data-theme="dark"] .clima-header h3,
+:root[data-theme="dark"] .contact-header h3{color:var(--texto)}
+:root[data-theme="dark"] .clima-temp{color:var(--azul-claro)}
+:root[data-theme="dark"] .clima-detalles{background:#0F172A;color:#CBD5E1}
+:root[data-theme="dark"] .contact-card .info-icon{color:#CBD5E1}
+:root[data-theme="dark"] .ubicacion{background:#334155;color:#CBD5E1}
+:root[data-theme="dark"] .protocolo-card{background:#1E293B;color:var(--texto);border-left-color:var(--azul-claro);border-top-color:var(--gris-borde);border-right-color:var(--gris-borde);border-bottom-color:var(--gris-borde)}
+:root[data-theme="dark"] .protocolo-card h4{color:var(--azul-claro)}
+:root[data-theme="dark"] .protocolo-card p{color:#CBD5E1}
+:root[data-theme="dark"] .form-sugerencias input[type=text],
+:root[data-theme="dark"] .form-sugerencias input[type=email],
+:root[data-theme="dark"] .form-sugerencias input[type=file],
+:root[data-theme="dark"] .form-sugerencias textarea,
+:root[data-theme="dark"] .form-sugerencias select{background:#0F172A;color:var(--texto);border-color:var(--gris-borde)}
+:root[data-theme="dark"] .campo label{color:var(--texto)}
+:root[data-theme="dark"] .sw-select-btn{background:#0F172A;color:var(--texto);border-color:var(--gris-borde)}
+:root[data-theme="dark"] .sw-opciones{background:#1E293B;border-color:var(--gris-borde)}
+:root[data-theme="dark"] .sw-opciones label{color:var(--texto);border-color:#334155}
+:root[data-theme="dark"] #chat-window{background:#1E293B;border-color:var(--gris-borde)}
+:root[data-theme="dark"] .chat-body{background:#0F172A}
+:root[data-theme="dark"] .chat-msg.bot{background:#1E293B;color:var(--texto);border-color:var(--gris-borde)}
+:root[data-theme="dark"] .chat-input-area{background:#1E293B;border-color:var(--gris-borde)}
+:root[data-theme="dark"] .chat-input-area input{background:#0F172A;color:var(--texto);border-color:var(--gris-borde)}
+:root[data-theme="dark"] .chat-atajos{background:#1E293B;border-color:var(--gris-borde)}
+:root[data-theme="dark"] .chat-atajos button{background:#334155;color:var(--azul-claro);border-color:var(--gris-borde)}
+:root[data-theme="dark"] .modal{background:#1E293B;color:var(--texto)}
+:root[data-theme="dark"] .modal h3{color:var(--azul-claro);border-color:var(--gris-borde)}
+:root[data-theme="dark"] .auth-card{background:#1E293B;color:var(--texto)}
+:root[data-theme="dark"] .auth-card h2{color:var(--azul-claro)}
+:root[data-theme="dark"] .form-auth-group input{background:#0F172A;color:var(--texto);border-color:var(--gris-borde)}
+:root[data-theme="dark"] .btn-cerrar{background:#334155;color:#CBD5E1}
+:root[data-theme="dark"] .btn-secondary{background:#334155;color:var(--texto)}
+:root[data-theme="dark"] .anuncio-flotante{background:#1E293B;color:var(--texto);border-left-color:var(--azul-claro)}
+:root[data-theme="dark"] .anuncio-header{color:var(--azul-claro)}
+:root[data-theme="dark"] .btn-solicita-web{background:#1E3A5F;color:#93C5FD;border-color:#2D5A8A}
+:root[data-theme="dark"] .aviso-bloqueo{background:linear-gradient(135deg,#0B1F33,#1E3A5F)}
+
+/* ⬅️ NUEVO: BOTONES TEMA Y COMPARTIR */
+.btn-tema-bar,.btn-compartir-bar{background:#F0F2F5;color:var(--texto);border:none;width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:transform .2s,background .2s}
+.btn-tema-bar:hover,.btn-compartir-bar:hover{transform:scale(1.1)}
+.btn-compartir-bar{color:var(--azul)}
+:root[data-theme="dark"] .btn-tema-bar{background:#334155;color:#FBBF24}
+:root[data-theme="dark"] .btn-compartir-bar{background:#334155;color:var(--azul-claro)}
+
+/* ⬅️ NUEVO: MODAL COMPARTIR */
+.share-modal{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;z-index:9999;padding:20px;backdrop-filter:blur(4px)}
+.share-modal.active{display:flex}
+.share-modal-content{background:#fff;border-radius:16px;padding:24px;max-width:400px;width:100%;text-align:center;box-shadow:0 25px 60px rgba(0,0,0,.4)}
+:root[data-theme="dark"] .share-modal-content{background:#1E293B;color:var(--texto)}
+.share-modal-content h3{color:var(--azul);margin-bottom:16px;font-size:18px}
+:root[data-theme="dark"] .share-modal-content h3{color:var(--azul-claro)}
+.share-opciones{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:16px}
+.share-opcion{display:flex;flex-direction:column;align-items:center;gap:6px;padding:14px 8px;border-radius:12px;border:1.5px solid var(--gris-borde);background:#F8FAFC;cursor:pointer;font-size:12px;font-weight:600;color:var(--texto);transition:.2s;font-family:inherit}
+:root[data-theme="dark"] .share-opcion{background:#0F172A;border-color:var(--gris-borde);color:var(--texto)}
+.share-opcion:hover{transform:translateY(-2px);box-shadow:0 6px 15px rgba(0,0,0,.1)}
+.share-opcion .icono{font-size:24px}
+.btn-cerrar-share{width:100%;background:#E0E5EC;color:var(--texto);border:none;padding:10px;border-radius:8px;font-weight:700;cursor:pointer;font-size:13px;font-family:inherit}
+:root[data-theme="dark"] .btn-cerrar-share{background:#334155;color:var(--texto)}
 </style>
 </head>
 <body>
@@ -180,8 +277,33 @@ radio-player{flex:1;width:50%;height:140px;display:block;min-width:0}
 <div class="modal"><h3 id="tituloMensaje">📬 Novedades del Sistema</h3><div id="contenidoMensajeSistema" style="font-size:13px;line-height:1.5;margin-bottom:12px;color:var(--texto)"></div><div id="panelAdminMensaje" style="display:none;border-top:1px dashed var(--gris-borde);padding-top:8px;margin-top:8px"><label for="inputNuevoMensaje" style="font-size:11px;font-weight:bold;color:var(--azul)">Editar mensaje:</label><textarea id="inputNuevoMensaje" style="width:100%;padding:8px;border:1px solid var(--gris-borde);border-radius:6px;margin-top:5px;min-height:80px"></textarea><button class="btn" style="margin-top:6px;background:var(--verde);color:#fff" onclick="guardarNuevoMensaje()">💾 Guardar</button></div><div class="modal-actions" style="justify-content:space-between"><button class="btn btn-secondary" onclick="toggleAdminMensaje()">⚙️ Configurar</button><button class="btn btn-primary" onclick="cerrarModalMensaje()">Cerrar</button></div></div>
 </div>
 <div id="modalAuth" role="dialog" aria-modal="true" aria-labelledby="tituloAuth"><div class="auth-card"><button class="btn-cerrar" onclick="cerrarModalAuth()" title="Cerrar" aria-label="Cerrar">✕</button><h2 id="tituloAuth">🔑 Registrate</h2><p class="sub">Solicita tu código de acceso.</p><div id="pasoPedirCodigo"><div class="form-auth-group"><label for="regNombre">Nombre del Guardia *</label><input type="text" id="regNombre" placeholder="Ej: Juan Pérez" autocomplete="name"></div><div class="form-auth-group"><label for="regEmail">Correo Electrónico *</label><input type="email" id="regEmail" placeholder="tu@email.com" autocomplete="email"></div><button class="btn-auth-submit" onclick="solicitarCodigoPersonal()">✉️ Solicitar mi Código</button><div style="margin-top:12px;font-size:12px;color:#7F8C8D">¿Ya tienes código? <a href="#" onclick="mostrarPasoCodigo();return false" style="color:var(--azul);font-weight:bold">Ingresar aquí</a></div></div><div id="pasoIngresarCodigo" style="display:none"><p style="font-size:12px;color:#2E6FA8;margin-bottom:10px" id="infoUsuarioAviso"></p><div class="form-auth-group"><label for="inputCodigoValidar">Código de Acceso</label><input type="text" id="inputCodigoValidar" placeholder="123456" maxlength="6" inputmode="numeric" autocomplete="one-time-code" style="text-align:center;font-size:18px;letter-spacing:4px"></div><button class="btn-auth-submit" onclick="validarCodigoUsuario()">✅ Desbloquear Portal</button><div style="margin-top:12px;font-size:12px"><a href="#" onclick="mostrarPasoPedir();return false" style="color:var(--azul)">Nueva solicitud</a></div></div></div></div>
+
+<!-- ⬅️ NUEVO: MODAL COMPARTIR -->
+<div class="share-modal" id="shareModal" role="dialog" aria-modal="true" aria-labelledby="tituloShare">
+  <div class="share-modal-content">
+    <h3 id="tituloShare">📤 Compartir TINMARUY</h3>
+    <div class="share-opciones">
+      <button class="share-opcion" onclick="compartirEn('whatsapp')"><span class="icono">💬</span><span>WhatsApp</span></button>
+      <button class="share-opcion" onclick="compartirEn('telegram')"><span class="icono">✈️</span><span>Telegram</span></button>
+      <button class="share-opcion" onclick="compartirEn('facebook')"><span class="icono">📘</span><span>Facebook</span></button>
+      <button class="share-opcion" onclick="compartirEn('twitter')"><span class="icono">🐦</span><span>X / Twitter</span></button>
+      <button class="share-opcion" onclick="compartirEn('email')"><span class="icono">✉️</span><span>Email</span></button>
+      <button class="share-opcion" onclick="compartirEn('copiar')"><span class="icono">🔗</span><span>Copiar link</span></button>
+    </div>
+    <button class="btn-cerrar-share" onclick="cerrarCompartir()">Cerrar</button>
+  </div>
+</div>
+
 <div id="appContainer" class="bloqueado">
-<div class="user-bar" id="userBar"><button class="sobre-notificacion-bar" onclick="abrirModalMensaje()" title="Novedades del sistema" aria-label="Novedades">✉️<span class="sobre-badge" id="sobreBadge">1</span></button><button type="button" class="btn-tienda-bar" onclick="cambiarPortal('tienda',null)">🛒 Tienda <span id="badgeTienda" class="carrito-contador" style="padding:2px 6px">0</span></button><div class="avatar" id="userAvatar">?</div><div class="nombre" id="userNombre">Invitado</div><button type="button" id="btnAccionUser" class="btn-ingresar" onclick="accionUsuario()">🔑 Ingresar</button></div>
+<div class="user-bar" id="userBar">
+  <button class="sobre-notificacion-bar" onclick="abrirModalMensaje()" title="Novedades del sistema" aria-label="Novedades">✉️<span class="sobre-badge" id="sobreBadge">1</span></button>
+  <button type="button" class="btn-tienda-bar" onclick="cambiarPortal('tienda',null)">🛒 Tienda <span id="badgeTienda" class="carrito-contador" style="padding:2px 6px">0</span></button>
+  <button type="button" class="btn-tema-bar" id="btnTema" onclick="toggleTema()" title="Cambiar tema" aria-label="Cambiar tema">🌙</button>
+  <button type="button" class="btn-compartir-bar" onclick="abrirCompartir()" title="Compartir app" aria-label="Compartir app">📤</button>
+  <div class="avatar" id="userAvatar">?</div>
+  <div class="nombre" id="userNombre">Invitado</div>
+  <button type="button" id="btnAccionUser" class="btn-ingresar" onclick="accionUsuario()">🔑 Ingresar</button>
+</div>
 <div class="aviso-bloqueo visible" id="avisoBloqueo"><h3>🔒 Portal Bloqueado</h3><p>Ingresa tus datos para solicitar tu código de acceso y ver el contenido del portal.</p><button class="btn-registrarse" onclick="abrirModalAuth()">🔑 Solicitar mi Código</button></div>
 <div id="portalContenido">
 <div class="portal-header"><h1><b>👋 <span style="color:#2E6FA8">TIN</span><span style="color:#E5A100">MAR</span></b></h1><p>Tu portal de información, servicios y compras</p></div>
@@ -279,8 +401,102 @@ function verificarMensajeSistemaAlInicio(){verificarMensajeSistema();if(localSto
 const listaAnuncios=[{titulo:"📋 Protocolos",texto:"Repasa los protocolos de rondas y uso de radio."},{titulo:"📩 Sugerencias",texto:"Envía comentarios o reportes desde la sección inferior."},{titulo:"⚖️ UruLeyes",texto:"Consulta las leyes desde la pestaña inferior."},{titulo:"🚨 Emergencias",texto:"Recordá los teléfonos de emergencia: 911, 104 y 105."},{titulo:"☀️ Clima",texto:"Revisa el estado del tiempo antes de salir."},{titulo:"🛒 Tienda",texto:"Busca artículos, modifica cantidades y envía el pedido por WhatsApp."}];
 function mostrarSiguienteAnuncio(){const el=document.getElementById("anuncioFlotante");if(el.dataset.cerrado==="1")return;const a=listaAnuncios[indiceAnuncio];document.getElementById("anuncioTitulo").textContent=a.titulo;document.getElementById("anuncioTexto").textContent=a.texto;el.classList.add("mostrar");clearTimeout(timerAnuncio);timerAnuncio=setTimeout(()=>el.classList.remove("mostrar"),5000);indiceAnuncio=(indiceAnuncio+1)%listaAnuncios.length}
 function cerrarAnuncioFlotante(){const el=document.getElementById("anuncioFlotante");el.classList.remove("mostrar");el.dataset.cerrado="1";clearTimeout(timerAnuncio)}
-document.addEventListener("keydown",function(e){if(e.key==="Escape"){cerrarModalAuth();cerrarModalMensaje();cerrarUruleyes();toggleChat(false);document.querySelectorAll(".sw-select").forEach(el=>el.classList.remove("abierto"))}});
-document.addEventListener("DOMContentLoaded",function(){verificarMensajeSistemaAlInicio();cargarCarrito();cargarClima();setInterval(cargarClima,1800000);anuncioTimer=setTimeout(mostrarSiguienteAnuncio,12000);setInterval(mostrarSiguienteAnuncio,30000)});
+
+/* ⬅️ NUEVO: TEMA CLARO/OSCURO */
+function aplicarTema(tema){
+  const root=document.documentElement;
+  const btn=document.getElementById("btnTema");
+  const meta=document.querySelector('meta[name="theme-color"]');
+  if(tema==="dark"){
+    root.setAttribute("data-theme","dark");
+    if(btn){btn.textContent="☀️";btn.title="Cambiar a tema claro";}
+    if(meta)meta.setAttribute("content","#0F172A");
+  }else{
+    root.removeAttribute("data-theme");
+    if(btn){btn.textContent="🌙";btn.title="Cambiar a tema oscuro";}
+    if(meta)meta.setAttribute("content","#1F4E78");
+  }
+}
+function toggleTema(){
+  const actual=document.documentElement.getAttribute("data-theme");
+  const nuevo=actual==="dark"?"light":"dark";
+  aplicarTema(nuevo);
+  try{localStorage.setItem("tinmaruy_tema",nuevo);}catch(e){}
+  mostrarToast(nuevo==="dark"?"🌙 Modo oscuro activado":"☀️ Modo claro activado","success");
+}
+function iniciarTema(){
+  let tema=null;
+  try{tema=localStorage.getItem("tinmaruy_tema");}catch(e){}
+  if(!tema){
+    tema=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";
+  }
+  aplicarTema(tema);
+}
+if(window.matchMedia){
+  window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change",function(e){
+    let guardado=null;
+    try{guardado=localStorage.getItem("tinmaruy_tema");}catch(err){}
+    if(!guardado)aplicarTema(e.matches?"dark":"light");
+  });
+}
+
+/* ⬅️ NUEVO: COMPARTIR APP */
+const DATOS_COMPARTIR={
+  titulo:"TINMARUY - Portal y Tienda",
+  texto:"Descubrí TINMARUY: protocolos, tienda, sugerencias y solicitud de páginas web. ¡Todo en un solo lugar!",
+  url:window.location.href.split("?")[0].split("#")[0]
+};
+async function abrirCompartir(){
+  if(navigator.share){
+    try{
+      await navigator.share({title:DATOS_COMPARTIR.titulo,text:DATOS_COMPARTIR.texto,url:DATOS_COMPARTIR.url});
+      mostrarToast("✅ ¡Gracias por compartir TINMARUY!","success");
+      return;
+    }catch(err){
+      if(err.name==="AbortError")return;
+    }
+  }
+  document.getElementById("shareModal").classList.add("active");
+}
+function cerrarCompartir(){document.getElementById("shareModal").classList.remove("active");}
+function compartirEn(red){
+  const url=encodeURIComponent(DATOS_COMPARTIR.url);
+  const texto=encodeURIComponent(DATOS_COMPARTIR.texto);
+  const titulo=encodeURIComponent(DATOS_COMPARTIR.titulo);
+  let enlace="";
+  switch(red){
+    case "whatsapp":enlace=`https://wa.me/?text=${texto}%0A${url}`;break;
+    case "telegram":enlace=`https://t.me/share/url?url=${url}&text=${texto}`;break;
+    case "facebook":enlace=`https://www.facebook.com/sharer/sharer.php?u=${url}`;break;
+    case "twitter":enlace=`https://twitter.com/intent/tweet?text=${texto}&url=${url}`;break;
+    case "email":enlace=`mailto:?subject=${titulo}&body=${texto}%0A%0A${url}`;break;
+    case "copiar":copiarLink();return;
+  }
+  if(enlace){window.open(enlace,"_blank","noopener,noreferrer");cerrarCompartir();}
+}
+async function copiarLink(){
+  const url=DATOS_COMPARTIR.url;
+  try{
+    if(navigator.clipboard&&window.isSecureContext){
+      await navigator.clipboard.writeText(url);
+    }else{
+      const ta=document.createElement("textarea");
+      ta.value=url;ta.style.position="fixed";ta.style.opacity="0";
+      document.body.appendChild(ta);ta.select();document.execCommand("copy");document.body.removeChild(ta);
+    }
+    mostrarToast("🔗 Link copiado al portapapeles","success");
+    cerrarCompartir();
+  }catch(e){
+    mostrarToast("No se pudo copiar. Copiá manualmente: "+url,"warning");
+  }
+}
+document.addEventListener("click",function(e){
+  const modal=document.getElementById("shareModal");
+  if(e.target===modal)cerrarCompartir();
+});
+
+document.addEventListener("keydown",function(e){if(e.key==="Escape"){cerrarModalAuth();cerrarModalMensaje();cerrarUruleyes();toggleChat(false);cerrarCompartir();document.querySelectorAll(".sw-select").forEach(el=>el.classList.remove("abierto"))}});
+document.addEventListener("DOMContentLoaded",function(){iniciarTema();verificarMensajeSistemaAlInicio();cargarCarrito();cargarClima();setInterval(cargarClima,1800000);anuncioTimer=setTimeout(mostrarSiguienteAnuncio,12000);setInterval(mostrarSiguienteAnuncio,30000)});
 (function(){const reloj=document.getElementById("reloj-lluvia");if(!reloj)return;const horaEl=reloj.querySelector("#hora"),fechaEl=reloj.querySelector("#fecha"),canvas=reloj.querySelector(".fondo-lluvia"),ctx=canvas.getContext("2d");const dias=["domingo","lunes","martes","miércoles","jueves","viernes","sábado"],meses=["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"];function actualizarHora(){const ahora=new Date();horaEl.textContent=[ahora.getHours(),ahora.getMinutes(),ahora.getSeconds()].map(x=>String(x).padStart(2,"0")).join(":");fechaEl.textContent=dias[ahora.getDay()]+", "+ahora.getDate()+" de "+meses[ahora.getMonth()]+" de "+ahora.getFullYear()}actualizarHora();setInterval(actualizarHora,1000);let gotas=[],salpicaduras=[];let ancho=0,alto=0;function nuevaGota(inicial=false){return{x:Math.random()*ancho,y:inicial?Math.random()*alto:-20,largo:6+Math.random()*10,velocidad:1.5+Math.random()*2.5,grosor:.4+Math.random()*.7,opacidad:.15+Math.random()*.25,inclinacion:.5+Math.random()}}function ajustarTamaño(){const rect=canvas.getBoundingClientRect();const dpr=Math.min(window.devicePixelRatio||1,2);ancho=rect.width;alto=rect.height;canvas.width=Math.round(ancho*dpr);canvas.height=Math.round(alto*dpr);ctx.setTransform(dpr,0,0,dpr,0,0);gotas=Array.from({length:Math.max(20,Math.floor(ancho/10))},()=>nuevaGota(true))}function animar(){ctx.clearRect(0,0,ancho,alto);for(const g of gotas){ctx.globalAlpha=g.opacidad*.25;ctx.strokeStyle="#001f29";ctx.lineWidth=g.grosor+1;ctx.beginPath();ctx.moveTo(g.x+1,g.y);ctx.lineTo(g.x+g.inclinacion+1,g.y+g.largo);ctx.stroke();ctx.globalAlpha=g.opacidad;ctx.strokeStyle="#7eefff";ctx.lineWidth=g.grosor;ctx.beginPath();ctx.moveTo(g.x,g.y);ctx.lineTo(g.x+g.inclinacion,g.y+g.largo);ctx.stroke();g.y+=g.velocidad;g.x+=.3;if(g.y>alto)Object.assign(g,nuevaGota(false));if(g.x>ancho+10){g.x=-10;g.y=Math.random()*alto}}ctx.globalAlpha=1;requestAnimationFrame(animar)}ajustarTamaño();animar();window.addEventListener("resize",ajustarTamaño)})();
 if(!customElements.get("radio-player")){customElements.define("radio-player",class extends HTMLElement{constructor(){super();this.attachShadow({mode:"open"})}connectedCallback(){if(this.shadowRoot.childElementCount)return;this.shadowRoot.innerHTML=`<style>:host{display:block;width:100%;height:100%;min-width:0}*{box-sizing:border-box}.radio-container{width:100%;height:100%;padding:10px 8px;background:linear-gradient(180deg,#082530,#073b48);border:1px solid #197b8b;border-radius:16px;box-shadow:0 5px 20px rgba(0,0,0,.25);font-family:Arial,sans-serif;text-align:center;display:flex;flex-direction:column;justify-content:space-evenly;align-items:center}.radio-screen{width:100%;min-height:28px;display:flex;align-items:center;justify-content:center;padding:4px;background:rgba(255,255,255,.08);border:1px solid rgba(100,230,245,.35);border-radius:8px;color:#70efff;font-size:11px;font-weight:bold}.radio-song{min-height:16px;color:#c6f8ff;font-size:10px;font-weight:600;margin:2px 0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100%}.play-button{width:38px;height:38px;flex-shrink:0;border:none;border-radius:50%;background:#c8f7fc;display:flex;align-items:center;justify-content:center;cursor:pointer}.play-icon{width:0;height:0;border-top:6px solid transparent;border-bottom:6px solid transparent;border-left:9px solid #087f89;margin-left:2px}.pause-icon{display:none;width:10px;height:12px;border-left:3px solid #087f89;border-right:3px solid #087f89}.playing .play-icon{display:none}.playing .pause-icon{display:block}.radio-info{color:#9bd6df;font-size:8px}.live{color:#6df1ff;font-size:8px;font-weight:bold}audio{display:none}</style><div class="radio-container"><div class="radio-screen" id="status">📻 RADIO ONLINE</div><div class="radio-song" id="song">🎶 SALUDOS A LOS ESCUCHAS</div><button class="play-button" id="play" type="button" aria-label="Reproducir radio"><div class="play-icon"></div><div class="pause-icon"></div></button><div class="live" id="live">● PAUSADO</div><div class="radio-info" id="info">TOCÁ PARA ESCUCHAR EN VIVO</div><audio id="audio" preload="none" playsinline><source src="https://stream.zeno.fm/8wup8yd9dm0uv" type="audio/mpeg"></audio></div>`;this.iniciarRadio()}iniciarRadio(){const root=this.shadowRoot,container=root.querySelector(".radio-container"),button=root.querySelector("#play"),audio=root.querySelector("#audio"),status=root.querySelector("#status"),info=root.querySelector("#info"),live=root.querySelector("#live");button.addEventListener("click",async()=>{if(audio.paused){status.textContent="⏳ CONECTANDO...";live.textContent="● CONECTANDO";info.textContent="CONECTANDO RADIO...";try{await audio.play();container.classList.add("playing");button.setAttribute("aria-label","Pausar radio")}catch(e){status.textContent="⚠️ SIN SEÑAL";live.textContent="● ERROR";info.textContent="TOCÁ DE NUEVO"}}else audio.pause()});audio.addEventListener("playing",()=>{container.classList.add("playing");status.textContent="⚡ ONLINE EN VIVO";live.textContent="● EN VIVO";info.textContent="🔊 REPRODUCIENDO";button.setAttribute("aria-label","Pausar radio")});audio.addEventListener("pause",()=>{container.classList.remove("playing");status.textContent="📻 PAUSADA";live.textContent="● PAUSADO";info.textContent="TOCÁ PARA ESCUCHAR";button.setAttribute("aria-label","Reproducir radio")});audio.addEventListener("waiting",()=>{status.textContent="⏳ CARGANDO...";live.textContent="● CONECTANDO"});audio.addEventListener("error",()=>{container.classList.remove("playing");status.textContent="⚠️ ERROR";live.textContent="● ERROR";info.textContent="TOCÁ DE NUEVO"})}})}
 </script>
