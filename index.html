@@ -65,8 +65,9 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible{
 .portal-header{text-align:center;margin-bottom:20px;background:linear-gradient(135deg,#1a3d5c,var(--azul));color:#fff;padding:25px 15px;border-radius:15px;box-shadow:var(--sombra)}
 .portal-header h1{font-size:24px;margin-bottom:6px;letter-spacing:.5px}
 .portal-header p{font-size:13px;opacity:.85}
-.portal-nav{position:fixed;bottom:15px;left:15px;right:15px;background:rgba(255,255,255,.96);backdrop-filter:blur(10px);display:flex;justify-content:space-around;align-items:center;padding:8px 6px;border-radius:16px;box-shadow:0 10px 30px rgba(0,0,0,.18);border:1px solid rgba(221,225,231,.8);z-index:1000}
-.portal-nav button{flex:1;background:transparent;border:none;border-radius:12px;padding:8px 4px;font-size:11px;font-weight:700;cursor:pointer;color:#718096;display:flex;flex-direction:column;align-items:center;gap:3px;min-width:0}
+.portal-nav{position:fixed;bottom:15px;left:15px;right:15px;background:rgba(255,255,255,.96);backdrop-filter:blur(10px);display:flex;justify-content:space-around;align-items:center;padding:8px 6px;border-radius:16px;box-shadow:0 10px 30px rgba(0,0,0,.18);border:1px solid rgba(221,225,231,.8);z-index:1000;overflow-x:auto;scrollbar-width:none}
+.portal-nav::-webkit-scrollbar{display:none}
+.portal-nav button{flex:1 0 auto;background:transparent;border:none;border-radius:12px;padding:8px 4px;font-size:11px;font-weight:700;cursor:pointer;color:#718096;display:flex;flex-direction:column;align-items:center;gap:3px;min-width:0}
 .nav-icon{font-size:18px}
 .portal-nav button.active{background:var(--azul);color:#fff;box-shadow:0 4px 12px rgba(31,78,120,.3)}
 .portal-section{display:none;background:#fff;border-radius:15px;box-shadow:var(--sombra);padding:20px;animation:fadeIn .3s ease;margin-bottom:20px}
@@ -141,9 +142,6 @@ radio-player{flex:1;width:50%;height:140px;display:block;min-width:0}
 .clima-error{color:var(--rojo);background:#fef2f2;border-radius:8px}
 .contact-card .info-icon{font-size:13px;color:#4a5568;margin-bottom:8px;display:flex;align-items:flex-start;gap:6px;overflow-wrap:anywhere}
 .contact-card .info-icon strong{color:var(--azul);flex-shrink:0}
-.protocolo-card{background:#fff;border-left:4px solid var(--azul);padding:15px;margin-bottom:12px;border-radius:0 8px 8px 0;box-shadow:0 2px 10px rgba(0,0,0,.03);border-top:1px solid #f0f0f0;border-right:1px solid #f0f0f0;border-bottom:1px solid #f0f0f0}
-.protocolo-card h4{color:var(--azul);margin-bottom:5px;font-size:15px}
-.protocolo-card p{font-size:13px;color:#4a5568;line-height:1.5}
 .sw-fila{display:grid;grid-template-columns:1fr 1fr;gap:7px}
 .sw-select{width:100%;margin-bottom:8px;position:relative}
 .sw-select-btn{width:100%;display:flex;align-items:center;justify-content:space-between;padding:11px 12px;border:1.5px solid var(--gris-borde);border-radius:8px;background:#f8fafc;color:var(--texto);font-size:13px;cursor:pointer;font-weight:bold}
@@ -221,9 +219,6 @@ radio-player{flex:1;width:50%;height:140px;display:block;min-width:0}
 :root[data-theme="dark"] .clima-detalles{background:#0F172A;color:#CBD5E1}
 :root[data-theme="dark"] .contact-card .info-icon{color:#CBD5E1}
 :root[data-theme="dark"] .ubicacion{background:#334155;color:#CBD5E1}
-:root[data-theme="dark"] .protocolo-card{background:#1E293B;color:var(--texto);border-left-color:var(--azul-claro);border-top-color:var(--gris-borde);border-right-color:var(--gris-borde);border-bottom-color:var(--gris-borde)}
-:root[data-theme="dark"] .protocolo-card h4{color:var(--azul-claro)}
-:root[data-theme="dark"] .protocolo-card p{color:#CBD5E1}
 :root[data-theme="dark"] .form-sugerencias input[type=text],:root[data-theme="dark"] .form-sugerencias input[type=email],:root[data-theme="dark"] .form-sugerencias input[type=file],:root[data-theme="dark"] .form-sugerencias textarea,:root[data-theme="dark"] .form-sugerencias select{background:#0F172A;color:var(--texto);border-color:var(--gris-borde)}
 :root[data-theme="dark"] .campo label{color:var(--texto)}
 :root[data-theme="dark"] .sw-select-btn{background:#0F172A;color:var(--texto);border-color:var(--gris-borde)}
@@ -269,42 +264,33 @@ radio-player{flex:1;width:50%;height:140px;display:block;min-width:0}
 .aviso-destacado-texto h4{color:#8A6100;font-size:14px;margin-bottom:3px}
 .aviso-destacado-texto p{font-size:12px;color:#6B5200;line-height:1.4;overflow-wrap:anywhere}
 .aviso-destacado-cerrar{background:rgba(0,0,0,.08);border:none;width:26px;height:26px;border-radius:50%;cursor:pointer;font-size:13px;color:#8A6100;flex-shrink:0}
-.novedades-filtros{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
-.filtro-btn{background:#EEF2F7;color:#5A6B7B;border:1.5px solid transparent;padding:8px 14px;border-radius:20px;font-size:12px;font-weight:700;cursor:pointer;transition:.2s}
-.filtro-btn:hover{background:#E0E7EF}
-.filtro-btn.active{background:var(--azul);color:#fff;border-color:var(--azul);box-shadow:0 4px 12px rgba(31,78,120,.25)}
-.novedades-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin-bottom:20px}
-.novedad-card{background:#F8FAFC;border:1px solid var(--gris-borde);border-radius:12px;padding:16px;position:relative;transition:transform .2s,box-shadow .2s;display:flex;flex-direction:column;gap:6px}
-.novedad-card:hover{transform:translateY(-3px);box-shadow:0 10px 25px rgba(0,0,0,.08)}
-.novedad-etiqueta{font-size:10px;font-weight:800;text-transform:uppercase;padding:4px 9px;border-radius:20px;align-self:flex-start;letter-spacing:.4px}
-.etiqueta-aviso{background:#FEF3C7;color:#92400E}
-.etiqueta-noticia{background:#DBEAFE;color:#1E40AF}
-.etiqueta-guia{background:#DCFCE7;color:#166534}
-.novedad-card h4{color:var(--azul);font-size:14px;line-height:1.3}
-.novedad-card p{font-size:12px;color:#64748B;line-height:1.5;flex:1}
-.novedad-fecha{font-size:10px;color:#94A3B8;font-weight:600}
-.blog-destacado{display:flex;gap:16px;align-items:center;background:linear-gradient(135deg,#1F4E78,#2E6FA8);color:#fff;border-radius:14px;padding:18px;box-shadow:0 8px 25px rgba(31,78,120,.3);flex-wrap:wrap;margin-bottom:18px}
-.blog-destacado-img{font-size:40px;background:rgba(255,255,255,.15);width:70px;height:70px;border-radius:16px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.blog-destacado-info{flex:1;min-width:180px}
-.blog-tag{background:var(--amarillo);color:#5A3E00;font-size:10px;font-weight:800;padding:3px 9px;border-radius:20px;text-transform:uppercase;letter-spacing:.5px}
-.blog-destacado-info h4{font-size:16px;margin:6px 0 4px}
-.blog-destacado-info p{font-size:12px;opacity:.92;line-height:1.5;margin-bottom:10px}
-.btn-consejo{background:rgba(255,255,255,.2);color:#fff;border:1px solid rgba(255,255,255,.35);padding:8px 14px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;transition:.2s}
-.btn-consejo:hover{background:rgba(255,255,255,.32)}
 :root[data-theme="dark"] .aviso-destacado{background:linear-gradient(135deg,#3D2E00,#4A3800);border-left-color:var(--amarillo)}
 :root[data-theme="dark"] .aviso-destacado-texto h4{color:#FCD34D}
 :root[data-theme="dark"] .aviso-destacado-texto p{color:#E5D9A8}
 :root[data-theme="dark"] .aviso-destacado-cerrar{background:rgba(255,255,255,.12);color:#FCD34D}
-:root[data-theme="dark"] .filtro-btn{background:#334155;color:#CBD5E1}
-:root[data-theme="dark"] .filtro-btn:hover{background:#475569}
-:root[data-theme="dark"] .filtro-btn.active{background:var(--azul);color:#fff}
-:root[data-theme="dark"] .novedad-card{background:#0F172A;border-color:var(--gris-borde)}
-:root[data-theme="dark"] .novedad-card h4{color:var(--azul-claro)}
-:root[data-theme="dark"] .novedad-card p{color:#94A3B8}
-:root[data-theme="dark"] .etiqueta-aviso{background:#422006;color:#FCD34D}
-:root[data-theme="dark"] .etiqueta-noticia{background:#172554;color:#93C5FD}
-:root[data-theme="dark"] .etiqueta-guia{background:#052E16;color:#86EFAC}
-:root[data-theme="dark"] .blog-destacado{background:linear-gradient(135deg,#0B1F33,#1E3A5F)}
+
+/* === ARCHIVOS === */
+.archivos-panel{background:#F8FAFC;border:2px dashed var(--azul);border-radius:12px;padding:20px;text-align:center;margin-bottom:18px}
+.archivos-panel h3{color:var(--azul);font-size:16px;margin-bottom:10px}
+.archivos-panel ul{list-style:none;text-align:left;font-size:13px;color:#4a5568;margin:12px 0;padding-left:5px}
+.archivos-panel ul li{margin-bottom:6px}
+.archivos-admin-btn{background:var(--azul);color:#fff;border:none;padding:10px 18px;border-radius:8px;font-weight:700;font-size:13px;cursor:pointer;margin-top:10px}
+.archivos-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:18px}
+.archivo-card{background:#fff;border:1px solid var(--gris-borde);border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:6px;transition:transform .2s,box-shadow .2s}
+.archivo-card:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(0,0,0,.08)}
+.archivo-card .archivo-icono{font-size:26px}
+.archivo-card h4{color:var(--azul);font-size:14px;overflow-wrap:anywhere}
+.archivo-card p{font-size:11px;color:#7F8C8D;overflow-wrap:anywhere}
+.archivo-card .archivo-acciones{display:flex;gap:6px;margin-top:6px}
+.archivo-card .archivo-acciones a,.archivo-card .archivo-acciones button{flex:1;border:none;border-radius:6px;padding:8px;font-size:12px;font-weight:700;cursor:pointer;text-align:center;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:4px}
+.archivo-card .btn-abrir{background:var(--azul);color:#fff}
+.archivo-card .btn-eliminar-archivo{background:var(--rojo);color:#fff;flex:0 0 auto;padding:8px 10px}
+:root[data-theme="dark"] .archivos-panel{background:#0F172A;border-color:var(--azul-claro)}
+:root[data-theme="dark"] .archivos-panel h3{color:var(--azul-claro)}
+:root[data-theme="dark"] .archivos-panel ul{color:#CBD5E1}
+:root[data-theme="dark"] .archivo-card{background:#1E293B;border-color:var(--gris-borde)}
+:root[data-theme="dark"] .archivo-card h4{color:var(--azul-claro)}
+:root[data-theme="dark"] .archivo-card p{color:#94A3B8}
 </style>
 </head>
 <body>
@@ -356,7 +342,7 @@ radio-player{flex:1;width:50%;height:140px;display:block;min-width:0}
 <p> </p></div>
 <div class="portal-nav">
   <button class="active" data-section="inicio" onclick="cambiarPortal('inicio',this)"><span class="nav-icon">🏠</span><span>Inicio</span></button>
-  <button data-section="protocolos" onclick="cambiarPortal('protocolos',this)"><span class="nav-icon">📋</span><span>Protocolos</span></button>
+  <button data-section="archivos" onclick="cambiarPortal('archivos',this)"><span class="nav-icon">📁</span><span>Archivos</span></button>
   <button data-section="tienda" onclick="cambiarPortal('tienda',this)"><span class="nav-icon">🛒</span><span>Tienda</span> <span id="badgeTienda" class="carrito-contador" style="padding:2px 6px">0</span></button>
   <button data-section="sugerencias" onclick="cambiarPortal('sugerencias',this)"><span class="nav-icon">📩</span><span>Sugerencias</span></button>
   <button data-section="solicitarweb" onclick="cambiarPortal('solicitarweb',this)"><span class="nav-icon">🌐</span><span>Solicitar Web</span></button>
@@ -380,7 +366,26 @@ radio-player{flex:1;width:50%;height:140px;display:block;min-width:0}
 </div>
 <div id="sinProductos" style="display:none;text-align:center;padding:20px;color:#718096">No se encontraron productos con esa búsqueda.</div>
 <div class="carrito-seccion" id="carritoSeccion"><div class="carrito-cabecera"><h3>🛒 Tu carrito de compras</h3><span class="carrito-contador" id="carritoContador">0 artículos</span></div><ul id="carrito-lista" class="carrito-lista" aria-live="polite"><li style="color:#7F8C8D">El carrito está vacío.</li></ul><div class="carrito-total-fila"><span>Total del pedido</span><span id="carrito-total">$ 0</span></div><div class="carrito-botones"><button class="btn-whatsapp-pedir" onclick="enviarPedidoWhatsApp()">📲 Pedir por WhatsApp</button><button class="btn-vaciar-carrito" onclick="vaciarCarrito()">🗑 Vaciar carrito</button></div><p class="carrito-nota">Precios en pesos uruguayos. El pedido se envía por WhatsApp para confirmar disponibilidad, entrega y forma de pago. El envío no está incluido en el total.</p></div></section>
-<section id="seccion-protocolos" class="portal-section"><h2>📋 Protocolos y Manual del Guardia</h2><p style="margin-bottom:15px;font-size:13px">Recordá seguir los procedimientos de tu empresa y las indicaciones de tu supervisor.</p><div class="protocolo-card"><h4>🚶‍♂️ Rondas y Patrullaje</h4><p>Realiza las rondas en los horarios establecidos. Presta atención a puertas forzadas, ruidos extraños, luces apagadas fuera de lo normal u objetos abandonados. Registra las novedades de forma objetiva.</p></div><div class="protocolo-card"><h4>📻 Uso Correcto de la Radio</h4><p>Mantén el canal despejado. Sé breve y conciso. Usa el alfabeto radiofónico si es necesario. No uses la radio para conversaciones personales.</p></div><div class="protocolo-card"><h4>🤝 Trato con el Público</h4><p>Mantén una actitud respetuosa, firme y servicial. Si hay un altercado, conserva la calma y avisa a tu supervisor o a los servicios de emergencia cuando corresponda.</p></div><div class="protocolo-card"><h4>📝 Registro de Novedades</h4><p>Anota la hora, el lugar, las personas involucradas y los hechos de forma objetiva. No escribas opiniones personales; registra lo que viste, escuchaste o hiciste.</p></div></section>
+<section id="seccion-archivos" class="portal-section">
+  <h2>📁 Archivos y Documentos</h2>
+  <div id="archivosVacio">
+    <div class="archivos-panel">
+      <h3>📂 Próximamente</h3>
+      <p style="font-size:13px;color:#4a5568">Acá vas a encontrar los documentos, planillas y archivos del portal:</p>
+      <ul>
+        <li>📄 Planillas de turnos</li>
+        <li>📘 Manuales y PDFs</li>
+        <li>📊 Documentos del portal</li>
+        <li>🎓 Material de capacitación</li>
+      </ul>
+      <button class="archivos-admin-btn" onclick="pedirClaveAgregarArchivo()">🔒 Agregar archivo (admin)</button>
+    </div>
+  </div>
+  <div id="archivosGrid" class="archivos-grid"></div>
+  <div id="archivosAdminBar" style="display:none;text-align:center;margin-top:14px">
+    <button class="archivos-admin-btn" onclick="pedirClaveAgregarArchivo()">➕ Agregar otro archivo</button>
+  </div>
+</section>
 <section id="seccion-sugerencias" class="portal-section"><h2>📩 Envía Sugerencia, Reporte o Imagen</h2><p style="margin-bottom:15px;font-size:13px;color:#7F8C8D">Para enviar información relacionada con esta web.</p><form class="form-sugerencias" action="https://formsubmit.co/Martinsampayo9@gmail.com" method="POST" enctype="multipart/form-data"><input type="hidden" name="_subject" value="Nueva sugerencia o reporte en TINMARUY"><input type="hidden" name="_captcha" value="false"><div class="campo"><label for="sugNombre">Tu nombre (opcional)</label><input type="text" id="sugNombre" name="Nombre" placeholder="Ej. Juan Pérez"></div><div class="campo"><label for="sugEmail">Tu correo electrónico *</label><input type="email" id="sugEmail" name="Correo" placeholder="tu@email.com" required></div><div class="campo"><label for="sugMensaje">Sugerencia, información o comentario *</label><textarea id="sugMensaje" name="Sugerencia_o_Reporte" rows="3" placeholder="Escribe aquí tu mensaje..." required></textarea></div><div class="campo"><label for="sugImagen">Adjuntar imagen (opcional)</label><input type="file" id="sugImagen" name="Adjunto" accept="image/*"></div><button type="submit" class="btn-sugerencia">🚀 ENVIAR</button></form></section>
 <section id="seccion-solicitarweb" class="portal-section"><h2>🌐 SOLICITÁ TU WEB</h2><p style="margin-bottom:15px;font-size:13px;color:#7F8C8D">Completá el formulario para solicitar tu página web.</p><form class="form-sugerencias" id="formWeb" action="https://formsubmit.co/Martinsampayo9@gmail.com" method="POST"><input type="hidden" name="_subject" value="Nueva solicitud de página web en TINMARUY"><input type="hidden" name="_captcha" value="false"><div class="sw-fila"><div class="campo"><label for="webNombre">Nombre *</label><input id="webNombre" type="text" name="Nombre_Cliente" placeholder="Ej. Juan Pérez" required></div><div class="campo"><label for="webCorreo">Correo electrónico *</label><input id="webCorreo" type="email" name="Correo_Cliente" placeholder="tu@email.com" required></div></div><div class="campo"><label for="webNegocio">Nombre del negocio *</label><input id="webNegocio" type="text" name="Negocio" placeholder="Nombre de tu negocio" required></div>
 <div class="sw-select" id="select-tipo"><button type="button" class="sw-select-btn">💻 <span>Tipo de web *</span> <b>⬇️</b></button><div class="sw-opciones"><label><input type="radio" name="Tipo_de_Web" value="Página para negocio"> 🏪 Página para negocio</label><label><input type="radio" name="Tipo_de_Web" value="Tienda online"> 🛒 Tienda online</label><label><input type="radio" name="Tipo_de_Web" value="Web profesional"> 💼 Web profesional</label><label><input type="radio" name="Tipo_de_Web" value="Web empresarial"> 🏢 Web empresarial</label><label><input type="radio" name="Tipo_de_Web" value="Web de servicios"> 🔧 Web de servicios</label><label><input type="radio" name="Tipo_de_Web" value="Web gastronómica"> 🍔 Web gastronómica</label><label><input type="radio" name="Tipo_de_Web" value="Portafolio"> 👨‍💻 Portafolio</label><label><input type="radio" name="Tipo_de_Web" value="Landing Page"> 📄 Landing Page</label><label><input type="radio" name="Tipo_de_Web" value="Otra"> ✨ Otra</label></div></div>
@@ -428,7 +433,7 @@ function desbloquearApp(nombreCompleto){
 }
 function cerrarSesion(){if(confirm("¿Estás seguro de que quieres cerrar sesión?")){localStorage.removeItem("stock_autorizado");localStorage.removeItem("usuario_activo");bloquearApp();mostrarToast("Sesión cerrada","warning")}}
 function accionUsuario(){if(localStorage.getItem("stock_autorizado")==="1")cerrarSesion();else abrirModalAuth()}
-function cambiarPortal(id,btn){cerrarUruleyes();const destino=document.getElementById("seccion-"+id);if(!destino)return;document.querySelectorAll(".portal-section").forEach(sec=>sec.classList.remove("active"));destino.classList.add("active");document.querySelectorAll(".portal-nav button").forEach(b=>b.classList.toggle("active",b.dataset.section===id));if(btn&&btn.dataset.section===id)btn.classList.add("active");if(id==="tienda")actualizarCarritoUI();window.scrollTo({top:0,behavior:"smooth"})}
+function cambiarPortal(id,btn){cerrarUruleyes();const destino=document.getElementById("seccion-"+id);if(!destino)return;document.querySelectorAll(".portal-section").forEach(sec=>sec.classList.remove("active"));destino.classList.add("active");document.querySelectorAll(".portal-nav button").forEach(b=>b.classList.toggle("active",b.dataset.section===id));if(btn&&btn.dataset.section===id)btn.classList.add("active");if(id==="tienda")actualizarCarritoUI();if(id==="archivos")renderArchivos();window.scrollTo({top:0,behavior:"smooth"})}
 function obtenerDatosTarjeta(boton){const tarjeta=boton.closest(".item");if(!tarjeta)return null;const nombre=tarjeta.dataset.name;const precio=Number(tarjeta.dataset.price);const input=tarjeta.querySelector(".cantidad-input");const cantidad=input?Number(input.value):1;if(!nombre||!Number.isFinite(precio)||precio<0||!Number.isInteger(cantidad)||cantidad<1||cantidad>99){mostrarToast("Selecciona una cantidad válida entre 1 y 99.","error");if(input)input.focus();return null}return {nombre,precio,cantidad}}
 function agregarProductoDesdeTarjeta(boton){const datos=obtenerDatosTarjeta(boton);if(datos)agregarAlCarrito(datos.nombre,datos.precio,datos.cantidad)}
 function agregarAlCarrito(nombre,precio,cantidad=1){nombre=String(nombre);precio=Number(precio);cantidad=Number(cantidad);if(!nombre||!Number.isFinite(precio)||precio<0||!Number.isInteger(cantidad)||cantidad<1||cantidad>99)return mostrarToast("Producto o cantidad no válidos.","error");const existente=carrito.find(item=>item.nombre===nombre);if(existente){if(existente.cantidad+cantidad>99)return mostrarToast("Máximo 99 unidades por producto.","warning");existente.cantidad+=cantidad}else carrito.push({nombre,precio,cantidad});guardarCarrito();actualizarCarritoUI();mostrarToast(nombre+" agregado al carrito","success")}
@@ -442,7 +447,7 @@ function enviarPedidoWhatsApp(){if(!carrito.length)return mostrarToast("Tu carri
 function abrirUruleyes(){document.getElementById("uruleyesFullscreen").classList.add("active");document.body.style.overflow="hidden"}
 function cerrarUruleyes(e){if(e)e.preventDefault();document.getElementById("uruleyesFullscreen").classList.remove("active");document.body.style.overflow=""}
 async function cargarClima(){const contenedor=document.getElementById("climaContenedor");if(!contenedor)return;try{const lat=-34.90,lon=-56.16;const res=await fetch("https://api.open-meteo.com/v1/forecast?latitude="+lat+"&longitude="+lon+"&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,wind_speed_10m&timezone=America%2FMontevideo",{cache:"no-store"});if(!res.ok)throw new Error("API");const data=await res.json();const actual=data.current;if(!actual)throw new Error("Sin datos");const codigo=actual.weather_code;let icono="☀️",texto="Despejado";if(codigo===0){icono="☀️";texto="Despejado"}else if(codigo<=3){icono="⛅";texto="Parcialmente nublado"}else if(codigo===45||codigo===48){icono="🌫️";texto="Niebla"}else if(codigo>=51&&codigo<=67){icono="🌧️";texto="Lluvia"}else if(codigo>=71&&codigo<=77){icono="❄️";texto="Nieve"}else if(codigo>=80&&codigo<=82){icono="🌦️";texto="Chaparrones"}else if(codigo>=85&&codigo<=86){icono="🌨️";texto="Nevadas"}else if(codigo>=95){icono="⛈️";texto="Tormenta"}const temp=Math.round(actual.temperature_2m);const sens=Math.round(actual.apparent_temperature);const viento=Math.round(actual.wind_speed_10m);const humedad=Math.round(actual.relative_humidity_2m);const hora=new Date().toLocaleTimeString("es-UY",{hour:"2-digit",minute:"2-digit",timeZone:"America/Montevideo"});contenedor.innerHTML='<div class="clima-body"><div><div class="clima-temp">'+temp+'°C</div><div style="font-size:13px;color:#4a5568;margin-top:4px">'+texto+'</div></div><div class="clima-icon">'+icono+'</div></div><div class="clima-detalles"><div>💨 Viento: '+viento+' km/h</div><div>💧 Humedad: '+humedad+'%</div><div>🌡️ Sensación: '+sens+'°C</div><div>🕒 Act.: '+hora+' hs</div></div>'}catch(e){contenedor.innerHTML='<div class="clima-error">⚠️ No se pudo actualizar el clima. Comprueba tu conexión.</div>'}}
-function verificarMensajeSistema(){const msg=localStorage.getItem("aviso_sistema_actualizacion");document.getElementById("contenidoMensajeSistema").textContent=msg||"¡Bienvenido a TINMARUY! Revisa las secciones de Protocolos, Sugerencias y Uruleyes.";document.getElementById("sobreBadge").classList.toggle("activo",!!msg)}
+function verificarMensajeSistema(){const msg=localStorage.getItem("aviso_sistema_actualizacion");document.getElementById("contenidoMensajeSistema").textContent=msg||"¡Bienvenido a TINMARUY! Revisa las secciones de Archivos, Sugerencias y Uruleyes.";document.getElementById("sobreBadge").classList.toggle("activo",!!msg)}
 function abrirModalMensaje(){verificarMensajeSistema();document.getElementById("modalMensajeSistema").classList.add("active");document.getElementById("sobreBadge").classList.remove("activo")}
 function cerrarModalMensaje(){document.getElementById("modalMensajeSistema").classList.remove("active")}
 function toggleAdminMensaje(){const panel=document.getElementById("panelAdminMensaje");if(panel.style.display==="none"){const pass=prompt("Ingresa la clave de administrador:");if(pass!==CLAVE_MAESTRA)return mostrarToast("Clave incorrecta.","error");panel.style.display="block";document.getElementById("inputNuevoMensaje").value=localStorage.getItem("aviso_sistema_actualizacion")||""}else panel.style.display="none"}
@@ -451,7 +456,7 @@ function toggleChat(forzar){const win=document.getElementById("chat-window");con
 function agregarMensajeChat(texto,tipo){const body=document.getElementById("chatBody");const div=document.createElement("div");div.className="chat-msg "+tipo;if(tipo==="user")div.textContent=texto;else div.innerHTML=texto;body.appendChild(div);while(body.children.length>80)body.removeChild(body.firstChild);body.scrollTop=body.scrollHeight}
 function consultaRapida(texto){document.getElementById("chatInput").value=texto;enviarMensajeChat()}
 function enviarMensajeChat(){const input=document.getElementById("chatInput");const texto=input.value.trim();if(!texto)return;if(texto.length>500)return mostrarToast("El mensaje es demasiado largo.","warning");agregarMensajeChat(texto,"user");input.value="";const espera=document.createElement("div");espera.className="chat-msg bot";espera.textContent="Escribiendo...";espera.id="chatEscribiendo";document.getElementById("chatBody").appendChild(espera);document.getElementById("chatBody").scrollTop=document.getElementById("chatBody").scrollHeight;window.setTimeout(()=>{espera.remove();agregarMensajeChat(generarRespuestaBot(texto),"bot")},250)}
-function abrirSeccionDesdeChat(id){if(id==="tienda"||id==="inicio"||id==="protocolos"||id==="sugerencias"||id==="solicitarweb")cambiarPortal(id,document.querySelector('[data-section="'+id+'"]'))}
+function abrirSeccionDesdeChat(id){if(id==="tienda"||id==="inicio"||id==="archivos"||id==="sugerencias"||id==="solicitarweb")cambiarPortal(id,document.querySelector('[data-section="'+id+'"]'))}
 function generarRespuestaBot(texto){
   const t = normalizar(texto);
   const ahora = new Date();
@@ -520,12 +525,12 @@ const total=carrito.reduce((s,x)=>s+x.precio*x.cantidad,0);
  if(t.includes("web")||t.includes("pagina")||t.includes("página")||t.includes("sitio")||t.includes("diseno")||t.includes("diseño")){
     abrirSeccionDesdeChat("solicitarweb");
     return "🌐 Abrí la sección Solicitar Web. Completa tus datos, el tipo de página, las funciones, el diseño y la idea de tu proyecto para enviar la solicitud.";  }
+  if(t.includes("archivo")||t.includes("archivos")||t.includes("documento")||t.includes("documentos")||t.includes("carpeta")||t.includes("carpetas")){
+    abrirSeccionDesdeChat("archivos");
+    return "📁 Abrí la sección Archivos. Ahí vas a encontrar documentos, planillas y material del portal. Si necesitás agregar algo, usá el botón de admin (requiere clave).";  }
   if(t.includes("sugerencia")||t.includes("reporte")||t.includes("imagen adjunta")){
     abrirSeccionDesdeChat("sugerencias");
     return "📩 Abrí la sección Sugerencias. Puedes escribir tu mensaje y adjuntar una imagen opcional.";  }
-  if(t.includes("protocolo")||t.includes("ronda")||t.includes("patrull")||t.includes("guardia")){
-    abrirSeccionDesdeChat("protocolos");
-    return "📋 Abrí la sección Protocolos. Allí encontrarás orientaciones sobre rondas, uso de radio, trato con el público y registro de novedades. Sigue siempre los procedimientos de tu empresa y las indicaciones de tu supervisor.";  }
  if(t.includes("clima")||t.includes("temperatura")||t.includes("lluvia")||t.includes("tiempo")){
     abrirSeccionDesdeChat("inicio");
     return "☀️ En Inicio encontrarás el clima actual de Montevideo, con temperatura, humedad, viento y sensación térmica.";  }
@@ -563,7 +568,7 @@ document.querySelectorAll(".sw-opciones input").forEach(input=>input.addEventLis
 document.getElementById("formWeb").addEventListener("submit",function(e){let primerError=null;document.querySelectorAll(".sw-select").forEach(el=>el.classList.remove("sw-error"));const requisitos=[["select-tipo",'input[name="Tipo_de_Web"]:checked',"Seleccioná el tipo de web."],["select-funciones",'input[name="Funciones[]"]:checked',"Seleccioná al menos una función para tu web."],["select-diseno",'input[name="Diseno"]:checked',"Seleccioná un estilo de diseño."],["select-dominio",'input[name="Dominio"]:checked',"Seleccioná una opción de dominio."]];for(const [id,selector,mensaje] of requisitos){if(!document.querySelector("#"+id+" "+selector)){const el=document.getElementById(id);el.classList.add("sw-error","abierto");primerError={el,mensaje};break}}if(primerError){e.preventDefault();mostrarToast(primerError.mensaje,"error");primerError.el.querySelector(".sw-select-btn").scrollIntoView({behavior:"smooth",block:"center"})}});
 document.addEventListener("click",function(e){if(!e.target.closest(".sw-select"))document.querySelectorAll(".sw-select").forEach(el=>el.classList.remove("abierto"))});
 function verificarMensajeSistemaAlInicio(){verificarMensajeSistema();if(localStorage.getItem("stock_autorizado")==="1")desbloquearApp(localStorage.getItem("usuario_activo"));else bloquearApp()}
-const listaAnuncios=[{titulo:"📋 Protocolos",texto:"Repasa los protocolos de rondas y uso de radio."},{titulo:"📩 Sugerencias",texto:"Envía comentarios o reportes desde la sección inferior."},{titulo:"⚖️ UruLeyes",texto:"Consulta las leyes desde la pestaña inferior."},{titulo:"🚨 Emergencias",texto:"Recordá los teléfonos de emergencia: 911, 104 y 105."},{titulo:"☀️ Clima",texto:"Revisa el estado del tiempo antes de salir."},{titulo:"🛒 Tienda",texto:"Busca artículos, modifica cantidades y envía el pedido por WhatsApp."},{titulo:"📰 Novedades",texto:"Consulta los avisos y noticias nuevas del portal."}];
+const listaAnuncios=[{titulo:"📁 Archivos",texto:"Consultá los documentos y planillas del portal."},{titulo:"📩 Sugerencias",texto:"Envía comentarios o reportes desde la sección inferior."},{titulo:"⚖️ UruLeyes",texto:"Consulta las leyes desde la pestaña inferior."},{titulo:"🚨 Emergencias",texto:"Recordá los teléfonos de emergencia: 911, 104 y 105."},{titulo:"☀️ Clima",texto:"Revisa el estado del tiempo antes de salir."},{titulo:"🛒 Tienda",texto:"Busca artículos, modifica cantidades y envía el pedido por WhatsApp."}];
 function mostrarSiguienteAnuncio(){const el=document.getElementById("anuncioFlotante");if(el.dataset.cerrado==="1")return;const a=listaAnuncios[indiceAnuncio];document.getElementById("anuncioTitulo").textContent=a.titulo;document.getElementById("anuncioTexto").textContent=a.texto;el.classList.add("mostrar");clearTimeout(timerAnuncio);timerAnuncio=setTimeout(()=>el.classList.remove("mostrar"),5000);indiceAnuncio=(indiceAnuncio+1)%listaAnuncios.length}
 function cerrarAnuncioFlotante(){const el=document.getElementById("anuncioFlotante");el.classList.remove("mostrar");el.dataset.cerrado="1";clearTimeout(timerAnuncio)}
 document.addEventListener("keydown",(e)=>{if(e.key==="F12"){e.preventDefault();alert("🔒 Inspección bloqueada")}if(e.ctrlKey&&e.shiftKey&&(e.key==="I"||e.key==="C"||e.key==="J")){e.preventDefault();alert("🚫 Atajo bloqueado")}if(e.ctrlKey&&e.key.toLowerCase()==="u"){e.preventDefault();alert("🚫 Ver código fuente deshabilitado")}});
@@ -584,20 +589,76 @@ function aplicarTema(tema){
 function toggleTema(){const actual=document.documentElement.getAttribute("data-theme");const nuevo=actual==="dark"?"light":"dark";aplicarTema(nuevo);try{localStorage.setItem("tinmaruy_tema",nuevo);}catch(e){}mostrarToast(nuevo==="dark"?"🌙 Modo oscuro activado":"☀️ Modo claro activado","success");}
 function iniciarTema(){let tema=null;try{tema=localStorage.getItem("tinmaruy_tema");}catch(e){}if(!tema){tema=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";}aplicarTema(tema);}
 if(window.matchMedia){window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change",function(e){let guardado=null;try{guardado=localStorage.getItem("tinmaruy_tema");}catch(err){}if(!guardado)aplicarTema(e.matches?"dark":"light");});}
-const DATOS_COMPARTIR={titulo:"TINMARUY - Portal y Tienda",texto:"Descubrí TINMARUY: protocolos, tienda, envia tu sugerencias y solicitud de páginas web. ¡Todo en un solo lugar!",url:window.location.href.split("?")[0].split("#")[0]};
+const DATOS_COMPARTIR={titulo:"TINMARUY - Portal y Tienda",texto:"Descubrí TINMARUY: archivos, tienda, sugerencias y solicitud de páginas web. ¡Todo en un solo lugar!",url:window.location.href.split("?")[0].split("#")[0]};
 async function abrirCompartir(){if(navigator.share){try{await navigator.share({title:DATOS_COMPARTIR.titulo,text:DATOS_COMPARTIR.texto,url:DATOS_COMPARTIR.url});mostrarToast("✅ ¡Gracias por compartir TINMARUY!","success");return;}catch(err){if(err.name==="AbortError")return;}}document.getElementById("shareModal").classList.add("active");}
 function cerrarCompartir(){document.getElementById("shareModal").classList.remove("active");}
 function compartirEn(red){const url=encodeURIComponent(DATOS_COMPARTIR.url);const texto=encodeURIComponent(DATOS_COMPARTIR.texto);const titulo=encodeURIComponent(DATOS_COMPARTIR.titulo);let enlace="";switch(red){case "whatsapp":enlace=`https://wa.me/?text=${texto}%0A${url}`;break;case "telegram":enlace=`https://t.me/share/url?url=${url}&text=${texto}`;break;case "facebook":enlace=`https://www.facebook.com/sharer/sharer.php?u=${url}`;break;case "twitter":enlace=`https://twitter.com/intent/tweet?text=${texto}&url=${url}`;break;case "email":enlace=`mailto:?subject=${titulo}&body=${texto}%0A%0A${url}`;break;case "copiar":copiarLink();return;}if(enlace){window.open(enlace,"_blank","noopener,noreferrer");cerrarCompartir();}}
 async function copiarLink(){const url=DATOS_COMPARTIR.url;try{if(navigator.clipboard&&window.isSecureContext){await navigator.clipboard.writeText(url);}else{const ta=document.createElement("textarea");ta.value=url;ta.style.position="fixed";ta.style.opacity="0";document.body.appendChild(ta);ta.select();document.execCommand("copy");document.body.removeChild(ta);}mostrarToast("🔗 Link copiado al portapapeles","success");cerrarCompartir();}catch(e){mostrarToast("No se pudo copiar. Copiá manualmente: "+url,"warning");}}
 document.addEventListener("click",function(e){const modal=document.getElementById("shareModal");if(e.target===modal)cerrarCompartir();});
+
+/* === ARCHIVOS === */
+const STORAGE_ARCHIVOS="tinmaruy_archivos_v1";
+function leerArchivos(){try{const raw=localStorage.getItem(STORAGE_ARCHIVOS);if(!raw)return[];const arr=JSON.parse(raw);if(!Array.isArray(arr))return[];return arr.filter(a=>a&&typeof a.nombre==="string"&&typeof a.url==="string")}catch(e){return[]}}
+function guardarArchivos(arr){try{localStorage.setItem(STORAGE_ARCHIVOS,JSON.stringify(arr))}catch(e){}}
+function renderArchivos(){
+  const grid=document.getElementById("archivosGrid");
+  const vacio=document.getElementById("archivosVacio");
+  const adminBar=document.getElementById("archivosAdminBar");
+  if(!grid||!vacio)return;
+  const lista=leerArchivos();
+  grid.replaceChildren();
+  if(!lista.length){
+    vacio.style.display="block";
+    adminBar.style.display="none";
+    return;
+  }
+  vacio.style.display="none";
+  adminBar.style.display="block";
+  lista.forEach((a,idx)=>{
+    const card=document.createElement("div");
+    card.className="archivo-card";
+    const icono=document.createElement("div");icono.className="archivo-icono";icono.textContent="📄";
+    const h4=document.createElement("h4");h4.textContent=a.nombre;
+    const p=document.createElement("p");p.textContent=a.descripcion||"Archivo del portal";
+    const acciones=document.createElement("div");acciones.className="archivo-acciones";
+    const abrir=document.createElement("a");abrir.className="btn-abrir";abrir.href=a.url;abrir.target="_blank";abrir.rel="noopener noreferrer";abrir.textContent="🔗 Abrir";
+    const eliminar=document.createElement("button");eliminar.className="btn-eliminar-archivo";eliminar.textContent="🗑";eliminar.title="Eliminar";eliminar.onclick=()=>eliminarArchivo(idx);
+    acciones.append(abrir,eliminar);
+    card.append(icono,h4,p,acciones);
+    grid.appendChild(card);
+  });
+}
+function pedirClaveAgregarArchivo(){
+  const pass=prompt("Clave de administrador para agregar archivo:");
+  if(pass!==CLAVE_MAESTRA){mostrarToast("Clave incorrecta.","error");return}
+  const nombre=prompt("Nombre del archivo o carpeta:");
+  if(!nombre)return;
+  const url=prompt("URL del archivo (Drive, PDF, Dropbox, etc.):");
+  if(!url){mostrarToast("URL inválida.","warning");return}
+  const descripcion=prompt("Descripción breve (opcional):")||"";
+  const lista=leerArchivos();
+  lista.push({nombre:nombre.trim(),url:url.trim(),descripcion:descripcion.trim()});
+  guardarArchivos(lista);
+  renderArchivos();
+  mostrarToast("✅ Archivo agregado","success");
+}
+function eliminarArchivo(idx){
+  const lista=leerArchivos();
+  if(idx<0||idx>=lista.length)return;
+  if(!confirm("¿Eliminar este archivo?"))return;
+  lista.splice(idx,1);
+  guardarArchivos(lista);
+  renderArchivos();
+  mostrarToast("Archivo eliminado","warning");
+}
+
 const consejosGuardia=["Colega tu radio en el canal asignado y evita conversaciones personales durante el servicio.","Registra las novedades de forma objetiva: hora, lugar, personas y hechos. Sin opiniones.","Antes de cada ronda, verifica que tu linterna y radio tengan batería suficiente.","Si detectas una puerta forzada, no entres solo: avisa a tu supervisor y a la Policía (911).","Mantén una actitud respetuosa y firme. La calma resuelve más que la confrontación.","Conoce las salidas de emergencia y los puntos de reunión de tu puesto.","No abandones tu puesto sin ser relevado. Si surge una urgencia, informa de inmediato."];
 let indiceConsejo=Math.floor(Math.random()*consejosGuardia.length);
 function nuevoConsejo(){indiceConsejo=(indiceConsejo+1)%consejosGuardia.length;const el=document.getElementById("consejoDelDia");if(el){el.style.opacity="0";setTimeout(()=>{el.textContent=consejosGuardia[indiceConsejo];el.style.opacity="1"},150)}mostrarToast("💡 Nuevo consejo cargado","success");}
-function filtrarNovedades(categoria,btn){document.querySelectorAll(".novedades-filtros .filtro-btn").forEach(b=>b.classList.toggle("active",b.dataset.filtro===categoria));let visibles=0;document.querySelectorAll("#novedadesGrid .novedad-card").forEach(card=>{const coincide=categoria==="todas"||card.dataset.categoria===categoria;card.style.display=coincide?"":"none";if(coincide)visibles++;});const sin=document.getElementById("sinNovedades");if(sin)sin.style.display=visibles?"none":"block";}
 function ocultarAvisoDestacado(){const aviso=document.getElementById("avisoDestacado");if(aviso)aviso.classList.add("oculto");try{localStorage.setItem("tinmaruy_aviso_oculto","1");}catch(e){}}
 function iniciarNovedades(){const el=document.getElementById("consejoDelDia");if(el)el.textContent=consejosGuardia[indiceConsejo];try{if(localStorage.getItem("tinmaruy_aviso_oculto")==="1"){const aviso=document.getElementById("avisoDestacado");if(aviso)aviso.classList.add("oculto");}}catch(e){}}
 document.addEventListener("keydown",function(e){if(e.key==="Escape"){cerrarModalAuth();cerrarModalMensaje();cerrarUruleyes();toggleChat(false);cerrarCompartir();document.querySelectorAll(".sw-select").forEach(el=>el.classList.remove("abierto"))}});
-document.addEventListener("DOMContentLoaded",function(){iniciarTema();iniciarNovedades();verificarMensajeSistemaAlInicio();cargarCarrito();cargarClima();setInterval(cargarClima,1800000);anuncioTimer=setTimeout(mostrarSiguienteAnuncio,12000);setInterval(mostrarSiguienteAnuncio,30000)});
+document.addEventListener("DOMContentLoaded",function(){iniciarTema();iniciarNovedades();verificarMensajeSistemaAlInicio();cargarCarrito();cargarClima();renderArchivos();setInterval(cargarClima,1800000);anuncioTimer=setTimeout(mostrarSiguienteAnuncio,12000);setInterval(mostrarSiguienteAnuncio,30000)});
 (function(){const reloj=document.getElementById("reloj-lluvia");if(!reloj)return;const horaEl=reloj.querySelector("#hora"),fechaEl=reloj.querySelector("#fecha"),canvas=reloj.querySelector(".fondo-lluvia"),ctx=canvas.getContext("2d");const dias=["domingo","lunes","martes","miércoles","jueves","viernes","sábado"],meses=["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"];function actualizarHora(){const ahora=new Date();horaEl.textContent=[ahora.getHours(),ahora.getMinutes(),ahora.getSeconds()].map(x=>String(x).padStart(2,"0")).join(":");fechaEl.textContent=dias[ahora.getDay()]+", "+ahora.getDate()+" de "+meses[ahora.getMonth()]+" de "+ahora.getFullYear()}actualizarHora();setInterval(actualizarHora,1000);let gotas=[],salpicaduras=[];let ancho=0,alto=0;function nuevaGota(inicial=false){return{x:Math.random()*ancho,y:inicial?Math.random()*alto:-20,largo:6+Math.random()*10,velocidad:1.5+Math.random()*2.5,grosor:.4+Math.random()*.7,opacidad:.15+Math.random()*.25,inclinacion:.5+Math.random()}}function ajustarTamaño(){const rect=canvas.getBoundingClientRect();const dpr=Math.min(window.devicePixelRatio||1,2);ancho=rect.width;alto=rect.height;canvas.width=Math.round(ancho*dpr);canvas.height=Math.round(alto*dpr);ctx.setTransform(dpr,0,0,dpr,0,0);gotas=Array.from({length:Math.max(20,Math.floor(ancho/10))},()=>nuevaGota(true))}function animar(){ctx.clearRect(0,0,ancho,alto);for(const g of gotas){ctx.globalAlpha=g.opacidad*.25;ctx.strokeStyle="#001f29";ctx.lineWidth=g.grosor+1;ctx.beginPath();ctx.moveTo(g.x+1,g.y);ctx.lineTo(g.x+g.inclinacion+1,g.y+g.largo);ctx.stroke();ctx.globalAlpha=g.opacidad;ctx.strokeStyle="#7eefff";ctx.lineWidth=g.grosor;ctx.beginPath();ctx.moveTo(g.x,g.y);ctx.lineTo(g.x+g.inclinacion,g.y+g.largo);ctx.stroke();g.y+=g.velocidad;g.x+=.3;if(g.y>alto)Object.assign(g,nuevaGota(false));if(g.x>ancho+10){g.x=-10;g.y=Math.random()*alto}}ctx.globalAlpha=1;requestAnimationFrame(animar)}ajustarTamaño();animar();window.addEventListener("resize",ajustarTamaño)})();
 if(!customElements.get("radio-player")){customElements.define("radio-player",class extends HTMLElement{constructor(){super();this.attachShadow({mode:"open"})}connectedCallback(){if(this.shadowRoot.childElementCount)return;this.shadowRoot.innerHTML=`<style>:host{display:block;width:100%;height:100%;min-width:0}*{box-sizing:border-box}.radio-container{width:100%;height:100%;padding:10px 8px;background:linear-gradient(180deg,#082530,#073b48);border:1px solid #197b8b;border-radius:16px;box-shadow:0 5px 20px rgba(0,0,0,.25);font-family:Arial,sans-serif;text-align:center;display:flex;flex-direction:column;justify-content:space-evenly;align-items:center}.radio-screen{width:100%;min-height:28px;display:flex;align-items:center;justify-content:center;padding:4px;background:rgba(255,255,255,.08);border:1px solid rgba(100,230,245,.35);border-radius:8px;color:#70efff;font-size:11px;font-weight:bold}.radio-song{min-height:16px;color:#c6f8ff;font-size:10px;font-weight:600;margin:2px 0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100%}.play-button{width:38px;height:38px;flex-shrink:0;border:none;border-radius:50%;background:#c8f7fc;display:flex;align-items:center;justify-content:center;cursor:pointer}.play-icon{width:0;height:0;border-top:6px solid transparent;border-bottom:6px solid transparent;border-left:9px solid #087f89;margin-left:2px}.pause-icon{display:none;width:10px;height:12px;border-left:3px solid #087f89;border-right:3px solid #087f89}.playing .play-icon{display:none}.playing .pause-icon{display:block}.radio-info{color:#9bd6df;font-size:8px}.live{color:#6df1ff;font-size:8px;font-weight:bold}audio{display:none}</style><div class="radio-container"><div class="radio-screen" id="status">📻 RADIO ONLINE</div><div class="radio-song" id="song">🎶 SALUDOS A LOS ESCUCHAS</div><button class="play-button" id="play" type="button" aria-label="Reproducir radio"><div class="play-icon"></div><div class="pause-icon"></div></button><div class="live" id="live">● PAUSADO</div><div class="radio-info" id="info">TOCÁ PARA ESCUCHAR EN VIVO</div><audio id="audio" preload="none" playsinline><source src="https://stream.zeno.fm/8wup8yd9dm0uv" type="audio/mpeg"></audio></div>`;this.iniciarRadio()}iniciarRadio(){const root=this.shadowRoot,container=root.querySelector(".radio-container"),button=root.querySelector("#play"),audio=root.querySelector("#audio"),status=root.querySelector("#status"),info=root.querySelector("#info"),live=root.querySelector("#live");button.addEventListener("click",async()=>{if(audio.paused){status.textContent="⏳ CONECTANDO...";live.textContent="● CONECTANDO";info.textContent="CONECTANDO RADIO...";try{await audio.play();container.classList.add("playing");button.setAttribute("aria-label","Pausar radio")}catch(e){status.textContent="⚠️ SIN SEÑAL";live.textContent="● ERROR";info.textContent="TOCÁ DE NUEVO"}}else audio.pause()});audio.addEventListener("playing",()=>{container.classList.add("playing");status.textContent="⚡ ONLINE EN VIVO";live.textContent="● EN VIVO";info.textContent="🔊 REPRODUCIENDO";button.setAttribute("aria-label","Pausar radio")});audio.addEventListener("pause",()=>{container.classList.remove("playing");status.textContent="📻 PAUSADA";live.textContent="● PAUSADO";info.textContent="TOCÁ PARA ESCUCHAR";button.setAttribute("aria-label","Reproducir radio")});audio.addEventListener("waiting",()=>{status.textContent="⏳ CARGANDO...";live.textContent="● CONECTANDO"});audio.addEventListener("error",()=>{container.classList.remove("playing");status.textContent="⚠️ ERROR";live.textContent="● ERROR";info.textContent="TOCÁ DE NUEVO"})}})}
 </script>
