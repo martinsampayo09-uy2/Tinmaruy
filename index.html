@@ -368,6 +368,20 @@ radio-player{flex:1;width:50%;height:140px;display:block;min-width:0}
 <div class="carrito-seccion" id="carritoSeccion"><div class="carrito-cabecera"><h3>🛒 Tu carrito de compras</h3><span class="carrito-contador" id="carritoContador">0 artículos</span></div><ul id="carrito-lista" class="carrito-lista" aria-live="polite"><li style="color:#7F8C8D">El carrito está vacío.</li></ul><div class="carrito-total-fila"><span>Total del pedido</span><span id="carrito-total">$ 0</span></div><div class="carrito-botones"><button class="btn-whatsapp-pedir" onclick="enviarPedidoWhatsApp()">📲 Pedir por WhatsApp</button><button class="btn-vaciar-carrito" onclick="vaciarCarrito()">🗑 Vaciar carrito</button></div><p class="carrito-nota">Precios en pesos uruguayos. El pedido se envía por WhatsApp para confirmar disponibilidad, entrega y forma de pago. El envío no está incluido en el total.</p></div></section>
 <section id="seccion-archivos" class="portal-section">
   <h2>📁 Archivos y Documentos</h2>
+  
+  <!-- Panel de Generación de Códigos (Siempre visible) -->
+  <div id="panelGenerarCodigo" style="background:#e8f3ff; border:1px solid #c9e2f7; border-radius:12px; padding:15px; margin-bottom:18px; text-align:center;">
+    <h3 style="color:#1769aa; font-size:15px; margin-bottom:8px;">🔑 Generador de Códigos para Guardias</h3>
+    <p style="font-size:12px; color:#4a5568; margin-bottom:10px;">Crea un código único y un enlace mágico para que el guardia pueda ingresar desde su celular.</p>
+    <input type="text" id="inputNombreGuardia" placeholder="Nombre del guardia (Ej: Hugo)" style="padding:8px; border:1px solid #c9e2f7; border-radius:6px; width:80%; max-width:250px; margin-bottom:8px;">
+    <button onclick="generarCodigoGuardia()" style="background:#00B050; color:white; border:none; padding:8px 16px; border-radius:6px; font-weight:bold; cursor:pointer;">Generar Código</button>
+    <div id="resultadoCodigo" style="display:none; margin-top:12px; background:white; padding:10px; border-radius:6px; border:1px dashed #1769aa;">
+      <p style="font-size:13px; color:#2C3E50; margin-bottom:5px;"><strong>Código:</strong> <span id="codigoGenerado" style="color:#00B050; font-weight:900; font-size:16px;"></span></p>
+      <p style="font-size:12px; color:#4a5568; margin-bottom:5px;"><strong>Enlace Mágico:</strong> <a id="linkMagico" href="#" target="_blank" style="color:#1769aa; word-break:break-all; font-size:11px;"></a></p>
+      <button onclick="copiarEnlaceMagico()" style="background:#1769aa; color:white; border:none; padding:6px 12px; border-radius:4px; font-size:12px; cursor:pointer; margin-top:5px;">📋 Copiar Enlace Mágico</button>
+    </div>
+  </div>
+
   <div id="archivosVacio">
     <div class="archivos-panel">
       <h3>📂 Próximamente</h3>
@@ -411,13 +425,142 @@ let indiceAnuncio=0;
 function escaparHTML(valor){return String(valor).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
 function normalizar(texto){return String(texto).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").trim()}
 function mostrarToast(msg,tipo="success"){const toast=document.getElementById("toast");toast.textContent=msg;toast.className="toast show "+tipo;clearTimeout(toast._timer);toast._timer=setTimeout(()=>toast.className="toast "+tipo,3200)}
+
+// Lógica de Códigos Mágicos
+function cargarCodigosMagicos(){
+  let codigos=localStorage.getItem("tinmaruy_codigos_magicos");
+  if(!codigos){
+    codigos={};
+    localStorage.setItem("tinmaruy_codigos_magicos", JSON.stringify(codigos));
+  }else{
+    codigos=JSON.parse(codigos);
+  }
+  // Leer parámetro de la URL
+  const urlParams=new URLSearchParams(window.location.search);
+  const codigoURL=urlParams.get('codigo');
+  if(codigoURL){
+    // Si viene un código por URL, lo guardamos localmente para que funcione en este dispositivo
+    let misCodigos=JSON.parse(localStorage.getItem("tinmaruy_mis_codigos")||"{}");
+    misCodigos[codigoURL]=true;
+    localStorage.setItem("tinmaruy_mis_codigos", JSON.stringify(misCodigos));
+    // Limpiar URL
+    window.history.replaceState({}, document.title, window.location.pathname);
+    mostrarToast("✅ Enlace Mágico activado. Ya puedes usar este código.","success");
+  }
+}
+cargarCodigosMagicos();
+
+function generarCodigoGuardia(){
+  const nombre=document.getElementById("inputNombreGuardia").value.trim();
+  if(!nombre){mostrarToast("Escribe el nombre del guardia.","error");return;}
+  // Generar código aleatorio de 6 caracteres
+  const caracteres="ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  let codigo="";
+  for(let i=0;i<6;i++){codigo+=caracteres.charAt(Math.floor(Math.random()*caracteres.length));}
+  
+  // Guardar en la lista global (en el admin)
+  let codigos=JSON.parse(localStorage.getItem("tinmaruy_codigos_magicos")||"{}");
+  codigos[codigo]=nombre;
+  localStorage.setItem("tinmaruy_codigos_magicos", JSON.stringify(codigos));
+  
+  // Guardar el código generado en el dispositivo actual también
+  let misCodigos=JSON.parse(localStorage.getItem("tinmaruy_mis_codigos")||"{}");
+  misCodigos[codigo]=true;
+  localStorage.setItem("tinmaruy_mis_codigos", JSON.stringify(misCodigos));
+
+  // Mostrar resultado
+  document.getElementById("resultadoCodigo").style.display="block";
+  document.getElementById("codigoGenerado").textContent=codigo;
+  
+  const urlBase=window.location.href.split('?')[0];
+  const link=urlBase+"?codigo="+codigo;
+  document.getElementById("linkMagico").href=link;
+  document.getElementById("linkMagico").textContent=link;
+}
+
+function copiarEnlaceMagico(){
+  const link=document.getElementById("linkMagico").href;
+  navigator.clipboard.writeText(link).then(()=>{
+    mostrarToast("🔗 Enlace copiado. Envíalo por WhatsApp a "+document.getElementById("inputNombreGuardia").value,"success");
+  }).catch(()=>{
+    mostrarToast("No se pudo copiar. Cópialo manualmente.","warning");
+  });
+}
+
+function validarCodigoUsuario(){
+  const codigo=document.getElementById("inputCodigoValidar").value.trim().toUpperCase();
+  const nombre=document.getElementById("regNombre").dataset.nombre||localStorage.getItem("nombre_usuario_registrado")||"Guardia";
+  
+  if(codigo===CLAVE_MAESTRA){
+    localStorage.setItem("stock_autorizado","1");localStorage.setItem("usuario_activo",nombre);desbloquearApp(nombre);cerrarModalAuth();mostrarToast("Bienvenido Administrador, "+nombre,"success");return;
+  }
+  
+  // Verificar si el código existe en los códigos mágicos guardados en este dispositivo
+  const misCodigos=JSON.parse(localStorage.getItem("tinmaruy_mis_codigos")||"{}");
+  if(misCodigos[codigo]){
+    localStorage.setItem("stock_autorizado","1");localStorage.setItem("usuario_activo",nombre);desbloquearApp(nombre);cerrarModalAuth();mostrarToast("Bienvenido Guardia, "+nombre,"success");return;
+  }
+
+  // Verificar si está en la lista general (por si el admin lo generó en el mismo dispositivo)
+  const todosLosCodigos=JSON.parse(localStorage.getItem("tinmaruy_codigos_magicos")||"{}");
+  if(todosLosCodigos[codigo]){
+    // Como el código existe, lo guardamos localmente para futuros inicios de sesión
+    misCodigos[codigo]=true;
+    localStorage.setItem("tinmaruy_mis_codigos", JSON.stringify(misCodigos));
+    localStorage.setItem("stock_autorizado","1");localStorage.setItem("usuario_activo",nombre);desbloquearApp(nombre);cerrarModalAuth();mostrarToast("Bienvenido Guardia, "+nombre,"success");return;
+  }
+
+  mostrarToast("Código incorrecto. Solicita uno nuevo al administrador.","error");
+}
+
 function abrirModalAuth(){document.getElementById("modalAuth").classList.add("active")}
 function cerrarModalAuth(){document.getElementById("modalAuth").classList.remove("active")}
 function mostrarPasoCodigo(){document.getElementById("pasoPedirCodigo").style.display="none";document.getElementById("pasoIngresarCodigo").style.display="block";document.getElementById("inputCodigoValidar").focus()}
 function mostrarPasoPedir(){document.getElementById("pasoPedirCodigo").style.display="block";document.getElementById("pasoIngresarCodigo").style.display="none"}
-async function solicitarCodigoPersonal(){const nombre=document.getElementById("regNombre").value.trim();const email=document.getElementById("regEmail").value.trim();if(!nombre||!email)return mostrarToast("Completa el nombre y el correo electrónico.","error");if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))return mostrarToast("Ingresa un correo válido.","error");const boton=document.querySelector("#pasoPedirCodigo .btn-auth-submit");if(boton.disabled)return;boton.disabled=true;boton.textContent="Enviando solicitud...";mostrarToast("Enviando solicitud de acceso...","warning");try{const respuesta=await fetch("https://formsubmit.co/ajax/"+encodeURIComponent(MI_CORREO_ADMIN),{method:"POST",headers:{"Content-Type":"application/json","Accept":"application/json"},body:JSON.stringify({_subject:"SOLICITUD CÓDIGO GUARDIA - "+nombre,Mensaje:"Un guardia solicita acceso al Portal TINMARUY. El administrador debe asignar el código de acceso.",Nombre_Guardia:nombre,Correo_Contacto:email})});if(!respuesta.ok)throw new Error("No se pudo enviar");document.getElementById("infoUsuarioAviso").textContent="¡Hola "+nombre+"! La solicitud fue enviada. El administrador debe proporcionarte el código de acceso.";document.getElementById("regNombre").dataset.nombre=nombre;document.getElementById("regEmail").dataset.email=email;mostrarPasoCodigo();mostrarToast("Solicitud enviada. Espera el código del administrador.","success")}catch(e){mostrarToast("No se pudo enviar. Comprueba tu conexión e inténtalo otra vez.","error")}finally{boton.disabled=false;boton.textContent="✉️ Solicitar mi Código"}}
-function validarCodigoUsuario(){const codigo=document.getElementById("inputCodigoValidar").value.trim();const nombre=document.getElementById("regNombre").dataset.nombre||localStorage.getItem("nombre_usuario_registrado")||"Guardia";if(codigo===CLAVE_MAESTRA){localStorage.setItem("stock_autorizado","1");localStorage.setItem("usuario_activo",nombre);desbloquearApp(nombre);cerrarModalAuth();mostrarToast("Bienvenido, "+nombre,"success");return}mostrarToast("El acceso requiere un código válido asignado por el administrador. La validación de códigos personales necesita un servidor seguro.","error")}
-function bloquearApp(){const app=document.getElementById("appContainer");app.classList.add("bloqueado");document.getElementById("avisoBloqueo").classList.add("visible");document.getElementById("userNombre").textContent="Invitado";document.getElementById("userAvatar").textContent="?";const btn=document.getElementById("btnAccionUser");btn.textContent="🔑 Ingresar";btn.className="btn-ingresar";btn.onclick=abrirModalAuth}
+
+async function solicitarCodigoPersonal(){
+  const nombre=document.getElementById("regNombre").value.trim();
+  const email=document.getElementById("regEmail").value.trim();
+  if(!nombre||!email)return mostrarToast("Completa el nombre y el correo electrónico.","error");
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))return mostrarToast("Ingresa un correo válido.","error");
+  const boton=document.querySelector("#pasoPedirCodigo .btn-auth-submit");
+  if(boton.disabled)return;
+  boton.disabled=true;
+  boton.textContent="Enviando solicitud...";
+  mostrarToast("Enviando solicitud de acceso...","warning");
+  try{
+    const respuesta=await fetch("https://formsubmit.co/ajax/"+encodeURIComponent(MI_CORREO_ADMIN),{method:"POST",headers:{"Content-Type":"application/json","Accept":"application/json"},body:JSON.stringify({
+      _subject:"SOLICITUD CÓDIGO GUARDIA - "+nombre,
+      Mensaje:"Un guardia solicita acceso al Portal TINMARUY. El administrador debe generarle un código desde la sección Archivos y enviarle el Enlace Mágico.",
+      Nombre_Guardia:nombre,
+      Correo_Contacto:email
+    })});
+    if(!respuesta.ok)throw new Error("No se pudo enviar");
+    document.getElementById("infoUsuarioAviso").textContent="¡Hola "+nombre+"! La solicitud fue enviada. El administrador te enviará tu código de acceso.";
+    document.getElementById("regNombre").dataset.nombre=nombre;
+    document.getElementById("regEmail").dataset.email=email;
+    mostrarPasoCodigo();
+    mostrarToast("Solicitud enviada. Espera el código del administrador.","success");
+  }catch(e){
+    mostrarToast("No se pudo enviar. Comprueba tu conexión e inténtalo otra vez.","error");
+  }finally{
+    boton.disabled=false;
+    boton.textContent="✉️ Solicitar mi Código";
+  }
+}
+
+function bloquearApp(){
+  const app=document.getElementById("appContainer");
+  app.classList.add("bloqueado");
+  document.getElementById("avisoBloqueo").classList.add("visible");
+  document.getElementById("userNombre").textContent="Invitado";
+  document.getElementById("userAvatar").textContent="?";
+  const btn=document.getElementById("btnAccionUser");
+  btn.textContent="🔑 Ingresar";
+  btn.className="btn-ingresar";
+  btn.onclick=abrirModalAuth;
+}
+
 function desbloquearApp(nombreCompleto){
   const nombre=nombreCompleto||localStorage.getItem("usuario_activo")||"Guardia";
   const app=document.getElementById("appContainer");
@@ -431,6 +574,7 @@ function desbloquearApp(nombreCompleto){
   btn.title="Cerrar sesión";
   btn.onclick=cerrarSesion;
 }
+
 function cerrarSesion(){if(confirm("¿Estás seguro de que quieres cerrar sesión?")){localStorage.removeItem("stock_autorizado");localStorage.removeItem("usuario_activo");bloquearApp();mostrarToast("Sesión cerrada","warning")}}
 function accionUsuario(){if(localStorage.getItem("stock_autorizado")==="1")cerrarSesion();else abrirModalAuth()}
 function cambiarPortal(id,btn){cerrarUruleyes();const destino=document.getElementById("seccion-"+id);if(!destino)return;document.querySelectorAll(".portal-section").forEach(sec=>sec.classList.remove("active"));destino.classList.add("active");document.querySelectorAll(".portal-nav button").forEach(b=>b.classList.toggle("active",b.dataset.section===id));if(btn&&btn.dataset.section===id)btn.classList.add("active");if(id==="tienda")actualizarCarritoUI();if(id==="archivos")renderArchivos();window.scrollTo({top:0,behavior:"smooth"})}
@@ -528,6 +672,8 @@ const total=carrito.reduce((s,x)=>s+x.precio*x.cantidad,0);
   if(t.includes("archivo")||t.includes("archivos")||t.includes("documento")||t.includes("documentos")||t.includes("carpeta")||t.includes("carpetas")){
     abrirSeccionDesdeChat("archivos");
     return "📁 Abrí la sección Archivos. Ahí vas a encontrar documentos, planillas y material del portal. Si necesitás agregar algo, usá el botón de admin (requiere clave).";  }
+  if(t.includes("codigo")||t.includes("código")||t.includes("ingresar")||t.includes("clave")){
+    return "🔑 Para ingresar, el administrador debe generarte un código y enviarte el enlace mágico. Si ya tienes código, ingrésalo en la ventana de login.";  }
   if(t.includes("sugerencia")||t.includes("reporte")||t.includes("imagen adjunta")){
     abrirSeccionDesdeChat("sugerencias");
     return "📩 Abrí la sección Sugerencias. Puedes escribir tu mensaje y adjuntar una imagen opcional.";  }
