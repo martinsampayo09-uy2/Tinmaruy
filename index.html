@@ -416,27 +416,63 @@ radio-player{flex:1;width:50%;height:140px;display:block;min-width:0}
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <div id="chat-widget"><div id="chat-window" role="dialog" aria-label="Asistente virtual TINMARUY" aria-hidden="true"><div class="chat-header"><div><b><h2>🤖 Asistente TINMARUY</h2></b> <span class="chat-estado"></span></div><button onclick="toggleChat(false)" aria-label="Cerrar chat">✕</button></div><div class="chat-body" id="chatBody" aria-live="polite"><div class="chat-msg bot"><b>¡Hola! 👋 Soy el asistente TINMARUY</b></div></div><form class="chat-input-area" id="chatForm"><input type="text" id="chatInput" placeholder="Escribe tu consulta..." autocomplete="off" maxlength="500" aria-label="Escribe tu consulta"><button type="submit" aria-label="Enviar mensaje">➤</button></form></div><button id="chat-toggle" onclick="toggleChat()" aria-label="Abrir asistente virtual" aria-expanded="false">🤖</button></div>
 </div><!-- /#appContainer -->
-<div id="stockFullscreen"><header class="stock-header"><h1>👋 <a href="#" onclick="cerrarStock(event)" style="color:inherit;text-decoration:none"><span style="color:#fff">TIN</span><span style="color:#d4af37">MAR</span></a></h1><nav><a href="#" onclick="cerrarStock(event)">⬅️ Volver al Inicio</a></nav></header><div class="stock-frame-container"><iframe id="iframeStock" src="https://controldeestok.vercel.app" title="Control de Stock" loading="lazy"></iframe></div></div>
-<div id="uruleyesFullscreen"><header class="uruleyes-header"><h1>👋 <a href="#" onclick="cerrarUruleyes(event)" style="color:inherit;text-decoration:none"><span style="color:#fff">TIN</span><span style="color:#d4af37">MAR</span></a></h1><nav><a href="#" onclick="cerrarUruleyes(event)">⬅️ Volver al Inicio</a></nav></header><div class="uruleyes-frame-container"><iframe src="https://uruleyes.com" title="UruLeyes - Buscador de Leyes" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe></div></div>
+
+<!-- PANTALLA COMPLETA STOCK (corregida) -->
+<div id="stockFullscreen">
+  <header class="stock-header">
+    <h1>👋 <a href="#" onclick="cerrarStock(event)" style="color:inherit;text-decoration:none"><span style="color:#fff">TIN</span><span style="color:#d4af37">MAR</span></a></h1>
+    <nav><a href="#" onclick="cerrarStock(event)">⬅️ Volver al Inicio</a></nav>
+  </header>
+  <div class="stock-frame-container">
+    <iframe id="iframeStock" src="about:blank" title="Control de Stock" allow="clipboard-read; clipboard-write"></iframe>
+  </div>
+</div>
+
+<!-- PANTALLA COMPLETA URULEYES -->
+<div id="uruleyesFullscreen">
+  <header class="uruleyes-header">
+    <h1>👋 <a href="#" onclick="cerrarUruleyes(event)" style="color:inherit;text-decoration:none"><span style="color:#fff">TIN</span><span style="color:#d4af37">MAR</span></a></h1>
+    <nav><a href="#" onclick="cerrarUruleyes(event)">⬅️ Volver al Inicio</a></nav>
+  </header>
+  <div class="uruleyes-frame-container">
+    <iframe src="https://uruleyes.com" title="UruLeyes - Buscador de Leyes" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+  </div>
+</div>
+
 <script>
 "use strict";
 const MI_CORREO_ADMIN="Martinsampayo9@gmail.com";
 const CLAVE_MAESTRA="852963";
 const WHATSAPP_TINMARUY="59899295848";
+const STOCK_URL="https://controldeestok.vercel.app";
 const formatoUY=new Intl.NumberFormat("es-UY",{style:"currency",currency:"UYU",maximumFractionDigits:0});
 let carrito=[];
 let timerAnuncio=null;
 let anuncioTimer=null;
 let indiceAnuncio=0;
-function escaparHTML(valor){return String(valor||"").replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
-
-// Función de normalización mejorada con comprobación segura de nulos/indefinidos
-function normalizar(texto){
-  if (texto === undefined || texto === null) texto = "";
-  return String(texto).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").trim();
-}
-
+function escaparHTML(valor){return String(valor).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
+function normalizar(texto){return String(texto).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").trim()}
 function mostrarToast(msg,tipo="success"){const toast=document.getElementById("toast");toast.textContent=msg;toast.className="toast show "+tipo;clearTimeout(toast._timer);toast._timer=setTimeout(()=>toast.className="toast "+tipo,3200)}
+
+// ================= STOCK =================
+function abrirStock(){
+  const contenedor=document.getElementById("stockFullscreen");
+  const iframe=document.getElementById("iframeStock");
+  // Forzar recarga del iframe cada vez que se abre
+  iframe.src=STOCK_URL;
+  contenedor.classList.add("active");
+  document.body.style.overflow="hidden";
+}
+function cerrarStock(e){
+  if(e)e.preventDefault();
+  const contenedor=document.getElementById("stockFullscreen");
+  const iframe=document.getElementById("iframeStock");
+  contenedor.classList.remove("active");
+  // Limpiar iframe para liberar recursos
+  iframe.src="about:blank";
+  document.body.style.overflow="";
+}
+// ==========================================
 
 function cargarCodigosMagicos(){
   let codigos=localStorage.getItem("tinmaruy_codigos_magicos");
@@ -598,16 +634,6 @@ function cambiarCantidadCarrito(index,cambio){const item=carrito[index];if(!item
 function vaciarCarrito(){if(!carrito.length)return mostrarToast("El carrito ya está vacío.","warning");if(!confirm("¿Quieres eliminar todos los productos del carrito?"))return;carrito=[];guardarCarrito();actualizarCarritoUI();mostrarToast("Carrito vaciado","warning")}
 function actualizarCarritoUI(){const lista=document.getElementById("carrito-lista");if(!lista)return;lista.replaceChildren();let total=0;let unidades=0;if(carrito.length===0){const li=document.createElement("li");li.textContent="El carrito está vacío.";li.style.color="#7F8C8D";lista.appendChild(li)}else{carrito.forEach((item,index)=>{const subtotal=item.precio*item.cantidad;total+=subtotal;unidades+=item.cantidad;const li=document.createElement("li");const detalle=document.createElement("div");const nombre=document.createElement("div");nombre.className="carrito-producto-nombre";nombre.textContent=item.nombre;const sub=document.createElement("div");sub.className="carrito-subtotal";sub.textContent=formatoUY.format(item.precio)+" × "+item.cantidad+" = "+formatoUY.format(subtotal);detalle.append(nombre,sub);const acciones=document.createElement("div");acciones.className="carrito-acciones-item";const menos=document.createElement("button");menos.className="btn-cantidad";menos.textContent="−";menos.title="Quitar una unidad";menos.setAttribute("aria-label","Quitar una unidad de "+item.nombre);menos.onclick=()=>cambiarCantidadCarrito(index,-1);const cantidad=document.createElement("span");cantidad.textContent=String(item.cantidad);cantidad.style.fontWeight="700";const mas=document.createElement("button");mas.className="btn-cantidad";mas.textContent="+";mas.title="Agregar una unidad";mas.setAttribute("aria-label","Agregar una unidad de "+item.nombre);mas.onclick=()=>cambiarCantidadCarrito(index,1);const eliminar=document.createElement("button");eliminar.className="btn-eliminar";eliminar.textContent="✕";eliminar.title="Eliminar producto";eliminar.setAttribute("aria-label","Eliminar "+item.nombre);eliminar.onclick=()=>eliminarDelCarrito(index);acciones.append(menos,cantidad,mas,eliminar);li.append(detalle,acciones);lista.appendChild(li)})}document.getElementById("carrito-total").textContent=formatoUY.format(total);document.getElementById("carritoContador").textContent=unidades+" "+(unidades===1?"artículo":"artículos");const badgeTienda=document.getElementById("badgeTienda");if(badgeTienda)badgeTienda.textContent=unidades>99?"99+":String(unidades);const badgeTiendaBarra=document.getElementById("badgeTiendaBarra");if(badgeTiendaBarra)badgeTiendaBarra.textContent=unidades>99?"99+":String(unidades);guardarCarrito()}
 function enviarPedidoWhatsApp(){if(!carrito.length)return mostrarToast("Tu carrito está vacío. Agrega productos primero.","warning");let total=0;let mensaje="¡Hola! Quisiera realizar este pedido en TINMARUY:\n\n";carrito.forEach(item=>{const subtotal=item.precio*item.cantidad;total+=subtotal;mensaje+="• "+item.nombre+" | Cantidad: "+item.cantidad+" | Subtotal: "+formatoUY.format(subtotal)+"\n"});mensaje+="\nTOTAL: "+formatoUY.format(total)+"\n\nQuisiera confirmar disponibilidad, entrega y forma de pago. ¡Gracias!";const url="https://wa.me/"+WHATSAPP_TINMARUY+"?text="+encodeURIComponent(mensaje);const ventana=window.open(url,"_blank","noopener,noreferrer");if(!ventana)window.location.href=url}
-
-function abrirStock(){
-  const iframe = document.getElementById("iframeStock");
-  if(iframe && (!iframe.src || iframe.src === "about:blank")) {
-    iframe.src = "https://controldeestok.vercel.app";
-  }
-  document.getElementById("stockFullscreen").classList.add("active");
-  document.body.style.overflow="hidden";
-}
-function cerrarStock(e){if(e)e.preventDefault();document.getElementById("stockFullscreen").classList.remove("active");document.body.style.overflow=""}
 function abrirUruleyes(){document.getElementById("uruleyesFullscreen").classList.add("active");document.body.style.overflow="hidden"}
 function cerrarUruleyes(e){if(e)e.preventDefault();document.getElementById("uruleyesFullscreen").classList.remove("active");document.body.style.overflow=""}
 async function cargarClima(){const contenedor=document.getElementById("climaContenedor");if(!contenedor)return;try{const lat=-34.90,lon=-56.16;const res=await fetch("https://api.open-meteo.com/v1/forecast?latitude="+lat+"&longitude="+lon+"&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,wind_speed_10m&timezone=America%2FMontevideo",{cache:"no-store"});if(!res.ok)throw new Error("API");const data=await res.json();const actual=data.current;if(!actual)throw new Error("Sin datos");const codigo=actual.weather_code;let icono="☀️",texto="Despejado";if(codigo===0){icono="☀️";texto="Despejado"}else if(codigo<=3){icono="⛅";texto="Parcialmente nublado"}else if(codigo===45||codigo===48){icono="🌫️";texto="Niebla"}else if(codigo>=51&&codigo<=67){icono="🌧️";texto="Lluvia"}else if(codigo>=71&&codigo<=77){icono="❄️";texto="Nieve"}else if(codigo>=80&&codigo<=82){icono="🌦️";texto="Chaparrones"}else if(codigo>=85&&codigo<=86){icono="🌨️";texto="Nevadas"}else if(codigo>=95){icono="⛈️";texto="Tormenta"}const temp=Math.round(actual.temperature_2m);const sens=Math.round(actual.apparent_temperature);const viento=Math.round(actual.wind_speed_10m);const humedad=Math.round(actual.relative_humidity_2m);const hora=new Date().toLocaleTimeString("es-UY",{hour:"2-digit",minute:"2-digit",timeZone:"America/Montevideo"});contenedor.innerHTML='<div class="clima-body"><div><div class="clima-temp">'+temp+'°C</div><div style="font-size:13px;color:#4a5568;margin-top:4px">'+texto+'</div></div><div class="clima-icon">'+icono+'</div></div><div class="clima-detalles"><div>💨 Viento: '+viento+' km/h</div><div>💧 Humedad: '+humedad+'%</div><div>🌡️ Sensación: '+sens+'°C</div><div>🕒 Act.: '+hora+' hs</div></div>'}catch(e){contenedor.innerHTML='<div class="clima-error">⚠️ No se pudo actualizar el clima. Comprueba tu conexión.</div>'}}
@@ -658,9 +684,9 @@ const total=carrito.reduce((s,x)=>s+x.precio*x.cantidad,0);
     return "Para comprar, solo agrega productos al carrito y luego haz clic en 'Enviar por WhatsApp'. 🛒📲";
   if(t.includes("precio")||t.includes("cuanto cuesta")||t.includes("cuánto cuesta")||t.includes("cuanto sale")){
     const productos=[...document.querySelectorAll(".item")];
-    const coincidencias=productos.filter(p=>normalizar((p.dataset.name||"")+" "+(p.querySelector("h3")?.textContent||"")).split(" ").some(palabra=>palabra.length>3&&t.includes(palabra)));
+    const coincidencias=productos.filter(p=>normalizar(p.dataset.name+" "+p.querySelector("h3").textContent).split(" ").some(palabra=>palabra.length>3&&t.includes(palabra)));
     if(coincidencias.length){
-      return "Estos son los productos que coinciden:\n"+coincidencias.slice(0,5).map(p=>"• "+(p.querySelector("h3")?.textContent||"")+": "+formatoUY.format(Number(p.dataset.price||0))).join("\n")+"\nPuedes verlos en la Tienda.";
+      return "Estos son los productos que coinciden:\n"+coincidencias.slice(0,5).map(p=>"• "+p.querySelector("h3").textContent+": "+formatoUY.format(Number(p.dataset.price))).join("\n")+"\nPuedes verlos en la Tienda.";
     }
     return "Los precios varían según el producto. ¿Tienes uno específico en mente? 🛒";
   }
@@ -727,23 +753,14 @@ const genericas=[
 document.getElementById("chatForm").addEventListener("submit",function(e){e.preventDefault();enviarMensajeChat()});
 document.getElementById("buscarProducto").addEventListener("input",filtrarProductos);
 document.getElementById("ordenProductos").addEventListener("change",ordenarProductos);
-function filtrarProductos(){
-  const q=normalizar(document.getElementById("buscarProducto").value);
-  let visibles=0;
-  document.querySelectorAll("#tiendaGrid .item").forEach(item=>{
-    const coincide=normalizar((item.dataset.name||"")+" "+(item.textContent||"")).includes(q);
-    item.style.display=coincide?"":"none";
-    if(coincide)visibles++
-  });
-  document.getElementById("sinProductos").style.display=visibles?"none":"block";
-}
-function ordenarProductos(){const grid=document.getElementById("tiendaGrid");const items=[...grid.querySelectorAll(".item")];const orden=document.getElementById("ordenProductos").value;items.sort((a,b)=>{if(orden==="precio-asc")return Number(a.dataset.price)-Number(b.dataset.price);if(orden==="precio-desc")return Number(b.dataset.price)-Number(a.dataset.price);if(orden==="nombre")return (a.dataset.name||"").localeCompare(b.dataset.name||"","es");return Number(a.dataset.order)-Number(b.dataset.order)});items.forEach(item=>grid.appendChild(item));filtrarProductos()}
+function filtrarProductos(){const q=normalizar(document.getElementById("buscarProducto").value);let visibles=0;document.querySelectorAll("#tiendaGrid .item").forEach(item=>{const coincide=normalizar(item.dataset.name+" "+item.textContent).includes(q);item.style.display=coincide?"":"none";if(coincide)visibles++});document.getElementById("sinProductos").style.display=visibles?"none":"block"}
+function ordenarProductos(){const grid=document.getElementById("tiendaGrid");const items=[...grid.querySelectorAll(".item")];const orden=document.getElementById("ordenProductos").value;items.sort((a,b)=>{if(orden==="precio-asc")return Number(a.dataset.price)-Number(b.dataset.price);if(orden==="precio-desc")return Number(b.dataset.price)-Number(a.dataset.price);if(orden==="nombre")return a.dataset.name.localeCompare(b.dataset.name,"es");return Number(a.dataset.order)-Number(b.dataset.order)});items.forEach(item=>grid.appendChild(item));filtrarProductos()}
 document.querySelectorAll(".sw-select-btn").forEach(boton=>boton.addEventListener("click",function(){const actual=this.parentElement;document.querySelectorAll(".sw-select").forEach(item=>{if(item!==actual)item.classList.remove("abierto")});actual.classList.toggle("abierto")}));
 document.querySelectorAll(".sw-opciones input").forEach(input=>input.addEventListener("change",function(){const select=this.closest(".sw-select");select.classList.remove("sw-error");if(this.type==="radio")select.classList.remove("abierto");const span=select.querySelector(".sw-select-btn span");if(select.id==="select-tipo"||select.id==="select-diseno"||select.id==="select-dominio"){const elegido=select.querySelector("input:checked");if(elegido)span.textContent=elegido.parentElement.textContent.trim()}else{const total=select.querySelectorAll("input:checked").length;span.textContent=total?total+" función(es) seleccionada(s)":"Funciones para tu web *"}}));
 document.getElementById("formWeb").addEventListener("submit",function(e){let primerError=null;document.querySelectorAll(".sw-select").forEach(el=>el.classList.remove("sw-error"));const requisitos=[["select-tipo",'input[name="Tipo_de_Web"]:checked',"Seleccioná el tipo de web."],["select-funciones",'input[name="Funciones[]"]:checked',"Seleccioná al menos una función para tu web."],["select-diseno",'input[name="Diseno"]:checked',"Seleccioná un estilo de diseño."],["select-dominio",'input[name="Dominio"]:checked',"Seleccioná una opción de dominio."]];for(const [id,selector,mensaje] of requisitos){if(!document.querySelector("#"+id+" "+selector)){const el=document.getElementById(id);el.classList.add("sw-error","abierto");primerError={el,mensaje};break}}if(primerError){e.preventDefault();mostrarToast(primerError.mensaje,"error");primerError.el.querySelector(".sw-select-btn").scrollIntoView({behavior:"smooth",block:"center"})}});
 document.addEventListener("click",function(e){if(!e.target.closest(".sw-select"))document.querySelectorAll(".sw-select").forEach(el=>el.classList.remove("abierto"))});
 function verificarMensajeSistemaAlInicio(){verificarMensajeSistema();if(localStorage.getItem("stock_autorizado")==="1")desbloquearApp(localStorage.getItem("usuario_activo"));else bloquearApp()}
-const listaAnuncios=[{titulo:"📁 Archivos",texto:"Consultá los documentos y planillas del portal."},{titulo:"📩 Sugerencias",texto:"Envía comentarios o reportes desde la sección inferior."},{titulo:"⚖️ UruLeyes",texto:"Consulta las leyes desde la pestaña inferior."},{titulo:"🚨 Emergencias",texto:"Recordá los teléfonos de emergencia: 911, 104 y 105."},{titulo:"☀️ Clima",texto:"Revisa el estado del tiempo antes de salir."},{titulo:"🛒 Tu Stock",texto:"Gestiona y controla tu stock directamente desde el portal."}];
+const listaAnuncios=[{titulo:"📁 Archivos",texto:"Consultá los documentos y planillas del portal."},{titulo:"📩 Sugerencias",texto:"Envía comentarios o reportes desde la sección inferior."},{titulo:"⚖️ UruLeyes",texto:"Consulta las leyes desde la pestaña inferior."},{titulo:"🚨 Emergencias",texto:"Recordá los teléfonos de emergencia: 911, 104 y 105."},{titulo:"☀️ Clima",texto:"Revisa el estado del tiempo antes de salir."},{titulo:"🏪 Tu Stock",texto:"Gestiona y controla tu stock directamente desde el portal."}];
 function mostrarSiguienteAnuncio(){const el=document.getElementById("anuncioFlotante");if(el.dataset.cerrado==="1")return;const a=listaAnuncios[indiceAnuncio];document.getElementById("anuncioTitulo").textContent=a.titulo;document.getElementById("anuncioTexto").textContent=a.texto;el.classList.add("mostrar");clearTimeout(timerAnuncio);timerAnuncio=setTimeout(()=>el.classList.remove("mostrar"),5000);indiceAnuncio=(indiceAnuncio+1)%listaAnuncios.length}
 function cerrarAnuncioFlotante(){const el=document.getElementById("anuncioFlotante");el.classList.remove("mostrar");el.dataset.cerrado="1";clearTimeout(timerAnuncio)}
 document.addEventListener("keydown",(e)=>{if(e.key==="F12"){e.preventDefault();alert("🔒 Inspección bloqueada")}if(e.ctrlKey&&e.shiftKey&&(e.key==="I"||e.key==="C"||e.key==="J")){e.preventDefault();alert("🚫 Atajo bloqueado")}if(e.ctrlKey&&e.key.toLowerCase()==="u"){e.preventDefault();alert("🚫 Ver código fuente deshabilitado")}});
