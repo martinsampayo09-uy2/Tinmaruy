@@ -159,6 +159,15 @@ radio-player{flex:1;width:50%;height:140px;display:block;min-width:0}
 .uruleyes-header nav a,.stock-header nav a{color:#fff;text-decoration:none;font-weight:bold;font-size:13px;cursor:pointer}
 .uruleyes-frame-container,.stock-frame-container{flex:1;width:100%;position:relative}
 .uruleyes-frame-container iframe,.stock-frame-container iframe{width:100%;height:100%;border:none;position:absolute;inset:0}
+/* Mensaje cuando la web no permite iframe */
+.stock-fallback{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;background:linear-gradient(135deg,#0d1b2a,#1F4E78);color:#fff;z-index:2}
+.stock-fallback.oculto{display:none}
+.stock-fallback h2{font-size:20px;margin-bottom:10px;color:#fff;border:none;padding:0}
+.stock-fallback p{font-size:14px;opacity:.9;margin-bottom:20px;line-height:1.5;max-width:400px}
+.stock-fallback .icono-grande{font-size:56px;margin-bottom:14px}
+.btn-abrir-stock{background:#00B050;color:#fff;border:none;padding:14px 28px;border-radius:10px;font-size:16px;font-weight:700;cursor:pointer;box-shadow:0 6px 20px rgba(0,176,80,.4);display:inline-flex;align-items:center;gap:8px;transition:transform .2s,background .2s}
+.btn-abrir-stock:hover{background:#009144;transform:scale(1.03)}
+.btn-abrir-stock:active{transform:scale(.98)}
 .toast{position:fixed;bottom:100px;right:15px;max-width:calc(100vw - 30px);background:var(--azul);color:#fff;padding:12px 18px;border-radius:10px;box-shadow:0 8px 20px rgba(0,0,0,.25);font-weight:600;font-size:13px;transform:translateX(calc(100% + 30px));transition:transform .3s;z-index:7000}
 .toast.show{transform:translateX(0)}
 .toast.success{background:var(--verde)}
@@ -417,14 +426,22 @@ radio-player{flex:1;width:50%;height:140px;display:block;min-width:0}
 <div id="chat-widget"><div id="chat-window" role="dialog" aria-label="Asistente virtual TINMARUY" aria-hidden="true"><div class="chat-header"><div><b><h2>🤖 Asistente TINMARUY</h2></b> <span class="chat-estado"></span></div><button onclick="toggleChat(false)" aria-label="Cerrar chat">✕</button></div><div class="chat-body" id="chatBody" aria-live="polite"><div class="chat-msg bot"><b>¡Hola! 👋 Soy el asistente TINMARUY</b></div></div><form class="chat-input-area" id="chatForm"><input type="text" id="chatInput" placeholder="Escribe tu consulta..." autocomplete="off" maxlength="500" aria-label="Escribe tu consulta"><button type="submit" aria-label="Enviar mensaje">➤</button></form></div><button id="chat-toggle" onclick="toggleChat()" aria-label="Abrir asistente virtual" aria-expanded="false">🤖</button></div>
 </div><!-- /#appContainer -->
 
-<!-- PANTALLA COMPLETA STOCK (corregida) -->
+<!-- PANTALLA COMPLETA STOCK (con fallback) -->
 <div id="stockFullscreen">
   <header class="stock-header">
     <h1>👋 <a href="#" onclick="cerrarStock(event)" style="color:inherit;text-decoration:none"><span style="color:#fff">TIN</span><span style="color:#d4af37">MAR</span></a></h1>
     <nav><a href="#" onclick="cerrarStock(event)">⬅️ Volver al Inicio</a></nav>
   </header>
   <div class="stock-frame-container">
-    <iframe id="iframeStock" src="about:blank" title="Control de Stock" allow="clipboard-read; clipboard-write"></iframe>
+    <iframe id="iframeStock" src="about:blank" title="Control de Stock"></iframe>
+    <div class="stock-fallback oculto" id="stockFallback">
+      <div class="icono-grande">🏪</div>
+      <h2>Control de Stock</h2>
+      <p>Por seguridad, esta página no permite verse dentro de la app. Tocá el botón para abrirla en pantalla completa con todos sus botones y funciones.</p>
+      <button class="btn-abrir-stock" onclick="abrirStockEnPestana()">
+        <i class="fa-solid fa-arrow-up-right-from-square"></i> Abrir Stock
+      </button>
+    </div>
   </div>
 </div>
 
@@ -454,25 +471,59 @@ function escaparHTML(valor){return String(valor).replace(/[&<>"']/g,function(c){
 function normalizar(texto){return String(texto).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").trim()}
 function mostrarToast(msg,tipo="success"){const toast=document.getElementById("toast");toast.textContent=msg;toast.className="toast show "+tipo;clearTimeout(toast._timer);toast._timer=setTimeout(()=>toast.className="toast "+tipo,3200)}
 
-// ================= STOCK =================
+/* ===================== STOCK ===================== */
+let stockCheckTimeout=null;
+
 function abrirStock(){
   const contenedor=document.getElementById("stockFullscreen");
   const iframe=document.getElementById("iframeStock");
-  // Forzar recarga del iframe cada vez que se abre
+  const fallback=document.getElementById("stockFallback");
+  
+  // Ocultar fallback al inicio
+  fallback.classList.add("oculto");
+  
+  // Cargar el iframe con la URL
   iframe.src=STOCK_URL;
+  
+  // Mostrar la pantalla completa
   contenedor.classList.add("active");
   document.body.style.overflow="hidden";
+  
+  // Detectar si la web bloquea el iframe (X-Frame-Options)
+  // Si después de 4 segundos el iframe no tiene contenido accesible, mostrar fallback
+  clearTimeout(stockCheckTimeout);
+  stockCheckTimeout=setTimeout(()=>{
+    try{
+      // Si el iframe está vacío o bloqueado, el contentWindow.location.href lanzará error
+      const iframeDoc=iframe.contentDocument||iframe.contentWindow.document;
+      // Si llegamos acá, el iframe cargó OK (no bloqueado)
+      console.log("Stock cargado dentro del iframe correctamente");
+    }catch(err){
+      // El iframe está bloqueado por seguridad → mostrar fallback
+      fallback.classList.remove("oculto");
+      iframe.style.display="none";
+    }
+  },4000);
 }
+
+function abrirStockEnPestana(){
+  window.open(STOCK_URL,"_blank","noopener,noreferrer");
+}
+
 function cerrarStock(e){
   if(e)e.preventDefault();
   const contenedor=document.getElementById("stockFullscreen");
   const iframe=document.getElementById("iframeStock");
+  const fallback=document.getElementById("stockFallback");
+  
+  clearTimeout(stockCheckTimeout);
   contenedor.classList.remove("active");
-  // Limpiar iframe para liberar recursos
   iframe.src="about:blank";
+  iframe.style.display="";
+  fallback.classList.add("oculto");
   document.body.style.overflow="";
 }
-// ==========================================
+/* ================================================== */
 
 function cargarCodigosMagicos(){
   let codigos=localStorage.getItem("tinmaruy_codigos_magicos");
