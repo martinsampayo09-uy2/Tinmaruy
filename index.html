@@ -31,7 +31,6 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible{
 .sobre-notificacion-bar{position:relative;background:var(--azul);color:#fff;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;cursor:pointer;border:none;flex-shrink:0}
 .sobre-badge{position:absolute;top:-2px;right:-2px;background:var(--rojo);color:#fff;font-size:9px;padding:2px 5px;border-radius:50%;font-weight:700;display:none}
 .sobre-badge.activo{display:block}
-/* Botón Tienda en barra superior */
 .btn-tienda-bar{position:relative;background:var(--azul);color:#fff;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;cursor:pointer;border:none;flex-shrink:0;transition:transform .2s,background .2s}
 .btn-tienda-bar:hover{background:var(--azul-claro);transform:scale(1.05)}
 .btn-tienda-bar .tienda-badge{position:absolute;top:-2px;right:-2px;background:var(--rojo);color:#fff;font-size:9px;padding:2px 5px;border-radius:50%;font-weight:700;min-width:16px;text-align:center}
@@ -52,7 +51,6 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible{
 .puerta-box .fa-person-running{color:#00873e;font-size:13px}
 .btn-salida-custom span{color:#ffffff;font-size:11px;font-weight:700}
 
-/* BOTÓN COMPARTIR - SOLO ICONO */
 .btn-compartir-custom{background-color:#1877F2;border:2px solid #ffffff;border-radius:8px;padding:5px 8px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 2px 5px rgba(0,0,0,0.2);transition:transform 0.2s,background-color 0.2s;flex-shrink:0}
 .btn-compartir-custom:hover{background-color:#145dbf;transform:scale(1.03)}
 .btn-compartir-custom i{color:#ffffff;font-size:15px}
@@ -322,7 +320,6 @@ radio-player{flex:1;width:50%;height:140px;display:block;min-width:0}
 <div class="user-bar" id="userBar">
   <button class="sobre-notificacion-bar" onclick="abrirModalMensaje()" title="Novedades del sistema" aria-label="Novedades">✉️<span class="sobre-badge" id="sobreBadge">1</span></button>
 
-  <!-- BOTÓN TIENDA EN BARRA SUPERIOR -->
   <button class="btn-tienda-bar" onclick="cambiarPortal('tienda',document.querySelector('[data-section=tienda]'))" title="Ir a la Tienda" aria-label="Tienda">
     <i class="fa-solid fa-store"></i>
     <span class="tienda-badge" id="badgeTiendaBarra">0</span>
@@ -377,7 +374,6 @@ radio-player{flex:1;width:50%;height:140px;display:block;min-width:0}
 <section id="seccion-archivos" class="portal-section">
   <h2>📁 Archivos y Documentos</h2>
   
-  <!-- Panel de Generación de Códigos (Siempre visible) -->
   <div id="panelGenerarCodigo" style="background:#e8f3ff; border:1px solid #c9e2f7; border-radius:12px; padding:15px; margin-bottom:18px; text-align:center;">
     <h3 style="color:#1769aa; font-size:15px; margin-bottom:8px;">🔑 Generador de Códigos para Guardias</h3>
     <p style="font-size:12px; color:#4a5568; margin-bottom:10px;">Crea un código único y un enlace mágico para que el guardia pueda ingresar desde su celular.</p>
@@ -420,7 +416,7 @@ radio-player{flex:1;width:50%;height:140px;display:block;min-width:0}
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <div id="chat-widget"><div id="chat-window" role="dialog" aria-label="Asistente virtual TINMARUY" aria-hidden="true"><div class="chat-header"><div><b><h2>🤖 Asistente TINMARUY</h2></b> <span class="chat-estado"></span></div><button onclick="toggleChat(false)" aria-label="Cerrar chat">✕</button></div><div class="chat-body" id="chatBody" aria-live="polite"><div class="chat-msg bot"><b>¡Hola! 👋 Soy el asistente TINMARUY</b></div></div><form class="chat-input-area" id="chatForm"><input type="text" id="chatInput" placeholder="Escribe tu consulta..." autocomplete="off" maxlength="500" aria-label="Escribe tu consulta"><button type="submit" aria-label="Enviar mensaje">➤</button></form></div><button id="chat-toggle" onclick="toggleChat()" aria-label="Abrir asistente virtual" aria-expanded="false">🤖</button></div>
 </div><!-- /#appContainer -->
-<div id="stockFullscreen"><header class="stock-header"><h1>👋 <a href="#" onclick="cerrarStock(event)" style="color:inherit;text-decoration:none"><span style="color:#fff">TIN</span><span style="color:#d4af37">MAR</span></a></h1><nav><a href="#" onclick="cerrarStock(event)">⬅️ Volver al Inicio</a></nav></header><div class="stock-frame-container"><iframe src="https://controldeestok.vercel.app" title="Control de Stock" loading="lazy"></iframe></div></div>
+<div id="stockFullscreen"><header class="stock-header"><h1>👋 <a href="#" onclick="cerrarStock(event)" style="color:inherit;text-decoration:none"><span style="color:#fff">TIN</span><span style="color:#d4af37">MAR</span></a></h1><nav><a href="#" onclick="cerrarStock(event)">⬅️ Volver al Inicio</a></nav></header><div class="stock-frame-container"><iframe id="iframeStock" src="https://controldeestok.vercel.app" title="Control de Stock" loading="lazy"></iframe></div></div>
 <div id="uruleyesFullscreen"><header class="uruleyes-header"><h1>👋 <a href="#" onclick="cerrarUruleyes(event)" style="color:inherit;text-decoration:none"><span style="color:#fff">TIN</span><span style="color:#d4af37">MAR</span></a></h1><nav><a href="#" onclick="cerrarUruleyes(event)">⬅️ Volver al Inicio</a></nav></header><div class="uruleyes-frame-container"><iframe src="https://uruleyes.com" title="UruLeyes - Buscador de Leyes" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe></div></div>
 <script>
 "use strict";
@@ -432,11 +428,16 @@ let carrito=[];
 let timerAnuncio=null;
 let anuncioTimer=null;
 let indiceAnuncio=0;
-function escaparHTML(valor){return String(valor).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
-function normalizar(texto){return String(texto).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").trim()}
+function escaparHTML(valor){return String(valor||"").replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
+
+// Función de normalización mejorada con comprobación segura de nulos/indefinidos
+function normalizar(texto){
+  if (texto === undefined || texto === null) texto = "";
+  return String(texto).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").trim();
+}
+
 function mostrarToast(msg,tipo="success"){const toast=document.getElementById("toast");toast.textContent=msg;toast.className="toast show "+tipo;clearTimeout(toast._timer);toast._timer=setTimeout(()=>toast.className="toast "+tipo,3200)}
 
-// Lógica de Códigos Mágicos
 function cargarCodigosMagicos(){
   let codigos=localStorage.getItem("tinmaruy_codigos_magicos");
   if(!codigos){
@@ -445,15 +446,12 @@ function cargarCodigosMagicos(){
   }else{
     codigos=JSON.parse(codigos);
   }
-  // Leer parámetro de la URL
   const urlParams=new URLSearchParams(window.location.search);
   const codigoURL=urlParams.get('codigo');
   if(codigoURL){
-    // Si viene un código por URL, lo guardamos localmente para que funcione en este dispositivo
     let misCodigos=JSON.parse(localStorage.getItem("tinmaruy_mis_codigos")||"{}");
     misCodigos[codigoURL]=true;
     localStorage.setItem("tinmaruy_mis_codigos", JSON.stringify(misCodigos));
-    // Limpiar URL
     window.history.replaceState({}, document.title, window.location.pathname);
     mostrarToast("✅ Enlace Mágico activado. Ya puedes usar este código.","success");
   }
@@ -463,22 +461,18 @@ cargarCodigosMagicos();
 function generarCodigoGuardia(){
   const nombre=document.getElementById("inputNombreGuardia").value.trim();
   if(!nombre){mostrarToast("Escribe el nombre del guardia.","error");return;}
-  // Generar código aleatorio de 6 caracteres
   const caracteres="ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
   let codigo="";
   for(let i=0;i<6;i++){codigo+=caracteres.charAt(Math.floor(Math.random()*caracteres.length));}
   
-  // Guardar en la lista global (en el admin)
   let codigos=JSON.parse(localStorage.getItem("tinmaruy_codigos_magicos")||"{}");
   codigos[codigo]=nombre;
   localStorage.setItem("tinmaruy_codigos_magicos", JSON.stringify(codigos));
   
-  // Guardar el código generado en el dispositivo actual también
   let misCodigos=JSON.parse(localStorage.getItem("tinmaruy_mis_codigos")||"{}");
   misCodigos[codigo]=true;
   localStorage.setItem("tinmaruy_mis_codigos", JSON.stringify(misCodigos));
 
-  // Mostrar resultado
   document.getElementById("resultadoCodigo").style.display="block";
   document.getElementById("codigoGenerado").textContent=codigo;
   
@@ -514,16 +508,13 @@ function validarCodigoUsuario(){
     localStorage.setItem("stock_autorizado","1");localStorage.setItem("usuario_activo",nombre);desbloquearApp(nombre);cerrarModalAuth();mostrarToast("Bienvenido Administrador, "+nombre,"success");return;
   }
   
-  // Verificar si el código existe en los códigos mágicos guardados en este dispositivo
   const misCodigos=JSON.parse(localStorage.getItem("tinmaruy_mis_codigos")||"{}");
   if(misCodigos[codigo]){
     localStorage.setItem("stock_autorizado","1");localStorage.setItem("usuario_activo",nombre);desbloquearApp(nombre);cerrarModalAuth();mostrarToast("Bienvenido Guardia, "+nombre,"success");return;
   }
 
-  // Verificar si está en la lista general (por si el admin lo generó en el mismo dispositivo)
   const todosLosCodigos=JSON.parse(localStorage.getItem("tinmaruy_codigos_magicos")||"{}");
   if(todosLosCodigos[codigo]){
-    // Como el código existe, lo guardamos localmente para futuros inicios de sesión
     misCodigos[codigo]=true;
     localStorage.setItem("tinmaruy_mis_codigos", JSON.stringify(misCodigos));
     localStorage.setItem("stock_autorizado","1");localStorage.setItem("usuario_activo",nombre);desbloquearApp(nombre);cerrarModalAuth();mostrarToast("Bienvenido Guardia, "+nombre,"success");return;
@@ -607,7 +598,15 @@ function cambiarCantidadCarrito(index,cambio){const item=carrito[index];if(!item
 function vaciarCarrito(){if(!carrito.length)return mostrarToast("El carrito ya está vacío.","warning");if(!confirm("¿Quieres eliminar todos los productos del carrito?"))return;carrito=[];guardarCarrito();actualizarCarritoUI();mostrarToast("Carrito vaciado","warning")}
 function actualizarCarritoUI(){const lista=document.getElementById("carrito-lista");if(!lista)return;lista.replaceChildren();let total=0;let unidades=0;if(carrito.length===0){const li=document.createElement("li");li.textContent="El carrito está vacío.";li.style.color="#7F8C8D";lista.appendChild(li)}else{carrito.forEach((item,index)=>{const subtotal=item.precio*item.cantidad;total+=subtotal;unidades+=item.cantidad;const li=document.createElement("li");const detalle=document.createElement("div");const nombre=document.createElement("div");nombre.className="carrito-producto-nombre";nombre.textContent=item.nombre;const sub=document.createElement("div");sub.className="carrito-subtotal";sub.textContent=formatoUY.format(item.precio)+" × "+item.cantidad+" = "+formatoUY.format(subtotal);detalle.append(nombre,sub);const acciones=document.createElement("div");acciones.className="carrito-acciones-item";const menos=document.createElement("button");menos.className="btn-cantidad";menos.textContent="−";menos.title="Quitar una unidad";menos.setAttribute("aria-label","Quitar una unidad de "+item.nombre);menos.onclick=()=>cambiarCantidadCarrito(index,-1);const cantidad=document.createElement("span");cantidad.textContent=String(item.cantidad);cantidad.style.fontWeight="700";const mas=document.createElement("button");mas.className="btn-cantidad";mas.textContent="+";mas.title="Agregar una unidad";mas.setAttribute("aria-label","Agregar una unidad de "+item.nombre);mas.onclick=()=>cambiarCantidadCarrito(index,1);const eliminar=document.createElement("button");eliminar.className="btn-eliminar";eliminar.textContent="✕";eliminar.title="Eliminar producto";eliminar.setAttribute("aria-label","Eliminar "+item.nombre);eliminar.onclick=()=>eliminarDelCarrito(index);acciones.append(menos,cantidad,mas,eliminar);li.append(detalle,acciones);lista.appendChild(li)})}document.getElementById("carrito-total").textContent=formatoUY.format(total);document.getElementById("carritoContador").textContent=unidades+" "+(unidades===1?"artículo":"artículos");const badgeTienda=document.getElementById("badgeTienda");if(badgeTienda)badgeTienda.textContent=unidades>99?"99+":String(unidades);const badgeTiendaBarra=document.getElementById("badgeTiendaBarra");if(badgeTiendaBarra)badgeTiendaBarra.textContent=unidades>99?"99+":String(unidades);guardarCarrito()}
 function enviarPedidoWhatsApp(){if(!carrito.length)return mostrarToast("Tu carrito está vacío. Agrega productos primero.","warning");let total=0;let mensaje="¡Hola! Quisiera realizar este pedido en TINMARUY:\n\n";carrito.forEach(item=>{const subtotal=item.precio*item.cantidad;total+=subtotal;mensaje+="• "+item.nombre+" | Cantidad: "+item.cantidad+" | Subtotal: "+formatoUY.format(subtotal)+"\n"});mensaje+="\nTOTAL: "+formatoUY.format(total)+"\n\nQuisiera confirmar disponibilidad, entrega y forma de pago. ¡Gracias!";const url="https://wa.me/"+WHATSAPP_TINMARUY+"?text="+encodeURIComponent(mensaje);const ventana=window.open(url,"_blank","noopener,noreferrer");if(!ventana)window.location.href=url}
-function abrirStock(){document.getElementById("stockFullscreen").classList.add("active");document.body.style.overflow="hidden"}
+
+function abrirStock(){
+  const iframe = document.getElementById("iframeStock");
+  if(iframe && (!iframe.src || iframe.src === "about:blank")) {
+    iframe.src = "https://controldeestok.vercel.app";
+  }
+  document.getElementById("stockFullscreen").classList.add("active");
+  document.body.style.overflow="hidden";
+}
 function cerrarStock(e){if(e)e.preventDefault();document.getElementById("stockFullscreen").classList.remove("active");document.body.style.overflow=""}
 function abrirUruleyes(){document.getElementById("uruleyesFullscreen").classList.add("active");document.body.style.overflow="hidden"}
 function cerrarUruleyes(e){if(e)e.preventDefault();document.getElementById("uruleyesFullscreen").classList.remove("active");document.body.style.overflow=""}
@@ -659,9 +658,9 @@ const total=carrito.reduce((s,x)=>s+x.precio*x.cantidad,0);
     return "Para comprar, solo agrega productos al carrito y luego haz clic en 'Enviar por WhatsApp'. 🛒📲";
   if(t.includes("precio")||t.includes("cuanto cuesta")||t.includes("cuánto cuesta")||t.includes("cuanto sale")){
     const productos=[...document.querySelectorAll(".item")];
-    const coincidencias=productos.filter(p=>normalizar(p.dataset.name+" "+p.querySelector("h3").textContent).split(" ").some(palabra=>palabra.length>3&&t.includes(palabra)));
+    const coincidencias=productos.filter(p=>normalizar((p.dataset.name||"")+" "+(p.querySelector("h3")?.textContent||"")).split(" ").some(palabra=>palabra.length>3&&t.includes(palabra)));
     if(coincidencias.length){
-      return "Estos son los productos que coinciden:\n"+coincidencias.slice(0,5).map(p=>"• "+p.querySelector("h3").textContent+": "+formatoUY.format(Number(p.dataset.price))).join("\n")+"\nPuedes verlos en la Tienda.";
+      return "Estos son los productos que coinciden:\n"+coincidencias.slice(0,5).map(p=>"• "+(p.querySelector("h3")?.textContent||"")+": "+formatoUY.format(Number(p.dataset.price||0))).join("\n")+"\nPuedes verlos en la Tienda.";
     }
     return "Los precios varían según el producto. ¿Tienes uno específico en mente? 🛒";
   }
@@ -728,8 +727,17 @@ const genericas=[
 document.getElementById("chatForm").addEventListener("submit",function(e){e.preventDefault();enviarMensajeChat()});
 document.getElementById("buscarProducto").addEventListener("input",filtrarProductos);
 document.getElementById("ordenProductos").addEventListener("change",ordenarProductos);
-function filtrarProductos(){const q=normalizar(document.getElementById("buscarProducto").value);let visibles=0;document.querySelectorAll("#tiendaGrid .item").forEach(item=>{const coincide=normalizar(item.dataset.name+" "+item.textContent).includes(q);item.style.display=coincide?"":"none";if(coincide)visibles++});document.getElementById("sinProductos").style.display=visibles?"none":"block"}
-function ordenarProductos(){const grid=document.getElementById("tiendaGrid");const items=[...grid.querySelectorAll(".item")];const orden=document.getElementById("ordenProductos").value;items.sort((a,b)=>{if(orden==="precio-asc")return Number(a.dataset.price)-Number(b.dataset.price);if(orden==="precio-desc")return Number(b.dataset.price)-Number(a.dataset.price);if(orden==="nombre")return a.dataset.name.localeCompare(b.dataset.name,"es");return Number(a.dataset.order)-Number(b.dataset.order)});items.forEach(item=>grid.appendChild(item));filtrarProductos()}
+function filtrarProductos(){
+  const q=normalizar(document.getElementById("buscarProducto").value);
+  let visibles=0;
+  document.querySelectorAll("#tiendaGrid .item").forEach(item=>{
+    const coincide=normalizar((item.dataset.name||"")+" "+(item.textContent||"")).includes(q);
+    item.style.display=coincide?"":"none";
+    if(coincide)visibles++
+  });
+  document.getElementById("sinProductos").style.display=visibles?"none":"block";
+}
+function ordenarProductos(){const grid=document.getElementById("tiendaGrid");const items=[...grid.querySelectorAll(".item")];const orden=document.getElementById("ordenProductos").value;items.sort((a,b)=>{if(orden==="precio-asc")return Number(a.dataset.price)-Number(b.dataset.price);if(orden==="precio-desc")return Number(b.dataset.price)-Number(a.dataset.price);if(orden==="nombre")return (a.dataset.name||"").localeCompare(b.dataset.name||"","es");return Number(a.dataset.order)-Number(b.dataset.order)});items.forEach(item=>grid.appendChild(item));filtrarProductos()}
 document.querySelectorAll(".sw-select-btn").forEach(boton=>boton.addEventListener("click",function(){const actual=this.parentElement;document.querySelectorAll(".sw-select").forEach(item=>{if(item!==actual)item.classList.remove("abierto")});actual.classList.toggle("abierto")}));
 document.querySelectorAll(".sw-opciones input").forEach(input=>input.addEventListener("change",function(){const select=this.closest(".sw-select");select.classList.remove("sw-error");if(this.type==="radio")select.classList.remove("abierto");const span=select.querySelector(".sw-select-btn span");if(select.id==="select-tipo"||select.id==="select-diseno"||select.id==="select-dominio"){const elegido=select.querySelector("input:checked");if(elegido)span.textContent=elegido.parentElement.textContent.trim()}else{const total=select.querySelectorAll("input:checked").length;span.textContent=total?total+" función(es) seleccionada(s)":"Funciones para tu web *"}}));
 document.getElementById("formWeb").addEventListener("submit",function(e){let primerError=null;document.querySelectorAll(".sw-select").forEach(el=>el.classList.remove("sw-error"));const requisitos=[["select-tipo",'input[name="Tipo_de_Web"]:checked',"Seleccioná el tipo de web."],["select-funciones",'input[name="Funciones[]"]:checked',"Seleccioná al menos una función para tu web."],["select-diseno",'input[name="Diseno"]:checked',"Seleccioná un estilo de diseño."],["select-dominio",'input[name="Dominio"]:checked',"Seleccioná una opción de dominio."]];for(const [id,selector,mensaje] of requisitos){if(!document.querySelector("#"+id+" "+selector)){const el=document.getElementById(id);el.classList.add("sw-error","abierto");primerError={el,mensaje};break}}if(primerError){e.preventDefault();mostrarToast(primerError.mensaje,"error");primerError.el.querySelector(".sw-select-btn").scrollIntoView({behavior:"smooth",block:"center"})}});
@@ -756,7 +764,6 @@ function aplicarTema(tema){
 function toggleTema(){const actual=document.documentElement.getAttribute("data-theme");const nuevo=actual==="dark"?"light":"dark";aplicarTema(nuevo);try{localStorage.setItem("tinmaruy_tema",nuevo);}catch(e){}mostrarToast(nuevo==="dark"?"🌙 Modo oscuro activado":"☀️ Modo claro activado","success");}
 function iniciarTema(){let tema=null;try{tema=localStorage.getItem("tinmaruy_tema");}catch(e){}if(!tema){tema=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";}aplicarTema(tema);}
 if(window.matchMedia){window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change",function(e){let guardado=null;try{guardado=localStorage.getItem("tinmaruy_tema");}catch(err){}if(!guardado)aplicarTema(e.matches?"dark":"light");});}
-/* URL FIJA PARA COMPARTIR */
 const DATOS_COMPARTIR={titulo:"TINMARUY - Portal y Tienda",texto:"Descubrí TINMARUY: archivos, tienda, sugerencias y solicitud de páginas web. ¡Todo en un solo lugar!",url:"https://tinmaruy.vercel.app"};
 async function abrirCompartir(){if(navigator.share){try{await navigator.share({title:DATOS_COMPARTIR.titulo,text:DATOS_COMPARTIR.texto,url:DATOS_COMPARTIR.url});mostrarToast("✅ ¡Gracias por compartir TINMARUY!","success");return;}catch(err){if(err.name==="AbortError")return;}}document.getElementById("shareModal").classList.add("active");}
 function cerrarCompartir(){document.getElementById("shareModal").classList.remove("active");}
