@@ -31,36 +31,38 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible{
 .sobre-notificacion-bar{position:relative;background:var(--azul);color:#fff;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;cursor:pointer;border:none;flex-shrink:0}
 .sobre-badge{position:absolute;top:-2px;right:-2px;background:var(--rojo);color:#fff;font-size:9px;padding:2px 5px;border-radius:50%;font-weight:700;display:none}
 .sobre-badge.activo{display:block}
+/* Botón Tienda en barra superior */
+.btn-tienda-bar{position:relative;background:var(--azul);color:#fff;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;cursor:pointer;border:none;flex-shrink:0;transition:transform .2s,background .2s}
+.btn-tienda-bar:hover{background:var(--azul-claro);transform:scale(1.05)}
+.btn-tienda-bar .tienda-badge{position:absolute;top:-2px;right:-2px;background:var(--rojo);color:#fff;font-size:9px;padding:2px 5px;border-radius:50%;font-weight:700;min-width:16px;text-align:center}
 .anuncio-flotante{position:fixed;bottom:100px;right:-320px;width:min(280px,calc(100vw - 30px));background:#fff;border-left:5px solid var(--azul);border-radius:10px;box-shadow:0 5px 25px rgba(0,0,0,.2);padding:12px 14px;z-index:997;transition:right .4s;font-size:12px}
 .anuncio-flotante.mostrar{right:15px}
 .anuncio-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;font-weight:700;color:var(--azul)}
 .anuncio-cerrar{background:none;border:none;cursor:pointer;font-size:15px;color:#95A5A6}
 .anuncio-texto{line-height:1.4}
-.user-bar{display:flex;align-items:center;justify-content:flex-end;gap:4px;margin-bottom:10px;padding:6px 8px;background:#fff;border-radius:10px;box-shadow:0 2px 6px rgba(0,0,0,.05);font-size:13px;flex-wrap:nowrap;position:relative;z-index:60;overflow-x:auto;scrollbar-width:none}
-.user-bar::-webkit-scrollbar{display:none}
-.avatar{width:28px;height:28px;border-radius:50%;background:var(--azul);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;flex-shrink:0}
-.nombre{font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:70px;flex-shrink:0;font-size:11px}
-.user-bar button:not(.sobre-notificacion-bar):not(.btn-compartir-custom):not(.btn-salida-custom){background:#F0F2F5;color:var(--texto);border:none;padding:6px 8px;border-radius:6px;font-size:11px;font-weight:600;cursor:pointer;flex-shrink:0}
+.user-bar{display:flex;align-items:center;justify-content:flex-end;gap:6px;margin-bottom:10px;padding:8px 10px;background:#fff;border-radius:10px;box-shadow:0 2px 6px rgba(0,0,0,.05);font-size:13px;flex-wrap:nowrap;position:relative;z-index:60;overflow-x:auto}
+.avatar{width:32px;height:32px;border-radius:50%;background:var(--azul);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex-shrink:0}
+.nombre{font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100px;flex-shrink:0;font-size:12px}
+.user-bar button:not(.sobre-notificacion-bar):not(.btn-tienda-bar):not(.btn-compartir-custom):not(.btn-salida-custom){background:#F0F2F5;color:var(--texto);border:none;padding:7px 10px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;flex-shrink:0}
 .user-bar button.btn-ingresar{background:var(--azul);color:#fff}
 
-.btn-salida-custom{background-color:#00873e;border:2px solid #ffffff;border-radius:8px;padding:3px 6px;display:inline-flex;align-items:center;gap:3px;cursor:pointer;box-shadow:0 2px 5px rgba(0,0,0,0.2);transition:transform 0.2s,background-color 0.2s;flex-shrink:0}
+.btn-salida-custom{background-color:#00873e;border:2px solid #ffffff;border-radius:8px;padding:4px 8px;display:inline-flex;align-items:center;gap:4px;cursor:pointer;box-shadow:0 2px 5px rgba(0,0,0,0.2);transition:transform 0.2s,background-color 0.2s;flex-shrink:0}
 .btn-salida-custom:hover{background-color:#006b31;transform:scale(1.03)}
-.puerta-box{background-color:#ffffff;width:16px;height:18px;border-radius:2px;display:flex;align-items:center;justify-content:center}
-.puerta-box .fa-person-running{color:#00873e;font-size:11px}
-.btn-salida-custom span{color:#ffffff;font-size:10px;font-weight:700}
+.puerta-box{background-color:#ffffff;width:18px;height:22px;border-radius:2px;display:flex;align-items:center;justify-content:center}
+.puerta-box .fa-person-running{color:#00873e;font-size:13px}
+.btn-salida-custom span{color:#ffffff;font-size:11px;font-weight:700}
 
-.btn-compartir-custom{background-color:#1877F2;border:2px solid #ffffff;border-radius:8px;padding:2px 5px;display:inline-flex;align-items:center;gap:3px;cursor:pointer;box-shadow:0 2px 5px rgba(0,0,0,0.2);transition:transform 0.2s,background-color 0.2s;flex-shrink:0}
+/* BOTÓN COMPARTIR - SOLO ICONO */
+.btn-compartir-custom{background-color:#1877F2;border:2px solid #ffffff;border-radius:8px;padding:5px 8px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 2px 5px rgba(0,0,0,0.2);transition:transform 0.2s,background-color 0.2s;flex-shrink:0}
 .btn-compartir-custom:hover{background-color:#145dbf;transform:scale(1.03)}
-.pulgar-box{background-color:#ffffff;width:16px;height:18px;border-radius:3px;display:flex;align-items:center;justify-content:center}
-.pulgar-box .fa-thumbs-up{color:#1877F2;font-size:10px}
-.btn-compartir-custom span{color:#ffffff;font-size:9px;font-weight:800;letter-spacing:0.3px}
+.btn-compartir-custom i{color:#ffffff;font-size:15px}
 
 .theme-switch-container{display:inline-flex;align-items:center;cursor:pointer;user-select:none;flex-shrink:0}
-.theme-switch{width:40px;height:22px;background:linear-gradient(135deg,#f39c12,#e74c3c);border-radius:30px;position:relative;transition:background 0.4s ease;box-shadow:inset 0 2px 4px rgba(0,0,0,0.2);display:flex;align-items:center;padding:2px;border:1.5px solid rgba(255,255,255,0.4)}
+.theme-switch{width:46px;height:24px;background:linear-gradient(135deg,#f39c12,#e74c3c);border-radius:30px;position:relative;transition:background 0.4s ease;box-shadow:inset 0 2px 4px rgba(0,0,0,0.2);display:flex;align-items:center;padding:2px;border:1.5px solid rgba(255,255,255,0.4)}
 :root[data-theme="dark"] .theme-switch{background:linear-gradient(135deg,#1e3c72,#2a5298)}
-.theme-switch-handle{width:16px;height:16px;background:#ffffff;border-radius:50%;position:absolute;left:2px;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 5px rgba(0,0,0,0.3);transition:transform 0.4s cubic-bezier(0.68,-0.55,0.27,1.55)}
-:root[data-theme="dark"] .theme-switch-handle{transform:translateX(18px);background:linear-gradient(135deg,#00c6ff,#0072ff)}
-.theme-switch-handle i{font-size:8px;color:#e67e22;transition:color 0.3s ease}
+.theme-switch-handle{width:18px;height:18px;background:#ffffff;border-radius:50%;position:absolute;left:3px;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 5px rgba(0,0,0,0.3);transition:transform 0.4s cubic-bezier(0.68,-0.55,0.27,1.55)}
+:root[data-theme="dark"] .theme-switch-handle{transform:translateX(22px);background:linear-gradient(135deg,#00c6ff,#0072ff)}
+.theme-switch-handle i{font-size:9px;color:#e67e22;transition:color 0.3s ease}
 :root[data-theme="dark"] .theme-switch-handle i{color:#ffffff}
 
 .portal-header{text-align:center;margin-bottom:20px;background:linear-gradient(135deg,#1a3d5c,var(--azul));color:#fff;padding:25px 15px;border-radius:15px;box-shadow:var(--sombra)}
@@ -190,7 +192,7 @@ radio-player{flex:1;width:50%;height:140px;display:block;min-width:0}
 .chat-input-area input{flex:1;min-width:0;padding:9px 11px;border:1px solid var(--gris-borde);border-radius:20px;outline:none;font-size:13px}
 .chat-input-area button{background:var(--azul);color:#fff;border:none;width:36px;height:36px;border-radius:50%;margin-left:6px;cursor:pointer;font-size:15px;flex-shrink:0}
 @media(min-width:768px){.tienda-grid{grid-template-columns:repeat(auto-fit,minmax(190px,1fr))}.item img{height:150px}}
-@media(max-width:500px){body{padding:8px 8px 100px}.user-bar{gap:3px;padding:4px 6px}.nombre{max-width:60px;font-size:10px}.avatar{width:26px;height:26px;font-size:11px}.portal-nav{left:8px;right:8px;bottom:8px}.portal-nav button{font-size:10px;padding:8px 2px}.nav-icon{font-size:17px}.portal-section{padding:14px}.portal-section h2{font-size:17px}#reloj-lluvia #hora{font-size:18px}#reloj-lluvia #fecha{font-size:9px}.carousel-container2 .slide img{max-width:220px;max-height:280px}.sw-fila{grid-template-columns:1fr}.tienda-controles{grid-template-columns:1fr}.carrito-botones{grid-template-columns:1fr}.clima-detalles{font-size:11px;gap:6px}.clima-temp{font-size:30px}}
+@media(max-width:500px){body{padding:8px 8px 100px}.user-bar{gap:5px;padding:7px 8px}.user-bar button:not(.sobre-notificacion-bar):not(.btn-tienda-bar):not(.btn-compartir-custom):not(.btn-salida-custom){padding:7px 8px}.nombre{max-width:80px;font-size:11px}.avatar{width:30px;height:30px;font-size:12px}.portal-nav{left:8px;right:8px;bottom:8px}.portal-nav button{font-size:10px;padding:8px 2px}.nav-icon{font-size:17px}.portal-section{padding:14px}.portal-section h2{font-size:17px}#reloj-lluvia #hora{font-size:18px}#reloj-lluvia #fecha{font-size:9px}.carousel-container2 .slide img{max-width:220px;max-height:280px}.sw-fila{grid-template-columns:1fr}.tienda-controles{grid-template-columns:1fr}.carrito-botones{grid-template-columns:1fr}.clima-detalles{font-size:11px;gap:6px}.clima-temp{font-size:30px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
 
 :root[data-theme="dark"]{--azul:#3B82C4;--azul-claro:#5A9BD8;--verde:#22C55E;--amarillo:#F5B800;--rojo:#EF4444;--gris-bg:#0F172A;--gris-borde:#2D3748;--texto:#E2E8F0;--sombra:0 8px 30px rgba(0,0,0,.4)}
@@ -320,6 +322,12 @@ radio-player{flex:1;width:50%;height:140px;display:block;min-width:0}
 <div class="user-bar" id="userBar">
   <button class="sobre-notificacion-bar" onclick="abrirModalMensaje()" title="Novedades del sistema" aria-label="Novedades">✉️<span class="sobre-badge" id="sobreBadge">1</span></button>
 
+  <!-- BOTÓN TIENDA EN BARRA SUPERIOR -->
+  <button class="btn-tienda-bar" onclick="cambiarPortal('tienda',document.querySelector('[data-section=tienda]'))" title="Ir a la Tienda" aria-label="Tienda">
+    <i class="fa-solid fa-store"></i>
+    <span class="tienda-badge" id="badgeTiendaBarra">0</span>
+  </button>
+
   <div class="theme-switch-container" onclick="toggleTema()" title="Cambiar tema" aria-label="Cambiar tema">
     <div class="theme-switch" id="themeSwitchTrack">
       <div class="theme-switch-handle" id="themeSwitchHandle">
@@ -329,8 +337,7 @@ radio-player{flex:1;width:50%;height:140px;display:block;min-width:0}
   </div>
 
   <button type="button" class="btn-compartir-custom" onclick="abrirCompartir()" title="Compartir app" aria-label="Compartir app">
-    <div class="pulgar-box"><i class="fa-solid fa-thumbs-up"></i></div>
-    <span>COMPARTIR</span>
+    <i class="fa-solid fa-share-alt"></i>
   </button>
 
   <div class="avatar" id="userAvatar">?</div>
@@ -370,10 +377,10 @@ radio-player{flex:1;width:50%;height:140px;display:block;min-width:0}
 <section id="seccion-archivos" class="portal-section">
   <h2>📁 Archivos y Documentos</h2>
   
-  <!-- Panel de Generación de Códigos (Oculto para guardias) -->
-  <div id="panelGenerarCodigo" style="display:none; background:#e8f3ff; border:1px solid #c9e2f7; border-radius:12px; padding:15px; margin-bottom:18px; text-align:center;">
+  <!-- Panel de Generación de Códigos (Siempre visible) -->
+  <div id="panelGenerarCodigo" style="background:#e8f3ff; border:1px solid #c9e2f7; border-radius:12px; padding:15px; margin-bottom:18px; text-align:center;">
     <h3 style="color:#1769aa; font-size:15px; margin-bottom:8px;">🔑 Generador de Códigos para Guardias</h3>
-    <p style="font-size:12px; color:#4a5568; margin-bottom:10px;">Crea un código único (solo números) y un enlace mágico para que el guardia pueda ingresar desde su celular.</p>
+    <p style="font-size:12px; color:#4a5568; margin-bottom:10px;">Crea un código único y un enlace mágico para que el guardia pueda ingresar desde su celular.</p>
     <input type="text" id="inputNombreGuardia" placeholder="Nombre del guardia (Ej: Hugo)" style="padding:8px; border:1px solid #c9e2f7; border-radius:6px; width:80%; max-width:250px; margin-bottom:8px;">
     <button onclick="generarCodigoGuardia()" style="background:#00B050; color:white; border:none; padding:8px 16px; border-radius:6px; font-weight:bold; cursor:pointer;">Generar Código</button>
     <div id="resultadoCodigo" style="display:none; margin-top:12px; background:white; padding:10px; border-radius:6px; border:1px dashed #1769aa;">
@@ -394,7 +401,7 @@ radio-player{flex:1;width:50%;height:140px;display:block;min-width:0}
         <li>📊 Documentos del portal</li>
         <li>🎓 Material de capacitación</li>
       </ul>
-      <button class="archivos-admin-btn" id="btnAdminAddFile" onclick="pedirClaveAgregarArchivo()">🔒 Agregar archivo (admin)</button>
+      <button class="archivos-admin-btn" onclick="pedirClaveAgregarArchivo()">🔒 Agregar archivo (admin)</button>
     </div>
   </div>
   <div id="archivosGrid" class="archivos-grid"></div>
@@ -441,13 +448,13 @@ function cargarCodigosMagicos(){
   const urlParams=new URLSearchParams(window.location.search);
   const codigoURL=urlParams.get('codigo');
   if(codigoURL){
-    // Si viene un código por URL, desbloqueamos el portal automáticamente como Guardia
-    localStorage.setItem("stock_autorizado","1");
-    localStorage.setItem("usuario_activo","Guardia");
-    
+    // Si viene un código por URL, lo guardamos localmente para que funcione en este dispositivo
+    let misCodigos=JSON.parse(localStorage.getItem("tinmaruy_mis_codigos")||"{}");
+    misCodigos[codigoURL]=true;
+    localStorage.setItem("tinmaruy_mis_codigos", JSON.stringify(misCodigos));
     // Limpiar URL
     window.history.replaceState({}, document.title, window.location.pathname);
-    mostrarToast("✅ Enlace Mágico activado. Bienvenido.","success");
+    mostrarToast("✅ Enlace Mágico activado. Ya puedes usar este código.","success");
   }
 }
 cargarCodigosMagicos();
@@ -455,10 +462,10 @@ cargarCodigosMagicos();
 function generarCodigoGuardia(){
   const nombre=document.getElementById("inputNombreGuardia").value.trim();
   if(!nombre){mostrarToast("Escribe el nombre del guardia.","error");return;}
-  
-  // Generar código aleatorio de 6 números
+  // Generar código aleatorio de 6 caracteres
+  const caracteres="ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
   let codigo="";
-  for(let i=0;i<6;i++){codigo+=Math.floor(Math.random()*10);}
+  for(let i=0;i<6;i++){codigo+=caracteres.charAt(Math.floor(Math.random()*caracteres.length));}
   
   // Guardar en la lista global (en el admin)
   let codigos=JSON.parse(localStorage.getItem("tinmaruy_codigos_magicos")||"{}");
@@ -499,7 +506,7 @@ function copiarEnlaceMagico(){
 }
 
 function validarCodigoUsuario(){
-  const codigo=document.getElementById("inputCodigoValidar").value.trim();
+  const codigo=document.getElementById("inputCodigoValidar").value.trim().toUpperCase();
   const nombre=document.getElementById("regNombre").dataset.nombre||localStorage.getItem("nombre_usuario_registrado")||"Guardia";
   
   if(codigo===CLAVE_MAESTRA){
@@ -570,9 +577,6 @@ function bloquearApp(){
   btn.textContent="🔑 Ingresar";
   btn.className="btn-ingresar";
   btn.onclick=abrirModalAuth;
-  
-  // Ocultar panel de códigos al bloquear
-  document.getElementById("panelGenerarCodigo").style.display="none";
 }
 
 function desbloquearApp(nombreCompleto){
@@ -584,16 +588,9 @@ function desbloquearApp(nombreCompleto){
   document.getElementById("userAvatar").textContent=nombre.charAt(0).toUpperCase();
   const btn=document.getElementById("btnAccionUser");
   btn.className="btn-salida-custom";
-  btn.innerHTML=`<div class="puerta-box"><i class="fa-solid fa-person-running"></i></div><span>Salir</span>`;
+  btn.innerHTML=`<div class="puerta-box"><i class="fa-solid fa-person-running"></i></div><span>Salida</span>`;
   btn.title="Cerrar sesión";
   btn.onclick=cerrarSesion;
-  
-  // MOSTRAR PANEL DE CÓDIGOS SOLO SI ES ADMIN (Nombre diferente a "Guardia")
-  if(nombre !== "Guardia"){
-    document.getElementById("panelGenerarCodigo").style.display="block";
-  } else {
-    document.getElementById("panelGenerarCodigo").style.display="none";
-  }
 }
 
 function cerrarSesion(){if(confirm("¿Estás seguro de que quieres cerrar sesión?")){localStorage.removeItem("stock_autorizado");localStorage.removeItem("usuario_activo");bloquearApp();mostrarToast("Sesión cerrada","warning")}}
@@ -607,7 +604,7 @@ function cargarCarrito(){try{const guardado=JSON.parse(localStorage.getItem("tin
 function eliminarDelCarrito(index){if(!Number.isInteger(index)||index<0||index>=carrito.length)return;carrito.splice(index,1);guardarCarrito();actualizarCarritoUI();mostrarToast("Producto eliminado","warning")}
 function cambiarCantidadCarrito(index,cambio){const item=carrito[index];if(!item)return;const nueva=item.cantidad+cambio;if(nueva<1){eliminarDelCarrito(index);return}if(nueva>99)return mostrarToast("Máximo 99 unidades por producto.","warning");item.cantidad=nueva;guardarCarrito();actualizarCarritoUI()}
 function vaciarCarrito(){if(!carrito.length)return mostrarToast("El carrito ya está vacío.","warning");if(!confirm("¿Quieres eliminar todos los productos del carrito?"))return;carrito=[];guardarCarrito();actualizarCarritoUI();mostrarToast("Carrito vaciado","warning")}
-function actualizarCarritoUI(){const lista=document.getElementById("carrito-lista");if(!lista)return;lista.replaceChildren();let total=0;let unidades=0;if(carrito.length===0){const li=document.createElement("li");li.textContent="El carrito está vacío.";li.style.color="#7F8C8D";lista.appendChild(li)}else{carrito.forEach((item,index)=>{const subtotal=item.precio*item.cantidad;total+=subtotal;unidades+=item.cantidad;const li=document.createElement("li");const detalle=document.createElement("div");const nombre=document.createElement("div");nombre.className="carrito-producto-nombre";nombre.textContent=item.nombre;const sub=document.createElement("div");sub.className="carrito-subtotal";sub.textContent=formatoUY.format(item.precio)+" × "+item.cantidad+" = "+formatoUY.format(subtotal);detalle.append(nombre,sub);const acciones=document.createElement("div");acciones.className="carrito-acciones-item";const menos=document.createElement("button");menos.className="btn-cantidad";menos.textContent="−";menos.title="Quitar una unidad";menos.setAttribute("aria-label","Quitar una unidad de "+item.nombre);menos.onclick=()=>cambiarCantidadCarrito(index,-1);const cantidad=document.createElement("span");cantidad.textContent=String(item.cantidad);cantidad.style.fontWeight="700";const mas=document.createElement("button");mas.className="btn-cantidad";mas.textContent="+";mas.title="Agregar una unidad";mas.setAttribute("aria-label","Agregar una unidad de "+item.nombre);mas.onclick=()=>cambiarCantidadCarrito(index,1);const eliminar=document.createElement("button");eliminar.className="btn-eliminar";eliminar.textContent="✕";eliminar.title="Eliminar producto";eliminar.setAttribute("aria-label","Eliminar "+item.nombre);eliminar.onclick=()=>eliminarDelCarrito(index);acciones.append(menos,cantidad,mas,eliminar);li.append(detalle,acciones);lista.appendChild(li)})}document.getElementById("carrito-total").textContent=formatoUY.format(total);document.getElementById("carritoContador").textContent=unidades+" "+(unidades===1?"artículo":"artículos");document.getElementById("badgeTienda").textContent=unidades>99?"99+":String(unidades);guardarCarrito()}
+function actualizarCarritoUI(){const lista=document.getElementById("carrito-lista");if(!lista)return;lista.replaceChildren();let total=0;let unidades=0;if(carrito.length===0){const li=document.createElement("li");li.textContent="El carrito está vacío.";li.style.color="#7F8C8D";lista.appendChild(li)}else{carrito.forEach((item,index)=>{const subtotal=item.precio*item.cantidad;total+=subtotal;unidades+=item.cantidad;const li=document.createElement("li");const detalle=document.createElement("div");const nombre=document.createElement("div");nombre.className="carrito-producto-nombre";nombre.textContent=item.nombre;const sub=document.createElement("div");sub.className="carrito-subtotal";sub.textContent=formatoUY.format(item.precio)+" × "+item.cantidad+" = "+formatoUY.format(subtotal);detalle.append(nombre,sub);const acciones=document.createElement("div");acciones.className="carrito-acciones-item";const menos=document.createElement("button");menos.className="btn-cantidad";menos.textContent="−";menos.title="Quitar una unidad";menos.setAttribute("aria-label","Quitar una unidad de "+item.nombre);menos.onclick=()=>cambiarCantidadCarrito(index,-1);const cantidad=document.createElement("span");cantidad.textContent=String(item.cantidad);cantidad.style.fontWeight="700";const mas=document.createElement("button");mas.className="btn-cantidad";mas.textContent="+";mas.title="Agregar una unidad";mas.setAttribute("aria-label","Agregar una unidad de "+item.nombre);mas.onclick=()=>cambiarCantidadCarrito(index,1);const eliminar=document.createElement("button");eliminar.className="btn-eliminar";eliminar.textContent="✕";eliminar.title="Eliminar producto";eliminar.setAttribute("aria-label","Eliminar "+item.nombre);eliminar.onclick=()=>eliminarDelCarrito(index);acciones.append(menos,cantidad,mas,eliminar);li.append(detalle,acciones);lista.appendChild(li)})}document.getElementById("carrito-total").textContent=formatoUY.format(total);document.getElementById("carritoContador").textContent=unidades+" "+(unidades===1?"artículo":"artículos");const badgeTienda=document.getElementById("badgeTienda");if(badgeTienda)badgeTienda.textContent=unidades>99?"99+":String(unidades);const badgeTiendaBarra=document.getElementById("badgeTiendaBarra");if(badgeTiendaBarra)badgeTiendaBarra.textContent=unidades>99?"99+":String(unidades);guardarCarrito()}
 function enviarPedidoWhatsApp(){if(!carrito.length)return mostrarToast("Tu carrito está vacío. Agrega productos primero.","warning");let total=0;let mensaje="¡Hola! Quisiera realizar este pedido en TINMARUY:\n\n";carrito.forEach(item=>{const subtotal=item.precio*item.cantidad;total+=subtotal;mensaje+="• "+item.nombre+" | Cantidad: "+item.cantidad+" | Subtotal: "+formatoUY.format(subtotal)+"\n"});mensaje+="\nTOTAL: "+formatoUY.format(total)+"\n\nQuisiera confirmar disponibilidad, entrega y forma de pago. ¡Gracias!";const url="https://wa.me/"+WHATSAPP_TINMARUY+"?text="+encodeURIComponent(mensaje);const ventana=window.open(url,"_blank","noopener,noreferrer");if(!ventana)window.location.href=url}
 function abrirUruleyes(){document.getElementById("uruleyesFullscreen").classList.add("active");document.body.style.overflow="hidden"}
 function cerrarUruleyes(e){if(e)e.preventDefault();document.getElementById("uruleyesFullscreen").classList.remove("active");document.body.style.overflow=""}
@@ -756,7 +753,8 @@ function aplicarTema(tema){
 function toggleTema(){const actual=document.documentElement.getAttribute("data-theme");const nuevo=actual==="dark"?"light":"dark";aplicarTema(nuevo);try{localStorage.setItem("tinmaruy_tema",nuevo);}catch(e){}mostrarToast(nuevo==="dark"?"🌙 Modo oscuro activado":"☀️ Modo claro activado","success");}
 function iniciarTema(){let tema=null;try{tema=localStorage.getItem("tinmaruy_tema");}catch(e){}if(!tema){tema=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";}aplicarTema(tema);}
 if(window.matchMedia){window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change",function(e){let guardado=null;try{guardado=localStorage.getItem("tinmaruy_tema");}catch(err){}if(!guardado)aplicarTema(e.matches?"dark":"light");});}
-const DATOS_COMPARTIR={titulo:"TINMARUY - Portal y Tienda",texto:"Descubrí TINMARUY: archivos, tienda, sugerencias y solicitud de páginas web. ¡Todo en un solo lugar!",url:window.location.href.split("?")[0].split("#")[0]};
+/* URL FIJA PARA COMPARTIR */
+const DATOS_COMPARTIR={titulo:"TINMARUY - Portal y Tienda",texto:"Descubrí TINMARUY: archivos, tienda, sugerencias y solicitud de páginas web. ¡Todo en un solo lugar!",url:"https://tinmaruy.vercel.app"};
 async function abrirCompartir(){if(navigator.share){try{await navigator.share({title:DATOS_COMPARTIR.titulo,text:DATOS_COMPARTIR.texto,url:DATOS_COMPARTIR.url});mostrarToast("✅ ¡Gracias por compartir TINMARUY!","success");return;}catch(err){if(err.name==="AbortError")return;}}document.getElementById("shareModal").classList.add("active");}
 function cerrarCompartir(){document.getElementById("shareModal").classList.remove("active");}
 function compartirEn(red){const url=encodeURIComponent(DATOS_COMPARTIR.url);const texto=encodeURIComponent(DATOS_COMPARTIR.texto);const titulo=encodeURIComponent(DATOS_COMPARTIR.titulo);let enlace="";switch(red){case "whatsapp":enlace=`https://wa.me/?text=${texto}%0A${url}`;break;case "telegram":enlace=`https://t.me/share/url?url=${url}&text=${texto}`;break;case "facebook":enlace=`https://www.facebook.com/sharer/sharer.php?u=${url}`;break;case "twitter":enlace=`https://twitter.com/intent/tweet?text=${texto}&url=${url}`;break;case "email":enlace=`mailto:?subject=${titulo}&body=${texto}%0A%0A${url}`;break;case "copiar":copiarLink();return;}if(enlace){window.open(enlace,"_blank","noopener,noreferrer");cerrarCompartir();}}
@@ -796,10 +794,6 @@ function renderArchivos(){
   });
 }
 function pedirClaveAgregarArchivo(){
-  // Solo el administrador puede agregar archivos
-  if(localStorage.getItem("usuario_activo") === "Guardia"){
-    mostrarToast("Solo el administrador puede agregar archivos.","error"); return;
-  }
   const pass=prompt("Clave de administrador para agregar archivo:");
   if(pass!==CLAVE_MAESTRA){mostrarToast("Clave incorrecta.","error");return}
   const nombre=prompt("Nombre del archivo o carpeta:");
@@ -814,10 +808,6 @@ function pedirClaveAgregarArchivo(){
   mostrarToast("✅ Archivo agregado","success");
 }
 function eliminarArchivo(idx){
-  // Solo el administrador puede borrar
-  if(localStorage.getItem("usuario_activo") === "Guardia"){
-    mostrarToast("Solo el administrador puede borrar archivos.","error"); return;
-  }
   const lista=leerArchivos();
   if(idx<0||idx>=lista.length)return;
   if(!confirm("¿Eliminar este archivo?"))return;
