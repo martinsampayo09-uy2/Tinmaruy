@@ -440,13 +440,13 @@ function cargarCodigosMagicos(){
   const urlParams=new URLSearchParams(window.location.search);
   const codigoURL=urlParams.get('codigo');
   if(codigoURL){
-    // Si viene un código por URL, lo guardamos localmente para que funcione en este dispositivo
-    let misCodigos=JSON.parse(localStorage.getItem("tinmaruy_mis_codigos")||"{}");
-    misCodigos[codigoURL]=true;
-    localStorage.setItem("tinmaruy_mis_codigos", JSON.stringify(misCodigos));
+    // Si viene un código por URL, desbloqueamos el portal automáticamente
+    localStorage.setItem("stock_autorizado","1");
+    localStorage.setItem("usuario_activo","Guardia (Enlace)");
+    
     // Limpiar URL
     window.history.replaceState({}, document.title, window.location.pathname);
-    mostrarToast("✅ Enlace Mágico activado. Ya puedes usar este código.","success");
+    mostrarToast("✅ Enlace Mágico activado. Bienvenido.","success");
   }
 }
 cargarCodigosMagicos();
