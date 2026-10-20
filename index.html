@@ -36,8 +36,6 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible{
 .anuncio-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;font-weight:700;color:var(--azul)}
 .anuncio-cerrar{background:none;border:none;cursor:pointer;font-size:15px;color:#95A5A6}
 .anuncio-texto{line-height:1.4}
-
-/* Ajustes en la barra superior para que entre en celulares */
 .user-bar{display:flex;align-items:center;justify-content:flex-end;gap:4px;margin-bottom:10px;padding:6px 8px;background:#fff;border-radius:10px;box-shadow:0 2px 6px rgba(0,0,0,.05);font-size:13px;flex-wrap:nowrap;position:relative;z-index:60;overflow-x:auto;scrollbar-width:none}
 .user-bar::-webkit-scrollbar{display:none}
 .avatar{width:28px;height:28px;border-radius:50%;background:var(--azul);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;flex-shrink:0}
@@ -191,27 +189,8 @@ radio-player{flex:1;width:50%;height:140px;display:block;min-width:0}
 .chat-input-area{display:flex;padding:8px;background:#fff;border-top:1px solid var(--gris-borde)}
 .chat-input-area input{flex:1;min-width:0;padding:9px 11px;border:1px solid var(--gris-borde);border-radius:20px;outline:none;font-size:13px}
 .chat-input-area button{background:var(--azul);color:#fff;border:none;width:36px;height:36px;border-radius:50%;margin-left:6px;cursor:pointer;font-size:15px;flex-shrink:0}
-
-/* Optimización para celulares muy angostos */
-@media(max-width:500px){
-  body{padding:8px 8px 100px}
-  .user-bar{gap:3px;padding:4px 6px}
-  .nombre{max-width:60px;font-size:10px}
-  .avatar{width:26px;height:26px;font-size:11px}
-  .portal-nav{left:8px;right:8px;bottom:8px}
-  .portal-nav button{font-size:10px;padding:8px 2px}
-  .nav-icon{font-size:17px}
-  .portal-section{padding:14px}
-  .portal-section h2{font-size:17px}
-  #reloj-lluvia #hora{font-size:18px}
-  #reloj-lluvia #fecha{font-size:9px}
-  .carousel-container2 .slide img{max-width:220px;max-height:280px}
-  .sw-fila{grid-template-columns:1fr}
-  .tienda-controles{grid-template-columns:1fr}
-  .carrito-botones{grid-template-columns:1fr}
-  .clima-detalles{font-size:11px;gap:6px}
-  .clima-temp{font-size:30px}
-}
+@media(min-width:768px){.tienda-grid{grid-template-columns:repeat(auto-fit,minmax(190px,1fr))}.item img{height:150px}}
+@media(max-width:500px){body{padding:8px 8px 100px}.user-bar{gap:3px;padding:4px 6px}.nombre{max-width:60px;font-size:10px}.avatar{width:26px;height:26px;font-size:11px}.portal-nav{left:8px;right:8px;bottom:8px}.portal-nav button{font-size:10px;padding:8px 2px}.nav-icon{font-size:17px}.portal-section{padding:14px}.portal-section h2{font-size:17px}#reloj-lluvia #hora{font-size:18px}#reloj-lluvia #fecha{font-size:9px}.carousel-container2 .slide img{max-width:220px;max-height:280px}.sw-fila{grid-template-columns:1fr}.tienda-controles{grid-template-columns:1fr}.carrito-botones{grid-template-columns:1fr}.clima-detalles{font-size:11px;gap:6px}.clima-temp{font-size:30px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
 
 :root[data-theme="dark"]{--azul:#3B82C4;--azul-claro:#5A9BD8;--verde:#22C55E;--amarillo:#F5B800;--rojo:#EF4444;--gris-bg:#0F172A;--gris-borde:#2D3748;--texto:#E2E8F0;--sombra:0 8px 30px rgba(0,0,0,.4)}
@@ -391,8 +370,8 @@ radio-player{flex:1;width:50%;height:140px;display:block;min-width:0}
 <section id="seccion-archivos" class="portal-section">
   <h2>📁 Archivos y Documentos</h2>
   
-  <!-- Panel de Generación de Códigos -->
-  <div id="panelGenerarCodigo" style="background:#e8f3ff; border:1px solid #c9e2f7; border-radius:12px; padding:15px; margin-bottom:18px; text-align:center;">
+  <!-- Panel de Generación de Códigos (Oculto para guardias) -->
+  <div id="panelGenerarCodigo" style="display:none; background:#e8f3ff; border:1px solid #c9e2f7; border-radius:12px; padding:15px; margin-bottom:18px; text-align:center;">
     <h3 style="color:#1769aa; font-size:15px; margin-bottom:8px;">🔑 Generador de Códigos para Guardias</h3>
     <p style="font-size:12px; color:#4a5568; margin-bottom:10px;">Crea un código único (solo números) y un enlace mágico para que el guardia pueda ingresar desde su celular.</p>
     <input type="text" id="inputNombreGuardia" placeholder="Nombre del guardia (Ej: Hugo)" style="padding:8px; border:1px solid #c9e2f7; border-radius:6px; width:80%; max-width:250px; margin-bottom:8px;">
@@ -415,7 +394,7 @@ radio-player{flex:1;width:50%;height:140px;display:block;min-width:0}
         <li>📊 Documentos del portal</li>
         <li>🎓 Material de capacitación</li>
       </ul>
-      <button class="archivos-admin-btn" onclick="pedirClaveAgregarArchivo()">🔒 Agregar archivo (admin)</button>
+      <button class="archivos-admin-btn" id="btnAdminAddFile" onclick="pedirClaveAgregarArchivo()">🔒 Agregar archivo (admin)</button>
     </div>
   </div>
   <div id="archivosGrid" class="archivos-grid"></div>
@@ -462,9 +441,8 @@ function cargarCodigosMagicos(){
   const urlParams=new URLSearchParams(window.location.search);
   const codigoURL=urlParams.get('codigo');
   if(codigoURL){
-    // Si viene un código por URL, desbloqueamos el portal automáticamente
+    // Si viene un código por URL, desbloqueamos el portal automáticamente como Guardia
     localStorage.setItem("stock_autorizado","1");
-    // Usamos un nombre corto para que la barra superior no se desborde
     localStorage.setItem("usuario_activo","Guardia");
     
     // Limpiar URL
@@ -592,6 +570,9 @@ function bloquearApp(){
   btn.textContent="🔑 Ingresar";
   btn.className="btn-ingresar";
   btn.onclick=abrirModalAuth;
+  
+  // Ocultar panel de códigos al bloquear
+  document.getElementById("panelGenerarCodigo").style.display="none";
 }
 
 function desbloquearApp(nombreCompleto){
@@ -606,6 +587,13 @@ function desbloquearApp(nombreCompleto){
   btn.innerHTML=`<div class="puerta-box"><i class="fa-solid fa-person-running"></i></div><span>Salir</span>`;
   btn.title="Cerrar sesión";
   btn.onclick=cerrarSesion;
+  
+  // MOSTRAR PANEL DE CÓDIGOS SOLO SI ES ADMIN (Nombre diferente a "Guardia")
+  if(nombre !== "Guardia"){
+    document.getElementById("panelGenerarCodigo").style.display="block";
+  } else {
+    document.getElementById("panelGenerarCodigo").style.display="none";
+  }
 }
 
 function cerrarSesion(){if(confirm("¿Estás seguro de que quieres cerrar sesión?")){localStorage.removeItem("stock_autorizado");localStorage.removeItem("usuario_activo");bloquearApp();mostrarToast("Sesión cerrada","warning")}}
@@ -808,6 +796,10 @@ function renderArchivos(){
   });
 }
 function pedirClaveAgregarArchivo(){
+  // Solo el administrador puede agregar archivos
+  if(localStorage.getItem("usuario_activo") === "Guardia"){
+    mostrarToast("Solo el administrador puede agregar archivos.","error"); return;
+  }
   const pass=prompt("Clave de administrador para agregar archivo:");
   if(pass!==CLAVE_MAESTRA){mostrarToast("Clave incorrecta.","error");return}
   const nombre=prompt("Nombre del archivo o carpeta:");
@@ -822,6 +814,10 @@ function pedirClaveAgregarArchivo(){
   mostrarToast("✅ Archivo agregado","success");
 }
 function eliminarArchivo(idx){
+  // Solo el administrador puede borrar
+  if(localStorage.getItem("usuario_activo") === "Guardia"){
+    mostrarToast("Solo el administrador puede borrar archivos.","error"); return;
+  }
   const lista=leerArchivos();
   if(idx<0||idx>=lista.length)return;
   if(!confirm("¿Eliminar este archivo?"))return;
