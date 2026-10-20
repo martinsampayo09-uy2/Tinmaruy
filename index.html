@@ -152,22 +152,13 @@ radio-player{flex:1;width:50%;height:140px;display:block;min-width:0}
 .sw-opciones label{display:flex;align-items:center;gap:8px;width:100%;padding:10px;border-bottom:1px solid #eee;font-size:13px;cursor:pointer;font-weight:bold;color:var(--texto)}
 .sw-opciones input{width:auto!important;margin:0}
 .sw-select.sw-error .sw-select-btn{border-color:var(--rojo)!important;background:#fff5f5!important}
-#uruleyesFullscreen,#stockFullscreen{display:none;position:fixed;inset:0;z-index:9000;background:#f5f5f5;flex-direction:column}
-#uruleyesFullscreen.active,#stockFullscreen.active{display:flex}
-.uruleyes-header,.stock-header{background:#0d1b2a;color:#fff;display:flex;justify-content:space-between;align-items:center;padding:12px 5%;border-bottom:3px solid #d4af37;gap:10px}
-.uruleyes-header h1,.stock-header h1{font-size:18px}
-.uruleyes-header nav a,.stock-header nav a{color:#fff;text-decoration:none;font-weight:bold;font-size:13px;cursor:pointer}
-.uruleyes-frame-container,.stock-frame-container{flex:1;width:100%;position:relative}
-.uruleyes-frame-container iframe,.stock-frame-container iframe{width:100%;height:100%;border:none;position:absolute;inset:0}
-/* Mensaje cuando la web no permite iframe */
-.stock-fallback{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;background:linear-gradient(135deg,#0d1b2a,#1F4E78);color:#fff;z-index:2}
-.stock-fallback.oculto{display:none}
-.stock-fallback h2{font-size:20px;margin-bottom:10px;color:#fff;border:none;padding:0}
-.stock-fallback p{font-size:14px;opacity:.9;margin-bottom:20px;line-height:1.5;max-width:400px}
-.stock-fallback .icono-grande{font-size:56px;margin-bottom:14px}
-.btn-abrir-stock{background:#00B050;color:#fff;border:none;padding:14px 28px;border-radius:10px;font-size:16px;font-weight:700;cursor:pointer;box-shadow:0 6px 20px rgba(0,176,80,.4);display:inline-flex;align-items:center;gap:8px;transition:transform .2s,background .2s}
-.btn-abrir-stock:hover{background:#009144;transform:scale(1.03)}
-.btn-abrir-stock:active{transform:scale(.98)}
+#uruleyesFullscreen{display:none;position:fixed;inset:0;z-index:9000;background:#f5f5f5;flex-direction:column}
+#uruleyesFullscreen.active{display:flex}
+.uruleyes-header{background:#0d1b2a;color:#fff;display:flex;justify-content:space-between;align-items:center;padding:12px 5%;border-bottom:3px solid #d4af37;gap:10px}
+.uruleyes-header h1{font-size:18px}
+.uruleyes-header nav a{color:#fff;text-decoration:none;font-weight:bold;font-size:13px;cursor:pointer}
+.uruleyes-frame-container{flex:1;width:100%;position:relative}
+.uruleyes-frame-container iframe{width:100%;height:100%;border:none;position:absolute;inset:0}
 .toast{position:fixed;bottom:100px;right:15px;max-width:calc(100vw - 30px);background:var(--azul);color:#fff;padding:12px 18px;border-radius:10px;box-shadow:0 8px 20px rgba(0,0,0,.25);font-weight:600;font-size:13px;transform:translateX(calc(100% + 30px));transition:transform .3s;z-index:7000}
 .toast.show{transform:translateX(0)}
 .toast.success{background:var(--verde)}
@@ -426,25 +417,6 @@ radio-player{flex:1;width:50%;height:140px;display:block;min-width:0}
 <div id="chat-widget"><div id="chat-window" role="dialog" aria-label="Asistente virtual TINMARUY" aria-hidden="true"><div class="chat-header"><div><b><h2>🤖 Asistente TINMARUY</h2></b> <span class="chat-estado"></span></div><button onclick="toggleChat(false)" aria-label="Cerrar chat">✕</button></div><div class="chat-body" id="chatBody" aria-live="polite"><div class="chat-msg bot"><b>¡Hola! 👋 Soy el asistente TINMARUY</b></div></div><form class="chat-input-area" id="chatForm"><input type="text" id="chatInput" placeholder="Escribe tu consulta..." autocomplete="off" maxlength="500" aria-label="Escribe tu consulta"><button type="submit" aria-label="Enviar mensaje">➤</button></form></div><button id="chat-toggle" onclick="toggleChat()" aria-label="Abrir asistente virtual" aria-expanded="false">🤖</button></div>
 </div><!-- /#appContainer -->
 
-<!-- PANTALLA COMPLETA STOCK (con fallback) -->
-<div id="stockFullscreen">
-  <header class="stock-header">
-    <h1>👋 <a href="#" onclick="cerrarStock(event)" style="color:inherit;text-decoration:none"><span style="color:#fff">TIN</span><span style="color:#d4af37">MAR</span></a></h1>
-    <nav><a href="#" onclick="cerrarStock(event)">⬅️ Volver al Inicio</a></nav>
-  </header>
-  <div class="stock-frame-container">
-    <iframe id="iframeStock" src="about:blank" title="Control de Stock"></iframe>
-    <div class="stock-fallback oculto" id="stockFallback">
-      <div class="icono-grande">🏪</div>
-      <h2>Control de Stock</h2>
-      <p>Por seguridad, esta página no permite verse dentro de la app. Tocá el botón para abrirla en pantalla completa con todos sus botones y funciones.</p>
-      <button class="btn-abrir-stock" onclick="abrirStockEnPestana()">
-        <i class="fa-solid fa-arrow-up-right-from-square"></i> Abrir Stock
-      </button>
-    </div>
-  </div>
-</div>
-
 <!-- PANTALLA COMPLETA URULEYES -->
 <div id="uruleyesFullscreen">
   <header class="uruleyes-header">
@@ -472,56 +444,17 @@ function normalizar(texto){return String(texto).toLowerCase().normalize("NFD").r
 function mostrarToast(msg,tipo="success"){const toast=document.getElementById("toast");toast.textContent=msg;toast.className="toast show "+tipo;clearTimeout(toast._timer);toast._timer=setTimeout(()=>toast.className="toast "+tipo,3200)}
 
 /* ===================== STOCK ===================== */
-let stockCheckTimeout=null;
-
+// Abre la web de Stock en una ventana nueva con la versión original completa
 function abrirStock(){
-  const contenedor=document.getElementById("stockFullscreen");
-  const iframe=document.getElementById("iframeStock");
-  const fallback=document.getElementById("stockFallback");
-  
-  // Ocultar fallback al inicio
-  fallback.classList.add("oculto");
-  
-  // Cargar el iframe con la URL
-  iframe.src=STOCK_URL;
-  
-  // Mostrar la pantalla completa
-  contenedor.classList.add("active");
-  document.body.style.overflow="hidden";
-  
-  // Detectar si la web bloquea el iframe (X-Frame-Options)
-  // Si después de 4 segundos el iframe no tiene contenido accesible, mostrar fallback
-  clearTimeout(stockCheckTimeout);
-  stockCheckTimeout=setTimeout(()=>{
-    try{
-      // Si el iframe está vacío o bloqueado, el contentWindow.location.href lanzará error
-      const iframeDoc=iframe.contentDocument||iframe.contentWindow.document;
-      // Si llegamos acá, el iframe cargó OK (no bloqueado)
-      console.log("Stock cargado dentro del iframe correctamente");
-    }catch(err){
-      // El iframe está bloqueado por seguridad → mostrar fallback
-      fallback.classList.remove("oculto");
-      iframe.style.display="none";
+  const ventana=window.open(STOCK_URL,"_blank","noopener,noreferrer");
+  if(!ventana){
+    // Si el navegador bloquea la ventana emergente, avisamos al usuario
+    mostrarToast("⚠️ Permití las ventanas emergentes para abrir Stock","warning");
+    // Fallback: redirigir en la misma pestaña
+    if(confirm("¿Abrir Stock en esta pestaña? Se saldrá de TINMARUY.")){
+      window.location.href=STOCK_URL;
     }
-  },4000);
-}
-
-function abrirStockEnPestana(){
-  window.open(STOCK_URL,"_blank","noopener,noreferrer");
-}
-
-function cerrarStock(e){
-  if(e)e.preventDefault();
-  const contenedor=document.getElementById("stockFullscreen");
-  const iframe=document.getElementById("iframeStock");
-  const fallback=document.getElementById("stockFallback");
-  
-  clearTimeout(stockCheckTimeout);
-  contenedor.classList.remove("active");
-  iframe.src="about:blank";
-  iframe.style.display="";
-  fallback.classList.add("oculto");
-  document.body.style.overflow="";
+  }
 }
 /* ================================================== */
 
@@ -674,7 +607,7 @@ function desbloquearApp(nombreCompleto){
 
 function cerrarSesion(){if(confirm("¿Estás seguro de que quieres cerrar sesión?")){localStorage.removeItem("stock_autorizado");localStorage.removeItem("usuario_activo");bloquearApp();mostrarToast("Sesión cerrada","warning")}}
 function accionUsuario(){if(localStorage.getItem("stock_autorizado")==="1")cerrarSesion();else abrirModalAuth()}
-function cambiarPortal(id,btn){cerrarUruleyes();cerrarStock();const destino=document.getElementById("seccion-"+id);if(!destino)return;document.querySelectorAll(".portal-section").forEach(sec=>sec.classList.remove("active"));destino.classList.add("active");document.querySelectorAll(".portal-nav button").forEach(b=>b.classList.toggle("active",b.dataset.section===id));if(btn&&btn.dataset.section===id)btn.classList.add("active");if(id==="tienda")actualizarCarritoUI();if(id==="archivos")renderArchivos();window.scrollTo({top:0,behavior:"smooth"})}
+function cambiarPortal(id,btn){cerrarUruleyes();const destino=document.getElementById("seccion-"+id);if(!destino)return;document.querySelectorAll(".portal-section").forEach(sec=>sec.classList.remove("active"));destino.classList.add("active");document.querySelectorAll(".portal-nav button").forEach(b=>b.classList.toggle("active",b.dataset.section===id));if(btn&&btn.dataset.section===id)btn.classList.add("active");if(id==="tienda")actualizarCarritoUI();if(id==="archivos")renderArchivos();window.scrollTo({top:0,behavior:"smooth"})}
 function obtenerDatosTarjeta(boton){const tarjeta=boton.closest(".item");if(!tarjeta)return null;const nombre=tarjeta.dataset.name;const precio=Number(tarjeta.dataset.price);const input=tarjeta.querySelector(".cantidad-input");const cantidad=input?Number(input.value):1;if(!nombre||!Number.isFinite(precio)||precio<0||!Number.isInteger(cantidad)||cantidad<1||cantidad>99){mostrarToast("Selecciona una cantidad válida entre 1 y 99.","error");if(input)input.focus();return null}return {nombre,precio,cantidad}}
 function agregarProductoDesdeTarjeta(boton){const datos=obtenerDatosTarjeta(boton);if(datos)agregarAlCarrito(datos.nombre,datos.precio,datos.cantidad)}
 function agregarAlCarrito(nombre,precio,cantidad=1){nombre=String(nombre);precio=Number(precio);cantidad=Number(cantidad);if(!nombre||!Number.isFinite(precio)||precio<0||!Number.isInteger(cantidad)||cantidad<1||cantidad>99)return mostrarToast("Producto o cantidad no válidos.","error");const existente=carrito.find(item=>item.nombre===nombre);if(existente){if(existente.cantidad+cantidad>99)return mostrarToast("Máximo 99 unidades por producto.","warning");existente.cantidad+=cantidad}else carrito.push({nombre,precio,cantidad});guardarCarrito();actualizarCarritoUI();mostrarToast(nombre+" agregado al carrito","success")}
@@ -900,7 +833,7 @@ let indiceConsejo=Math.floor(Math.random()*consejosGuardia.length);
 function nuevoConsejo(){indiceConsejo=(indiceConsejo+1)%consejosGuardia.length;const el=document.getElementById("consejoDelDia");if(el){el.style.opacity="0";setTimeout(()=>{el.textContent=consejosGuardia[indiceConsejo];el.style.opacity="1"},150)}mostrarToast("💡 Nuevo consejo cargado","success");}
 function ocultarAvisoDestacado(){const aviso=document.getElementById("avisoDestacado");if(aviso)aviso.classList.add("oculto");try{localStorage.setItem("tinmaruy_aviso_oculto","1");}catch(e){}}
 function iniciarNovedades(){const el=document.getElementById("consejoDelDia");if(el)el.textContent=consejosGuardia[indiceConsejo];try{if(localStorage.getItem("tinmaruy_aviso_oculto")==="1"){const aviso=document.getElementById("avisoDestacado");if(aviso)aviso.classList.add("oculto");}}catch(e){}}
-document.addEventListener("keydown",function(e){if(e.key==="Escape"){cerrarModalAuth();cerrarModalMensaje();cerrarUruleyes();cerrarStock();toggleChat(false);cerrarCompartir();document.querySelectorAll(".sw-select").forEach(el=>el.classList.remove("abierto"))}});
+document.addEventListener("keydown",function(e){if(e.key==="Escape"){cerrarModalAuth();cerrarModalMensaje();cerrarUruleyes();toggleChat(false);cerrarCompartir();document.querySelectorAll(".sw-select").forEach(el=>el.classList.remove("abierto"))}});
 document.addEventListener("DOMContentLoaded",function(){iniciarTema();iniciarNovedades();verificarMensajeSistemaAlInicio();cargarCarrito();cargarClima();renderArchivos();setInterval(cargarClima,1800000);anuncioTimer=setTimeout(mostrarSiguienteAnuncio,12000);setInterval(mostrarSiguienteAnuncio,30000)});
 (function(){const reloj=document.getElementById("reloj-lluvia");if(!reloj)return;const horaEl=reloj.querySelector("#hora"),fechaEl=reloj.querySelector("#fecha"),canvas=reloj.querySelector(".fondo-lluvia"),ctx=canvas.getContext("2d");const dias=["domingo","lunes","martes","miércoles","jueves","viernes","sábado"],meses=["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"];function actualizarHora(){const ahora=new Date();horaEl.textContent=[ahora.getHours(),ahora.getMinutes(),ahora.getSeconds()].map(x=>String(x).padStart(2,"0")).join(":");fechaEl.textContent=dias[ahora.getDay()]+", "+ahora.getDate()+" de "+meses[ahora.getMonth()]+" de "+ahora.getFullYear()}actualizarHora();setInterval(actualizarHora,1000);let gotas=[],salpicaduras=[];let ancho=0,alto=0;function nuevaGota(inicial=false){return{x:Math.random()*ancho,y:inicial?Math.random()*alto:-20,largo:6+Math.random()*10,velocidad:1.5+Math.random()*2.5,grosor:.4+Math.random()*.7,opacidad:.15+Math.random()*.25,inclinacion:.5+Math.random()}}function ajustarTamaño(){const rect=canvas.getBoundingClientRect();const dpr=Math.min(window.devicePixelRatio||1,2);ancho=rect.width;alto=rect.height;canvas.width=Math.round(ancho*dpr);canvas.height=Math.round(alto*dpr);ctx.setTransform(dpr,0,0,dpr,0,0);gotas=Array.from({length:Math.max(20,Math.floor(ancho/10))},()=>nuevaGota(true))}function animar(){ctx.clearRect(0,0,ancho,alto);for(const g of gotas){ctx.globalAlpha=g.opacidad*.25;ctx.strokeStyle="#001f29";ctx.lineWidth=g.grosor+1;ctx.beginPath();ctx.moveTo(g.x+1,g.y);ctx.lineTo(g.x+g.inclinacion+1,g.y+g.largo);ctx.stroke();ctx.globalAlpha=g.opacidad;ctx.strokeStyle="#7eefff";ctx.lineWidth=g.grosor;ctx.beginPath();ctx.moveTo(g.x,g.y);ctx.lineTo(g.x+g.inclinacion,g.y+g.largo);ctx.stroke();g.y+=g.velocidad;g.x+=.3;if(g.y>alto)Object.assign(g,nuevaGota(false));if(g.x>ancho+10){g.x=-10;g.y=Math.random()*alto}}ctx.globalAlpha=1;requestAnimationFrame(animar)}ajustarTamaño();animar();window.addEventListener("resize",ajustarTamaño)})();
 if(!customElements.get("radio-player")){customElements.define("radio-player",class extends HTMLElement{constructor(){super();this.attachShadow({mode:"open"})}connectedCallback(){if(this.shadowRoot.childElementCount)return;this.shadowRoot.innerHTML=`<style>:host{display:block;width:100%;height:100%;min-width:0}*{box-sizing:border-box}.radio-container{width:100%;height:100%;padding:10px 8px;background:linear-gradient(180deg,#082530,#073b48);border:1px solid #197b8b;border-radius:16px;box-shadow:0 5px 20px rgba(0,0,0,.25);font-family:Arial,sans-serif;text-align:center;display:flex;flex-direction:column;justify-content:space-evenly;align-items:center}.radio-screen{width:100%;min-height:28px;display:flex;align-items:center;justify-content:center;padding:4px;background:rgba(255,255,255,.08);border:1px solid rgba(100,230,245,.35);border-radius:8px;color:#70efff;font-size:11px;font-weight:bold}.radio-song{min-height:16px;color:#c6f8ff;font-size:10px;font-weight:600;margin:2px 0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100%}.play-button{width:38px;height:38px;flex-shrink:0;border:none;border-radius:50%;background:#c8f7fc;display:flex;align-items:center;justify-content:center;cursor:pointer}.play-icon{width:0;height:0;border-top:6px solid transparent;border-bottom:6px solid transparent;border-left:9px solid #087f89;margin-left:2px}.pause-icon{display:none;width:10px;height:12px;border-left:3px solid #087f89;border-right:3px solid #087f89}.playing .play-icon{display:none}.playing .pause-icon{display:block}.radio-info{color:#9bd6df;font-size:8px}.live{color:#6df1ff;font-size:8px;font-weight:bold}audio{display:none}</style><div class="radio-container"><div class="radio-screen" id="status">📻 RADIO ONLINE</div><div class="radio-song" id="song">🎶 SALUDOS A LOS ESCUCHAS</div><button class="play-button" id="play" type="button" aria-label="Reproducir radio"><div class="play-icon"></div><div class="pause-icon"></div></button><div class="live" id="live">● PAUSADO</div><div class="radio-info" id="info">TOCÁ PARA ESCUCHAR EN VIVO</div><audio id="audio" preload="none" playsinline><source src="https://stream.zeno.fm/8wup8yd9dm0uv" type="audio/mpeg"></audio></div>`;this.iniciarRadio()}iniciarRadio(){const root=this.shadowRoot,container=root.querySelector(".radio-container"),button=root.querySelector("#play"),audio=root.querySelector("#audio"),status=root.querySelector("#status"),info=root.querySelector("#info"),live=root.querySelector("#live");button.addEventListener("click",async()=>{if(audio.paused){status.textContent="⏳ CONECTANDO...";live.textContent="● CONECTANDO";info.textContent="CONECTANDO RADIO...";try{await audio.play();container.classList.add("playing");button.setAttribute("aria-label","Pausar radio")}catch(e){status.textContent="⚠️ SIN SEÑAL";live.textContent="● ERROR";info.textContent="TOCÁ DE NUEVO"}}else audio.pause()});audio.addEventListener("playing",()=>{container.classList.add("playing");status.textContent="⚡ ONLINE EN VIVO";live.textContent="● EN VIVO";info.textContent="🔊 REPRODUCIENDO";button.setAttribute("aria-label","Pausar radio")});audio.addEventListener("pause",()=>{container.classList.remove("playing");status.textContent="📻 PAUSADA";live.textContent="● PAUSADO";info.textContent="TOCÁ PARA ESCUCHAR";button.setAttribute("aria-label","Reproducir radio")});audio.addEventListener("waiting",()=>{status.textContent="⏳ CARGANDO...";live.textContent="● CONECTANDO"});audio.addEventListener("error",()=>{container.classList.remove("playing");status.textContent="⚠️ ERROR";live.textContent="● ERROR";info.textContent="TOCÁ DE NUEVO"})}})}
