@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#1F4E78">
 <title>TINMARUY</title>
-<!-- FontAwesome para los íconos (incluyendo sol, luna, pulgar y puerta) -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
  *{margin:0;padding:0;box-sizing:border-box}
@@ -44,128 +43,25 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible{
 .user-bar button.btn-ingresar{background:var(--azul);color:#fff}
 .btn-tienda-bar{background:#fff!important;color:var(--azul)!important;border:1.5px solid var(--azul)!important;font-weight:700!important;margin-right:auto;display:flex;align-items:center;gap:6px}
 
-/* ESTILOS DEL BOTÓN DE SALIDA PERSONALIZADO */
-.btn-salida-custom {
-  background-color: #00873e;
-  border: 2px solid #ffffff;
-  border-radius: 8px;
-  padding: 4px 10px;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  cursor: pointer;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-  transition: transform 0.2s, background-color 0.2s;
-}
-.btn-salida-custom:hover {
-  background-color: #006b31;
-  transform: scale(1.03);
-}
-.puerta-box {
-  background-color: #ffffff;
-  width: 22px;
-  height: 26px;
-  border-radius: 2px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.puerta-box .fa-person-running {
-  color: #00873e;
-  font-size: 16px;
-}
-.btn-salida-custom span {
-  color: #ffffff;
-  font-size: 12px;
-  font-weight: 700;
-}
+.btn-salida-custom{background-color:#00873e;border:2px solid #ffffff;border-radius:8px;padding:4px 10px;display:inline-flex;align-items:center;gap:6px;cursor:pointer;box-shadow:0 2px 5px rgba(0,0,0,0.2);transition:transform 0.2s,background-color 0.2s}
+.btn-salida-custom:hover{background-color:#006b31;transform:scale(1.03)}
+.puerta-box{background-color:#ffffff;width:22px;height:26px;border-radius:2px;display:flex;align-items:center;justify-content:center}
+.puerta-box .fa-person-running{color:#00873e;font-size:16px}
+.btn-salida-custom span{color:#ffffff;font-size:12px;font-weight:700}
 
-/* ESTILOS DEL BOTÓN DE COMPARTIR PERSONALIZADO */
-.btn-compartir-custom {
-  background-color: #1877F2;
-  border: 2px solid #ffffff;
-  border-radius: 8px;
-  padding: 4px 10px;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  cursor: pointer;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-  transition: transform 0.2s, background-color 0.2s;
-}
-.btn-compartir-custom:hover {
-  background-color: #145dbf;
-  transform: scale(1.03);
-}
-.pulgar-box {
-  background-color: #ffffff;
-  width: 24px;
-  height: 26px;
-  border-radius: 4px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.pulgar-box .fa-thumbs-up {
-  color: #1877F2;
-  font-size: 14px;
-}
-.btn-compartir-custom span {
-  color: #ffffff;
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 0.5px;
-}
+.btn-compartir-custom{background-color:#1877F2;border:2px solid #ffffff;border-radius:8px;padding:4px 10px;display:inline-flex;align-items:center;gap:6px;cursor:pointer;box-shadow:0 2px 5px rgba(0,0,0,0.2);transition:transform 0.2s,background-color 0.2s}
+.btn-compartir-custom:hover{background-color:#145dbf;transform:scale(1.03)}
+.pulgar-box{background-color:#ffffff;width:24px;height:26px;border-radius:4px;display:flex;align-items:center;justify-content:center}
+.pulgar-box .fa-thumbs-up{color:#1877F2;font-size:14px}
+.btn-compartir-custom span{color:#ffffff;font-size:11px;font-weight:800;letter-spacing:0.5px}
 
-/* INTERRUPTOR DE MODO CLARO / OSCURO ESTILO IMAGEN DE REFERENCIA */
-.theme-switch-container {
-  display: inline-flex;
-  align-items: center;
-  cursor: pointer;
-  user-select: none;
-  flex-shrink: 0;
-}
-.theme-switch {
-  width: 54px;
-  height: 28px;
-  background: linear-gradient(135deg, #f39c12, #e74c3c); /* Gradiente cálido para modo claro (Sol) */
-  border-radius: 30px;
-  position: relative;
-  transition: background 0.4s ease;
-  box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
-  display: flex;
-  align-items: center;
-  padding: 2px;
-  border: 1.5px solid rgba(255,255,255,0.4);
-}
-:root[data-theme="dark"] .theme-switch {
-  background: linear-gradient(135deg, #1e3c72, #2a5298); /* Gradiente azul para modo oscuro (Luna) */
-}
-.theme-switch-handle {
-  width: 22px;
-  height: 22px;
-  background: #ffffff;
-  border-radius: 50%;
-  position: absolute;
-  left: 3px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-  transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-}
-:root[data-theme="dark"] .theme-switch-handle {
-  transform: translateX(26px);
-  background: linear-gradient(135deg, #00c6ff, #0072ff);
-}
-.theme-switch-handle i {
-  font-size: 11px;
-  color: #e67e22;
-  transition: color 0.3s ease;
-}
-:root[data-theme="dark"] .theme-switch-handle i {
-  color: #ffffff;
-}
+.theme-switch-container{display:inline-flex;align-items:center;cursor:pointer;user-select:none;flex-shrink:0}
+.theme-switch{width:54px;height:28px;background:linear-gradient(135deg,#f39c12,#e74c3c);border-radius:30px;position:relative;transition:background 0.4s ease;box-shadow:inset 0 2px 4px rgba(0,0,0,0.2);display:flex;align-items:center;padding:2px;border:1.5px solid rgba(255,255,255,0.4)}
+:root[data-theme="dark"] .theme-switch{background:linear-gradient(135deg,#1e3c72,#2a5298)}
+.theme-switch-handle{width:22px;height:22px;background:#ffffff;border-radius:50%;position:absolute;left:3px;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 5px rgba(0,0,0,0.3);transition:transform 0.4s cubic-bezier(0.68,-0.55,0.27,1.55)}
+:root[data-theme="dark"] .theme-switch-handle{transform:translateX(26px);background:linear-gradient(135deg,#00c6ff,#0072ff)}
+.theme-switch-handle i{font-size:11px;color:#e67e22;transition:color 0.3s ease}
+:root[data-theme="dark"] .theme-switch-handle i{color:#ffffff}
 
 .portal-header{text-align:center;margin-bottom:20px;background:linear-gradient(135deg,#1a3d5c,var(--azul));color:#fff;padding:25px 15px;border-radius:15px;box-shadow:var(--sombra)}
 .portal-header h1{font-size:24px;margin-bottom:6px;letter-spacing:.5px}
@@ -299,18 +195,7 @@ radio-player{flex:1;width:50%;height:140px;display:block;min-width:0}
 @media(max-width:500px){body{padding:8px 8px 100px}.user-bar{gap:6px;padding:8px}.user-bar button:not(.sobre-notificacion-bar):not(.btn-compartir-custom):not(.btn-salida-custom){padding:8px}.nombre{max-width:90px}.portal-nav{left:8px;right:8px;bottom:8px}.portal-nav button{font-size:10px;padding:8px 2px}.nav-icon{font-size:17px}.portal-section{padding:14px}.portal-section h2{font-size:17px}#reloj-lluvia #hora{font-size:18px}#reloj-lluvia #fecha{font-size:9px}.carousel-container2 .slide img{max-width:220px;max-height:280px}.sw-fila{grid-template-columns:1fr}.tienda-controles{grid-template-columns:1fr}.carrito-botones{grid-template-columns:1fr}.clima-detalles{font-size:11px;gap:6px}.clima-temp{font-size:30px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
 
-/* TEMA OSCURO */
-:root[data-theme="dark"]{
-  --azul:#3B82C4;
-  --azul-claro:#5A9BD8;
-  --verde:#22C55E;
-  --amarillo:#F5B800;
-  --rojo:#EF4444;
-  --gris-bg:#0F172A;
-  --gris-borde:#2D3748;
-  --texto:#E2E8F0;
-  --sombra:0 8px 30px rgba(0,0,0,.4);
-}
+:root[data-theme="dark"]{--azul:#3B82C4;--azul-claro:#5A9BD8;--verde:#22C55E;--amarillo:#F5B800;--rojo:#EF4444;--gris-bg:#0F172A;--gris-borde:#2D3748;--texto:#E2E8F0;--sombra:0 8px 30px rgba(0,0,0,.4)}
 :root[data-theme="dark"] body{background:var(--gris-bg);color:var(--texto)}
 :root[data-theme="dark"] .user-bar{background:#1E293B;box-shadow:0 2px 6px rgba(0,0,0,.3)}
 :root[data-theme="dark"] .user-bar button:not(.sobre-notificacion-bar):not(.btn-tienda-bar):not(.btn-compartir-custom):not(.btn-salida-custom){background:#334155;color:var(--texto)}
@@ -326,19 +211,14 @@ radio-player{flex:1;width:50%;height:140px;display:block;min-width:0}
 :root[data-theme="dark"] .item h3{color:var(--azul-claro)}
 :root[data-theme="dark"] .item p{color:#94A3B8}
 :root[data-theme="dark"] .item img{background:#1E293B}
-:root[data-theme="dark"] .cantidad-input,
-:root[data-theme="dark"] .tienda-controles input,
-:root[data-theme="dark"] .tienda-controles select{background:#1E293B;color:var(--texto);border-color:var(--gris-borde)}
+:root[data-theme="dark"] .cantidad-input,:root[data-theme="dark"] .tienda-controles input,:root[data-theme="dark"] .tienda-controles select{background:#1E293B;color:var(--texto);border-color:var(--gris-borde)}
 :root[data-theme="dark"] .carrito-seccion{background:#1E293B;border-color:var(--azul-claro)}
 :root[data-theme="dark"] .carrito-seccion h3{color:var(--azul-claro)}
 :root[data-theme="dark"] .carrito-lista li{border-color:var(--gris-borde)}
 :root[data-theme="dark"] .btn-cantidad{background:#334155;color:var(--azul-claro)}
-:root[data-theme="dark"] .clima-card,
-:root[data-theme="dark"] .contact-card{background:linear-gradient(145deg,#1E293B,#0F172A);border-color:var(--gris-borde)}
-:root[data-theme="dark"] .clima-header,
-:root[data-theme="dark"] .contact-header{border-color:var(--gris-borde)}
-:root[data-theme="dark"] .clima-header h3,
-:root[data-theme="dark"] .contact-header h3{color:var(--texto)}
+:root[data-theme="dark"] .clima-card,:root[data-theme="dark"] .contact-card{background:linear-gradient(145deg,#1E293B,#0F172A);border-color:var(--gris-borde)}
+:root[data-theme="dark"] .clima-header,:root[data-theme="dark"] .contact-header{border-color:var(--gris-borde)}
+:root[data-theme="dark"] .clima-header h3,:root[data-theme="dark"] .contact-header h3{color:var(--texto)}
 :root[data-theme="dark"] .clima-temp{color:var(--azul-claro)}
 :root[data-theme="dark"] .clima-detalles{background:#0F172A;color:#CBD5E1}
 :root[data-theme="dark"] .contact-card .info-icon{color:#CBD5E1}
@@ -346,11 +226,7 @@ radio-player{flex:1;width:50%;height:140px;display:block;min-width:0}
 :root[data-theme="dark"] .protocolo-card{background:#1E293B;color:var(--texto);border-left-color:var(--azul-claro);border-top-color:var(--gris-borde);border-right-color:var(--gris-borde);border-bottom-color:var(--gris-borde)}
 :root[data-theme="dark"] .protocolo-card h4{color:var(--azul-claro)}
 :root[data-theme="dark"] .protocolo-card p{color:#CBD5E1}
-:root[data-theme="dark"] .form-sugerencias input[type=text],
-:root[data-theme="dark"] .form-sugerencias input[type=email],
-:root[data-theme="dark"] .form-sugerencias input[type=file],
-:root[data-theme="dark"] .form-sugerencias textarea,
-:root[data-theme="dark"] .form-sugerencias select{background:#0F172A;color:var(--texto);border-color:var(--gris-borde)}
+:root[data-theme="dark"] .form-sugerencias input[type=text],:root[data-theme="dark"] .form-sugerencias input[type=email],:root[data-theme="dark"] .form-sugerencias input[type=file],:root[data-theme="dark"] .form-sugerencias textarea,:root[data-theme="dark"] .form-sugerencias select{background:#0F172A;color:var(--texto);border-color:var(--gris-borde)}
 :root[data-theme="dark"] .campo label{color:var(--texto)}
 :root[data-theme="dark"] .sw-select-btn{background:#0F172A;color:var(--texto);border-color:var(--gris-borde)}
 :root[data-theme="dark"] .sw-opciones{background:#1E293B;border-color:var(--gris-borde)}
@@ -374,7 +250,6 @@ radio-player{flex:1;width:50%;height:140px;display:block;min-width:0}
 :root[data-theme="dark"] .btn-solicita-web{background:#1E3A5F;color:#93C5FD;border-color:#2D5A8A}
 :root[data-theme="dark"] .aviso-bloqueo{background:linear-gradient(135deg,#0B1F33,#1E3A5F)}
 
-/* MODAL COMPARTIR */
 .share-modal{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;z-index:9999;padding:20px;backdrop-filter:blur(4px)}
 .share-modal.active{display:flex}
 .share-modal-content{background:#fff;border-radius:16px;padding:24px;max-width:400px;width:100%;text-align:center;box-shadow:0 25px 60px rgba(0,0,0,.4)}
@@ -389,7 +264,6 @@ radio-player{flex:1;width:50%;height:140px;display:block;min-width:0}
 .btn-cerrar-share{width:100%;background:#E0E5EC;color:var(--texto);border:none;padding:10px;border-radius:8px;font-weight:700;cursor:pointer;font-size:13px;font-family:inherit}
 :root[data-theme="dark"] .btn-cerrar-share{background:#334155;color:var(--texto)}
 
-/* NOVEDADES */
 .aviso-destacado{display:flex;align-items:center;gap:12px;background:linear-gradient(135deg,#FFF7E0,#FFEFC2);border-left:5px solid var(--amarillo);border-radius:10px;padding:14px;margin-bottom:18px;position:relative;box-shadow:0 4px 12px rgba(0,0,0,.05)}
 .aviso-destacado.oculto{display:none}
 .aviso-destacado-icono{font-size:26px;flex-shrink:0}
@@ -411,7 +285,7 @@ radio-player{flex:1;width:50%;height:140px;display:block;min-width:0}
 .novedad-card h4{color:var(--azul);font-size:14px;line-height:1.3}
 .novedad-card p{font-size:12px;color:#64748B;line-height:1.5;flex:1}
 .novedad-fecha{font-size:10px;color:#94A3B8;font-weight:600}
-.blog-destacado{display:flex;gap:16px;align-items:center;background:linear-gradient(135deg,#1F4E78,#2E6FA8);color:#fff;border-radius:14px;padding:18px;box-shadow:0 8px 25px rgba(31,78,120,.3);flex-wrap:wrap}
+.blog-destacado{display:flex;gap:16px;align-items:center;background:linear-gradient(135deg,#1F4E78,#2E6FA8);color:#fff;border-radius:14px;padding:18px;box-shadow:0 8px 25px rgba(31,78,120,.3);flex-wrap:wrap;margin-bottom:18px}
 .blog-destacado-img{font-size:40px;background:rgba(255,255,255,.15);width:70px;height:70px;border-radius:16px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .blog-destacado-info{flex:1;min-width:180px}
 .blog-tag{background:var(--amarillo);color:#5A3E00;font-size:10px;font-weight:800;padding:3px 9px;border-radius:20px;text-transform:uppercase;letter-spacing:.5px}
@@ -462,7 +336,6 @@ radio-player{flex:1;width:50%;height:140px;display:block;min-width:0}
   <button class="sobre-notificacion-bar" onclick="abrirModalMensaje()" title="Novedades del sistema" aria-label="Novedades">✉️<span class="sobre-badge" id="sobreBadge">1</span></button>
   <button type="button" class="btn-tienda-bar" onclick="cambiarPortal('tienda',null)">🛒 Tienda <span id="badgeTienda" class="carrito-contador" style="padding:2px 6px">0</span></button>
   
-  <!-- INTERRUPTOR DE MODO CLARO / OSCURO PERSONALIZADO -->
   <div class="theme-switch-container" onclick="toggleTema()" title="Cambiar tema" aria-label="Cambiar tema">
     <div class="theme-switch" id="themeSwitchTrack">
       <div class="theme-switch-handle" id="themeSwitchHandle">
@@ -504,18 +377,25 @@ radio-player{flex:1;width:50%;height:140px;display:block;min-width:0}
 <div id="sinProductos" style="display:none;text-align:center;padding:20px;color:#718096">No se encontraron productos con esa búsqueda.</div>
 <div class="carrito-seccion" id="carritoSeccion"><div class="carrito-cabecera"><h3>🛒 Tu carrito de compras</h3><span class="carrito-contador" id="carritoContador">0 artículos</span></div><ul id="carrito-lista" class="carrito-lista" aria-live="polite"><li style="color:#7F8C8D">El carrito está vacío.</li></ul><div class="carrito-total-fila"><span>Total del pedido</span><span id="carrito-total">$ 0</span></div><div class="carrito-botones"><button class="btn-whatsapp-pedir" onclick="enviarPedidoWhatsApp()">📲 Pedir por WhatsApp</button><button class="btn-vaciar-carrito" onclick="vaciarCarrito()">🗑 Vaciar carrito</button></div><p class="carrito-nota">Precios en pesos uruguayos. El pedido se envía por WhatsApp para confirmar disponibilidad, entrega y forma de pago. El envío no está incluido en el total.</p></div></section>
 <section id="seccion-protocolos" class="portal-section"><h2>📋 Protocolos y Manual del Guardia</h2><p style="margin-bottom:15px;font-size:13px">Recordá seguir los procedimientos de tu empresa y las indicaciones de tu supervisor.</p><div class="protocolo-card"><h4>🚶‍♂️ Rondas y Patrullaje</h4><p>Realiza las rondas en los horarios establecidos. Presta atención a puertas forzadas, ruidos extraños, luces apagadas fuera de lo normal u objetos abandonados. Registra las novedades de forma objetiva.</p></div><div class="protocolo-card"><h4>📻 Uso Correcto de la Radio</h4><p>Mantén el canal despejado. Sé breve y conciso. Usa el alfabeto radiofónico si es necesario. No uses la radio para conversaciones personales.</p></div><div class="protocolo-card"><h4>🤝 Trato con el Público</h4><p>Mantén una actitud respetuosa, firme y servicial. Si hay un altercado, conserva la calma y avisa a tu supervisor o a los servicios de emergencia cuando corresponda.</p></div><div class="protocolo-card"><h4>📝 Registro de Novedades</h4><p>Anota la hora, el lugar, las personas involucradas y los hechos de forma objetiva. No escribas opiniones personales; registra lo que viste, escuchaste o hiciste.</p></div></section>
-<section id="seccion-novedades" class="portal-section"><h2>📰 Novedades y Avisos</h2> 
-<div class="aviso-destacado" id="avisoDestacado"><div class="aviso-destacado-icono">📢</div><div class="aviso-destacado-texto"><h4 id="avisoDestacadoTitulo">Aviso importante</h4><p id="avisoDestacadoCuerpo">Revisa los protocolos updated antes de tu próximo turno.</p></div><button class="aviso-destacado-cerrar" onclick="ocultarAvisoDestacado()" aria-label="Cerrar aviso">X</button></div>
-<div id="sinNovedades" style="display:none;text-align:center;padding:20px;color:#718096">No hay novedades en esta categoría.</div>
-<div class="blog-destacado"><div class="blog-destacado-img">🎯</div><div class="blog-destacado-info"><span class="blog-tag">Destacado</span><h4>Consejo del día</h4><p id="consejoDelDia">Mantén tu radio en el canal asignado y evita conversaciones personales durante el servicio.</p><button class="btn-consejo" onclick="nuevoConsejo()">🔄 Otro consejo</button></div></div></section>
-<div class="novedades-grid" id="novedadesGrid">
-<div class="novedad-card" data-categoria="aviso"><div class="novedad-etiqueta etiqueta-aviso">⚠️ Aviso</div><h4>Actualización de protocolos</h4><p>Revisa la sección de Protocolos. Se actualizaron las pautas de rondas y registro de novedades.</p><span class="novedad-fecha">📅 Hoy</span></div>
-<div class="novedad-card" data-categoria="noticia"><div class="novedad-etiqueta etiqueta-noticia">📰 Noticia</div><h4>Nuevos productos en la tienda</h4><p>Se sumaron artículos a la tienda", teclado gamer y cámara web. Consulta precios y disponibilidad.</p><span class="novedad-fecha">📅 Esta semana</span></div>
-<div class="novedad-card" data-categoria="guia"><div class="novedad-etiqueta etiqueta-guia">📚 Guía</div><h4>Cómo pedir por WhatsApp</h4><p>Agrega productos al carrito, revisa el total y toca "Pedir por WhatsApp". El pedido se envía listo para confirmar.</p><span class="novedad-fecha">📅 Guía rápida</span></div>
-<div class="novedad-card" data-categoria="aviso">
-    <div class="novedad-etiqueta etiqueta-aviso">⚠️ Aviso</div><h4>SITIO EN CONSTANTE ACTUALISACION</h4><p>ACUALISANDO...</p><span class="novedad-fecha">📅 Permanente</span></div>
-<div class="novedad-card" data-categoria="noticia"><div class="novedad-etiqueta etiqueta-noticia">📰 Noticia</div><h4>Nuevo servicio</h4><p>Ya puedes solicitar tu página web desde el portal. Completa el formulario con tu idea y te contactamos.</p><span class="novedad-fecha">📅 Reciente</span></div>
-<div class="novedad-card" data-categoria="guia"><div class="novedad-etiqueta etiqueta-guia">📚 Guía</div><h4>Uso del asistente virtual</h4><p>Toca el botón 🤖 y pregúntale...</p><span class="novedad-fecha">📅 Guía rápida</span></div></div>
+<section id="seccion-novedades" class="portal-section"><h2>📰 Novedades y Avisos</h2>
+  <div class="aviso-destacado" id="avisoDestacado"><div class="aviso-destacado-icono">📢</div><div class="aviso-destacado-texto"><h4 id="avisoDestacadoTitulo">Aviso importante</h4><p id="avisoDestacadoCuerpo">Revisa los protocolos actualizados antes de tu próximo turno.</p></div><button class="aviso-destacado-cerrar" onclick="ocultarAvisoDestacado()" aria-label="Cerrar aviso">X</button></div>
+  <div class="blog-destacado"><div class="blog-destacado-img">🎯</div><div class="blog-destacado-info"><span class="blog-tag">Destacado</span><h4>Consejo del día</h4><p id="consejoDelDia">Mantén tu radio en el canal asignado y evita conversaciones personales durante el servicio.</p><button class="btn-consejo" onclick="nuevoConsejo()">🔄 Otro consejo</button></div></div>
+  <div class="novedades-filtros">
+    <button class="filtro-btn active" data-filtro="todas" onclick="filtrarNovedades('todas',this)">Todas</button>
+    <button class="filtro-btn" data-filtro="aviso" onclick="filtrarNovedades('aviso',this)">⚠️ Avisos</button>
+    <button class="filtro-btn" data-filtro="noticia" onclick="filtrarNovedades('noticia',this)">📰 Noticias</button>
+    <button class="filtro-btn" data-filtro="guia" onclick="filtrarNovedades('guia',this)">📚 Guías</button>
+  </div>
+  <div class="novedades-grid" id="novedadesGrid">
+    <div class="novedad-card" data-categoria="aviso"><div class="novedad-etiqueta etiqueta-aviso">⚠️ Aviso</div><h4>Actualización de protocolos</h4><p>Revisa la sección de Protocolos. Se actualizaron las pautas de rondas y registro de novedades.</p><span class="novedad-fecha">📅 Hoy</span></div>
+    <div class="novedad-card" data-categoria="noticia"><div class="novedad-etiqueta etiqueta-noticia">📰 Noticia</div><h4>Nuevos productos en la tienda</h4><p>Se sumaron artículos a la tienda: teclado gamer y cámara web. Consulta precios y disponibilidad.</p><span class="novedad-fecha">📅 Esta semana</span></div>
+    <div class="novedad-card" data-categoria="guia"><div class="novedad-etiqueta etiqueta-guia">📚 Guía</div><h4>Cómo pedir por WhatsApp</h4><p>Agrega productos al carrito, revisa el total y toca "Pedir por WhatsApp". El pedido se envía listo para confirmar.</p><span class="novedad-fecha">📅 Guía rápida</span></div>
+    <div class="novedad-card" data-categoria="aviso"><div class="novedad-etiqueta etiqueta-aviso">⚠️ Aviso</div><h4>SITIO EN CONSTANTE ACTUALIZACIÓN</h4><p>ACTUALIZANDO...</p><span class="novedad-fecha">📅 Permanente</span></div>
+    <div class="novedad-card" data-categoria="noticia"><div class="novedad-etiqueta etiqueta-noticia">📰 Noticia</div><h4>Nuevo servicio</h4><p>Ya puedes solicitar tu página web desde el portal. Completa el formulario con tu idea y te contactamos.</p><span class="novedad-fecha">📅 Reciente</span></div>
+    <div class="novedad-card" data-categoria="guia"><div class="novedad-etiqueta etiqueta-guia">📚 Guía</div><h4>Uso del asistente virtual</h4><p>Toca el botón 🤖 y pregúntale lo que necesites.</p><span class="novedad-fecha">📅 Guía rápida</span></div>
+  </div>
+  <div id="sinNovedades" style="display:none;text-align:center;padding:20px;color:#718096">No hay novedades en esta categoría.</div>
+</section>
 <section id="seccion-sugerencias" class="portal-section"><h2>📩 Envía Sugerencia, Reporte o Imagen</h2><p style="margin-bottom:15px;font-size:13px;color:#7F8C8D">Para enviar información relacionada con esta web.</p><form class="form-sugerencias" action="https://formsubmit.co/Martinsampayo9@gmail.com" method="POST" enctype="multipart/form-data"><input type="hidden" name="_subject" value="Nueva sugerencia o reporte en TINMARUY"><input type="hidden" name="_captcha" value="false"><div class="campo"><label for="sugNombre">Tu nombre (opcional)</label><input type="text" id="sugNombre" name="Nombre" placeholder="Ej. Juan Pérez"></div><div class="campo"><label for="sugEmail">Tu correo electrónico *</label><input type="email" id="sugEmail" name="Correo" placeholder="tu@email.com" required></div><div class="campo"><label for="sugMensaje">Sugerencia, información o comentario *</label><textarea id="sugMensaje" name="Sugerencia_o_Reporte" rows="3" placeholder="Escribe aquí tu mensaje..." required></textarea></div><div class="campo"><label for="sugImagen">Adjuntar imagen (opcional)</label><input type="file" id="sugImagen" name="Adjunto" accept="image/*"></div><button type="submit" class="btn-sugerencia">🚀 ENVIAR</button></form></section>
 <section id="seccion-solicitarweb" class="portal-section"><h2>🌐 SOLICITÁ TU WEB</h2><p style="margin-bottom:15px;font-size:13px;color:#7F8C8D">Completá el formulario para solicitar tu página web.</p><form class="form-sugerencias" id="formWeb" action="https://formsubmit.co/Martinsampayo9@gmail.com" method="POST"><input type="hidden" name="_subject" value="Nueva solicitud de página web en TINMARUY"><input type="hidden" name="_captcha" value="false"><div class="sw-fila"><div class="campo"><label for="webNombre">Nombre *</label><input id="webNombre" type="text" name="Nombre_Cliente" placeholder="Ej. Juan Pérez" required></div><div class="campo"><label for="webCorreo">Correo electrónico *</label><input id="webCorreo" type="email" name="Correo_Cliente" placeholder="tu@email.com" required></div></div><div class="campo"><label for="webNegocio">Nombre del negocio *</label><input id="webNegocio" type="text" name="Negocio" placeholder="Nombre de tu negocio" required></div>
 <div class="sw-select" id="select-tipo"><button type="button" class="sw-select-btn">💻 <span>Tipo de web *</span> <b>⬇️</b></button><div class="sw-opciones"><label><input type="radio" name="Tipo_de_Web" value="Página para negocio"> 🏪 Página para negocio</label><label><input type="radio" name="Tipo_de_Web" value="Tienda online"> 🛒 Tienda online</label><label><input type="radio" name="Tipo_de_Web" value="Web profesional"> 💼 Web profesional</label><label><input type="radio" name="Tipo_de_Web" value="Web empresarial"> 🏢 Web empresarial</label><label><input type="radio" name="Tipo_de_Web" value="Web de servicios"> 🔧 Web de servicios</label><label><input type="radio" name="Tipo_de_Web" value="Web gastronómica"> 🍔 Web gastronómica</label><label><input type="radio" name="Tipo_de_Web" value="Portafolio"> 👨‍💻 Portafolio</label><label><input type="radio" name="Tipo_de_Web" value="Landing Page"> 📄 Landing Page</label><label><input type="radio" name="Tipo_de_Web" value="Otra"> ✨ Otra</label></div></div>
@@ -523,10 +403,10 @@ radio-player{flex:1;width:50%;height:140px;display:block;min-width:0}
 <div class="sw-select" id="select-diseno"><button type="button" class="sw-select-btn">🎨 <span>Estilo de diseño *</span> <b>⬇️</b></button><div class="sw-opciones"><label><input type="radio" name="Diseno" value="Moderno"> Moderno</label><label><input type="radio" name="Diseno" value="Minimalista"> Minimalista</label><label><input type="radio" name="Diseno" value="Elegante"> Elegante</label><label><input type="radio" name="Diseno" value="Profesional"> Profesional</label><label><input type="radio" name="Diseno" value="Colorido"> Colorido</label><label><input type="radio" name="Diseno" value="No estoy seguro"> No estoy seguro</label></div></div>
 <div class="sw-select" id="select-dominio"><button type="button" class="sw-select-btn">🌎 <span>Dominio *</span> <b>⬇️</b></button><div class="sw-opciones"><label><input type="radio" name="Dominio" value="Quiero un dominio .com"> 🌐 Quiero un dominio .com</label><label><input type="radio" name="Dominio" value="Ya tengo dominio"> ✔️ Ya tengo dominio</label><label><input type="radio" name="Dominio" value="No estoy seguro"> ❓ No estoy seguro</label></div></div>
 <div class="campo"><label for="webSecciones">Secciones que necesitás *</label><input id="webSecciones" type="text" name="Secciones" placeholder="Ej. Inicio, Servicios, Contacto" required></div><div class="campo"><label for="webIdea">Contame tu idea *</label><textarea id="webIdea" rows="3" name="Idea_Principal" placeholder="Describe tu idea..." required></textarea></div><button type="submit" class="btn-sugerencia">📲 ENVIAR SOLICITUD</button></form></section>
-</div>
+</div><!-- /#portalContenido -->
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <div id="chat-widget"><div id="chat-window" role="dialog" aria-label="Asistente virtual TINMARUY" aria-hidden="true"><div class="chat-header"><div><b><h2>🤖 Asistente TINMARUY</h2></b> <span class="chat-estado"></span></div><button onclick="toggleChat(false)" aria-label="Cerrar chat">✕</button></div><div class="chat-body" id="chatBody" aria-live="polite"><div class="chat-msg bot"><b>¡Hola! 👋 Soy el asistente TINMARUY</b></div></div><form class="chat-input-area" id="chatForm"><input type="text" id="chatInput" placeholder="Escribe tu consulta..." autocomplete="off" maxlength="500" aria-label="Escribe tu consulta"><button type="submit" aria-label="Enviar mensaje">➤</button></form></div><button id="chat-toggle" onclick="toggleChat()" aria-label="Abrir asistente virtual" aria-expanded="false">🤖</button></div>
-</div>
+</div><!-- /#appContainer -->
 <div id="uruleyesFullscreen"><header class="uruleyes-header"><h1>👋 <a href="#" onclick="cerrarUruleyes(event)" style="color:inherit;text-decoration:none"><span style="color:#fff">TIN</span><span style="color:#d4af37">MAR</span></a></h1><nav><a href="#" onclick="cerrarUruleyes(event)">⬅️ Volver al Inicio</a></nav></header><div class="uruleyes-frame-container"><iframe src="https://uruleyes.com" title="UruLeyes - Buscador de Leyes" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe></div></div>
 <script>
 "use strict";
@@ -610,7 +490,7 @@ if(t.includes("hora")||t.includes("qué hora es")||t.includes("que hora es")||t.
   if(t.includes("fecha")||t.includes("qué día es")||t.includes("que dia es")||t.includes("hoy es")||t.includes("fecha de hoy")||t.includes("qué fecha es")||t.includes("cual es la fecha")||t.includes("qué día de la semana es")||t.includes("en qué día estamos")||t.includes("hoy qué día es"))
 return "Hoy es "+diaSemana+", "+fecha+" 📅.";
 if(t.includes("quien sos")||t.includes("quién sos")||t.includes("como te llamas")||t.includes("cómo te llamas")||t.includes("nombre")||t.includes("sos")||t.includes("sos martin")||t.includes("de quien es")||t.includes("de quién es")||t.includes("con quien ablo")||t.includes("con quién hablo"))
-    return "Soy Tinma, tu asistente virtual de TINMARUY 🤖📱. Te ayudo en lo que necetés.";
+    return "Soy Tinma, tu asistente virtual de TINMARUY 🤖📱. Te ayudo en lo que necesites.";
   if(t.includes("la chupas")||t.includes("la mamas")||t.includes("sexo oral")||t.includes("sos gay")||t.includes("puto"))
     return "¿A qué te referís? Si hablás de sexo, soy varón y me gustan los culos nalgones/as 🍑.";
 if(t.includes("carrito")){
@@ -691,7 +571,6 @@ const genericas=[
     "No estoy seguro de a qué te refieres 🤔",
 "Interesante... ¿puedes explicarlo mejor? 🤓" ];
  return genericas[Math.floor(Math.random()*genericas.length)];}
-// EVENTOS
 document.getElementById("chatForm").addEventListener("submit",function(e){e.preventDefault();enviarMensajeChat()});
 document.getElementById("buscarProducto").addEventListener("input",filtrarProductos);
 document.getElementById("ordenProductos").addEventListener("change",ordenarProductos);
@@ -705,36 +584,30 @@ function verificarMensajeSistemaAlInicio(){verificarMensajeSistema();if(localSto
 const listaAnuncios=[{titulo:"📋 Protocolos",texto:"Repasa los protocolos de rondas y uso de radio."},{titulo:"📩 Sugerencias",texto:"Envía comentarios o reportes desde la sección inferior."},{titulo:"⚖️ UruLeyes",texto:"Consulta las leyes desde la pestaña inferior."},{titulo:"🚨 Emergencias",texto:"Recordá los teléfonos de emergencia: 911, 104 y 105."},{titulo:"☀️ Clima",texto:"Revisa el estado del tiempo antes de salir."},{titulo:"🛒 Tienda",texto:"Busca artículos, modifica cantidades y envía el pedido por WhatsApp."},{titulo:"📰 Novedades",texto:"Consulta los avisos y noticias nuevas del portal."}];
 function mostrarSiguienteAnuncio(){const el=document.getElementById("anuncioFlotante");if(el.dataset.cerrado==="1")return;const a=listaAnuncios[indiceAnuncio];document.getElementById("anuncioTitulo").textContent=a.titulo;document.getElementById("anuncioTexto").textContent=a.texto;el.classList.add("mostrar");clearTimeout(timerAnuncio);timerAnuncio=setTimeout(()=>el.classList.remove("mostrar"),5000);indiceAnuncio=(indiceAnuncio+1)%listaAnuncios.length}
 function cerrarAnuncioFlotante(){const el=document.getElementById("anuncioFlotante");el.classList.remove("mostrar");el.dataset.cerrado="1";clearTimeout(timerAnuncio)}
-// BLOQUEO DE INSPECCIÓN
 document.addEventListener("keydown",(e)=>{if(e.key==="F12"){e.preventDefault();alert("🔒 Inspección bloqueada")}if(e.ctrlKey&&e.shiftKey&&(e.key==="I"||e.key==="C"||e.key==="J")){e.preventDefault();alert("🚫 Atajo bloqueado")}if(e.ctrlKey&&e.key.toLowerCase()==="u"){e.preventDefault();alert("🚫 Ver código fuente deshabilitado")}});
 document.addEventListener("contextmenu",(e)=>{e.preventDefault();alert("Clic derecho deshabilitado")});
-// TEMA CLARO/OSCURO CON ICONO DINÁMICO
 function aplicarTema(tema){
   const root=document.documentElement;
   const icon=document.getElementById("themeSwitchIcon");
   const meta=document.querySelector('meta[name="theme-color"]');
   if(tema==="dark"){
     root.setAttribute("data-theme","dark");
-    if(icon){
- icon.className="fa-solid fa-moon";  }
- if(meta)meta.setAttribute("content","#0F172A");
+    if(icon){ icon.className="fa-solid fa-moon"; }
+    if(meta)meta.setAttribute("content","#0F172A");
   }else{
     root.removeAttribute("data-theme");
-    if(icon){
-      icon.className="fa-solid fa-sun";  }
-if(meta)meta.setAttribute("content","#1F4E78");}
+    if(icon){ icon.className="fa-solid fa-sun"; }
+    if(meta)meta.setAttribute("content","#1F4E78");}
 }
 function toggleTema(){const actual=document.documentElement.getAttribute("data-theme");const nuevo=actual==="dark"?"light":"dark";aplicarTema(nuevo);try{localStorage.setItem("tinmaruy_tema",nuevo);}catch(e){}mostrarToast(nuevo==="dark"?"🌙 Modo oscuro activado":"☀️ Modo claro activado","success");}
 function iniciarTema(){let tema=null;try{tema=localStorage.getItem("tinmaruy_tema");}catch(e){}if(!tema){tema=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";}aplicarTema(tema);}
 if(window.matchMedia){window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change",function(e){let guardado=null;try{guardado=localStorage.getItem("tinmaruy_tema");}catch(err){}if(!guardado)aplicarTema(e.matches?"dark":"light");});}
-// COMPARTIR APP
 const DATOS_COMPARTIR={titulo:"TINMARUY - Portal y Tienda",texto:"Descubrí TINMARUY: protocolos, tienda, envia tu sugerencias y solicitud de páginas web. ¡Todo en un solo lugar!",url:window.location.href.split("?")[0].split("#")[0]};
 async function abrirCompartir(){if(navigator.share){try{await navigator.share({title:DATOS_COMPARTIR.titulo,text:DATOS_COMPARTIR.texto,url:DATOS_COMPARTIR.url});mostrarToast("✅ ¡Gracias por compartir TINMARUY!","success");return;}catch(err){if(err.name==="AbortError")return;}}document.getElementById("shareModal").classList.add("active");}
 function cerrarCompartir(){document.getElementById("shareModal").classList.remove("active");}
 function compartirEn(red){const url=encodeURIComponent(DATOS_COMPARTIR.url);const texto=encodeURIComponent(DATOS_COMPARTIR.texto);const titulo=encodeURIComponent(DATOS_COMPARTIR.titulo);let enlace="";switch(red){case "whatsapp":enlace=`https://wa.me/?text=${texto}%0A${url}`;break;case "telegram":enlace=`https://t.me/share/url?url=${url}&text=${texto}`;break;case "facebook":enlace=`https://www.facebook.com/sharer/sharer.php?u=${url}`;break;case "twitter":enlace=`https://twitter.com/intent/tweet?text=${texto}&url=${url}`;break;case "email":enlace=`mailto:?subject=${titulo}&body=${texto}%0A%0A${url}`;break;case "copiar":copiarLink();return;}if(enlace){window.open(enlace,"_blank","noopener,noreferrer");cerrarCompartir();}}
 async function copiarLink(){const url=DATOS_COMPARTIR.url;try{if(navigator.clipboard&&window.isSecureContext){await navigator.clipboard.writeText(url);}else{const ta=document.createElement("textarea");ta.value=url;ta.style.position="fixed";ta.style.opacity="0";document.body.appendChild(ta);ta.select();document.execCommand("copy");document.body.removeChild(ta);}mostrarToast("🔗 Link copiado al portapapeles","success");cerrarCompartir();}catch(e){mostrarToast("No se pudo copiar. Copiá manualmente: "+url,"warning");}}
 document.addEventListener("click",function(e){const modal=document.getElementById("shareModal");if(e.target===modal)cerrarCompartir();});
-// NOVEDADES
 const consejosGuardia=["Colega tu radio en el canal asignado y evita conversaciones personales durante el servicio.","Registra las novedades de forma objetiva: hora, lugar, personas y hechos. Sin opiniones.","Antes de cada ronda, verifica que tu linterna y radio tengan batería suficiente.","Si detectas una puerta forzada, no entres solo: avisa a tu supervisor y a la Policía (911).","Mantén una actitud respetuosa y firme. La calma resuelve más que la confrontación.","Conoce las salidas de emergencia y los puntos de reunión de tu puesto.","No abandones tu puesto sin ser relevado. Si surge una urgencia, informa de inmediato."];
 let indiceConsejo=Math.floor(Math.random()*consejosGuardia.length);
 function nuevoConsejo(){indiceConsejo=(indiceConsejo+1)%consejosGuardia.length;const el=document.getElementById("consejoDelDia");if(el){el.style.opacity="0";setTimeout(()=>{el.textContent=consejosGuardia[indiceConsejo];el.style.opacity="1"},150)}mostrarToast("💡 Nuevo consejo cargado","success");}
