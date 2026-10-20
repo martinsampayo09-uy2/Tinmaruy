@@ -377,6 +377,7 @@ radio-player{flex:1;width:50%;height:140px;display:block;min-width:0}
     <button onclick="generarCodigoGuardia()" style="background:#00B050; color:white; border:none; padding:8px 16px; border-radius:6px; font-weight:bold; cursor:pointer;">Generar Código</button>
     <div id="resultadoCodigo" style="display:none; margin-top:12px; background:white; padding:10px; border-radius:6px; border:1px dashed #1769aa;">
       <p style="font-size:13px; color:#2C3E50; margin-bottom:5px;"><strong>Código:</strong> <span id="codigoGenerado" style="color:#00B050; font-weight:900; font-size:16px;"></span></p>
+      <button onclick="copiarCodigoGenerado()" style="background:#00B050; color:white; border:none; padding:6px 12px; border-radius:4px; font-size:12px; cursor:pointer; margin-bottom:10px;">📋 Copiar Código</button>
       <p style="font-size:12px; color:#4a5568; margin-bottom:5px;"><strong>Enlace Mágico:</strong> <a id="linkMagico" href="#" target="_blank" style="color:#1769aa; word-break:break-all; font-size:11px;"></a></p>
       <button onclick="copiarEnlaceMagico()" style="background:#1769aa; color:white; border:none; padding:6px 12px; border-radius:4px; font-size:12px; cursor:pointer; margin-top:5px;">📋 Copiar Enlace Mágico</button>
     </div>
@@ -476,6 +477,15 @@ function generarCodigoGuardia(){
   const link=urlBase+"?codigo="+codigo;
   document.getElementById("linkMagico").href=link;
   document.getElementById("linkMagico").textContent=link;
+}
+
+function copiarCodigoGenerado(){
+  const codigo=document.getElementById("codigoGenerado").textContent;
+  navigator.clipboard.writeText(codigo).then(()=>{
+    mostrarToast("🔑 Código copiado al portapapeles","success");
+  }).catch(()=>{
+    mostrarToast("No se pudo copiar. Cópialo manualmente.","warning");
+  });
 }
 
 function copiarEnlaceMagico(){
