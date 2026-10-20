@@ -377,8 +377,8 @@ radio-player{flex:1;width:50%;height:140px;display:block;min-width:0}
 <section id="seccion-archivos" class="portal-section">
   <h2>📁 Archivos y Documentos</h2>
   
-  <!-- Panel de Generación de Códigos (Siempre visible) -->
-  <div id="panelGenerarCodigo" style="background:#e8f3ff; border:1px solid #c9e2f7; border-radius:12px; padding:15px; margin-bottom:18px; text-align:center;">
+  <!-- Panel de Generación de Códigos (OCULTO POR DEFECTO - SOLO ADMIN) -->
+  <div id="panelGenerarCodigo" style="display:none; background:#e8f3ff; border:1px solid #c9e2f7; border-radius:12px; padding:15px; margin-bottom:18px; text-align:center;">
     <h3 style="color:#1769aa; font-size:15px; margin-bottom:8px;">🔑 Generador de Códigos para Guardias</h3>
     <p style="font-size:12px; color:#4a5568; margin-bottom:10px;">Crea un código único y un enlace mágico para que el guardia pueda ingresar desde su celular.</p>
     <input type="text" id="inputNombreGuardia" placeholder="Nombre del guardia (Ej: Hugo)" style="padding:8px; border:1px solid #c9e2f7; border-radius:6px; width:80%; max-width:250px; margin-bottom:8px;">
@@ -402,6 +402,7 @@ radio-player{flex:1;width:50%;height:140px;display:block;min-width:0}
         <li>🎓 Material de capacitación</li>
       </ul>
       <button class="archivos-admin-btn" onclick="pedirClaveAgregarArchivo()">🔒 Agregar archivo (admin)</button>
+      <button class="archivos-admin-btn" style="background:#1769aa;margin-left:6px" onclick="pedirClaveMostrarGenerador()">🔑 Generar código (admin)</button>
     </div>
   </div>
   <div id="archivosGrid" class="archivos-grid"></div>
@@ -459,25 +460,37 @@ function cargarCodigosMagicos(){
 }
 cargarCodigosMagicos();
 
+// NUEVA FUNCIÓN: Pide la clave para MOSTRAR el generador de códigos
+function pedirClaveMostrarGenerador(){
+  const pass=prompt("Clave de administrador para acceder al generador de códigos:");
+  if(pass!==CLAVE_MAESTRA){mostrarToast("Clave incorrecta.","error");return;}
+  const panel=document.getElementById("panelGenerarCodigo");
+  panel.style.display="block";
+  panel.scrollIntoView({behavior:"smooth",block:"start"});
+  mostrarToast("🔓 Generador desbloqueado","success");
+}
+
+// PROTECCIÓN: verifica clave antes de generar el código
 function generarCodigoGuardia(){
+  // Verificación de seguridad interna
+  const verif=prompt("Ingresa la clave de administrador para generar el código:");
+  if(verif!==CLAVE_MAESTRA){mostrarToast("Clave incorrecta. Acción cancelada.","error");return;}
+  
   const nombre=document.getElementById("inputNombreGuardia").value.trim();
   if(!nombre){mostrarToast("Escribe el nombre del guardia.","error");return;}
-  // Generar código aleatorio de 6 caracteres
+  
   const caracteres="ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
   let codigo="";
   for(let i=0;i<6;i++){codigo+=caracteres.charAt(Math.floor(Math.random()*caracteres.length));}
   
-  // Guardar en la lista global (en el admin)
   let codigos=JSON.parse(localStorage.getItem("tinmaruy_codigos_magicos")||"{}");
   codigos[codigo]=nombre;
   localStorage.setItem("tinmaruy_codigos_magicos", JSON.stringify(codigos));
   
-  // Guardar el código generado en el dispositivo actual también
   let misCodigos=JSON.parse(localStorage.getItem("tinmaruy_mis_codigos")||"{}");
   misCodigos[codigo]=true;
   localStorage.setItem("tinmaruy_mis_codigos", JSON.stringify(misCodigos));
 
-  // Mostrar resultado
   document.getElementById("resultadoCodigo").style.display="block";
   document.getElementById("codigoGenerado").textContent=codigo;
   
@@ -485,6 +498,7 @@ function generarCodigoGuardia(){
   const link=urlBase+"?codigo="+codigo;
   document.getElementById("linkMagico").href=link;
   document.getElementById("linkMagico").textContent=link;
+  mostrarToast("✅ Código generado correctamente","success");
 }
 
 function copiarCodigoGenerado(){
@@ -513,16 +527,13 @@ function validarCodigoUsuario(){
     localStorage.setItem("stock_autorizado","1");localStorage.setItem("usuario_activo",nombre);desbloquearApp(nombre);cerrarModalAuth();mostrarToast("Bienvenido Administrador, "+nombre,"success");return;
   }
   
-  // Verificar si el código existe en los códigos mágicos guardados en este dispositivo
   const misCodigos=JSON.parse(localStorage.getItem("tinmaruy_mis_codigos")||"{}");
   if(misCodigos[codigo]){
     localStorage.setItem("stock_autorizado","1");localStorage.setItem("usuario_activo",nombre);desbloquearApp(nombre);cerrarModalAuth();mostrarToast("Bienvenido Guardia, "+nombre,"success");return;
   }
 
-  // Verificar si está en la lista general (por si el admin lo generó en el mismo dispositivo)
   const todosLosCodigos=JSON.parse(localStorage.getItem("tinmaruy_codigos_magicos")||"{}");
   if(todosLosCodigos[codigo]){
-    // Como el código existe, lo guardamos localmente para futuros inicios de sesión
     misCodigos[codigo]=true;
     localStorage.setItem("tinmaruy_mis_codigos", JSON.stringify(misCodigos));
     localStorage.setItem("stock_autorizado","1");localStorage.setItem("usuario_activo",nombre);desbloquearApp(nombre);cerrarModalAuth();mostrarToast("Bienvenido Guardia, "+nombre,"success");return;
