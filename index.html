@@ -36,30 +36,33 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible{
 .anuncio-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;font-weight:700;color:var(--azul)}
 .anuncio-cerrar{background:none;border:none;cursor:pointer;font-size:15px;color:#95A5A6}
 .anuncio-texto{line-height:1.4}
-.user-bar{display:flex;align-items:center;justify-content:flex-end;gap:6px;margin-bottom:10px;padding:8px 10px;background:#fff;border-radius:10px;box-shadow:0 2px 6px rgba(0,0,0,.05);font-size:13px;flex-wrap:nowrap;position:relative;z-index:60;overflow-x:auto}
-.avatar{width:32px;height:32px;border-radius:50%;background:var(--azul);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex-shrink:0}
-.nombre{font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100px;flex-shrink:0;font-size:12px}
-.user-bar button:not(.sobre-notificacion-bar):not(.btn-compartir-custom):not(.btn-salida-custom){background:#F0F2F5;color:var(--texto);border:none;padding:7px 10px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;flex-shrink:0}
+
+/* Ajustes en la barra superior para que entre en celulares */
+.user-bar{display:flex;align-items:center;justify-content:flex-end;gap:4px;margin-bottom:10px;padding:6px 8px;background:#fff;border-radius:10px;box-shadow:0 2px 6px rgba(0,0,0,.05);font-size:13px;flex-wrap:nowrap;position:relative;z-index:60;overflow-x:auto;scrollbar-width:none}
+.user-bar::-webkit-scrollbar{display:none}
+.avatar{width:28px;height:28px;border-radius:50%;background:var(--azul);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;flex-shrink:0}
+.nombre{font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:70px;flex-shrink:0;font-size:11px}
+.user-bar button:not(.sobre-notificacion-bar):not(.btn-compartir-custom):not(.btn-salida-custom){background:#F0F2F5;color:var(--texto);border:none;padding:6px 8px;border-radius:6px;font-size:11px;font-weight:600;cursor:pointer;flex-shrink:0}
 .user-bar button.btn-ingresar{background:var(--azul);color:#fff}
 
-.btn-salida-custom{background-color:#00873e;border:2px solid #ffffff;border-radius:8px;padding:4px 8px;display:inline-flex;align-items:center;gap:4px;cursor:pointer;box-shadow:0 2px 5px rgba(0,0,0,0.2);transition:transform 0.2s,background-color 0.2s;flex-shrink:0}
+.btn-salida-custom{background-color:#00873e;border:2px solid #ffffff;border-radius:8px;padding:3px 6px;display:inline-flex;align-items:center;gap:3px;cursor:pointer;box-shadow:0 2px 5px rgba(0,0,0,0.2);transition:transform 0.2s,background-color 0.2s;flex-shrink:0}
 .btn-salida-custom:hover{background-color:#006b31;transform:scale(1.03)}
-.puerta-box{background-color:#ffffff;width:18px;height:22px;border-radius:2px;display:flex;align-items:center;justify-content:center}
-.puerta-box .fa-person-running{color:#00873e;font-size:13px}
-.btn-salida-custom span{color:#ffffff;font-size:11px;font-weight:700}
+.puerta-box{background-color:#ffffff;width:16px;height:18px;border-radius:2px;display:flex;align-items:center;justify-content:center}
+.puerta-box .fa-person-running{color:#00873e;font-size:11px}
+.btn-salida-custom span{color:#ffffff;font-size:10px;font-weight:700}
 
-.btn-compartir-custom{background-color:#1877F2;border:2px solid #ffffff;border-radius:8px;padding:3px 7px;display:inline-flex;align-items:center;gap:4px;cursor:pointer;box-shadow:0 2px 5px rgba(0,0,0,0.2);transition:transform 0.2s,background-color 0.2s;flex-shrink:0}
+.btn-compartir-custom{background-color:#1877F2;border:2px solid #ffffff;border-radius:8px;padding:2px 5px;display:inline-flex;align-items:center;gap:3px;cursor:pointer;box-shadow:0 2px 5px rgba(0,0,0,0.2);transition:transform 0.2s,background-color 0.2s;flex-shrink:0}
 .btn-compartir-custom:hover{background-color:#145dbf;transform:scale(1.03)}
-.pulgar-box{background-color:#ffffff;width:18px;height:20px;border-radius:3px;display:flex;align-items:center;justify-content:center}
-.pulgar-box .fa-thumbs-up{color:#1877F2;font-size:11px}
-.btn-compartir-custom span{color:#ffffff;font-size:10px;font-weight:800;letter-spacing:0.3px}
+.pulgar-box{background-color:#ffffff;width:16px;height:18px;border-radius:3px;display:flex;align-items:center;justify-content:center}
+.pulgar-box .fa-thumbs-up{color:#1877F2;font-size:10px}
+.btn-compartir-custom span{color:#ffffff;font-size:9px;font-weight:800;letter-spacing:0.3px}
 
 .theme-switch-container{display:inline-flex;align-items:center;cursor:pointer;user-select:none;flex-shrink:0}
-.theme-switch{width:46px;height:24px;background:linear-gradient(135deg,#f39c12,#e74c3c);border-radius:30px;position:relative;transition:background 0.4s ease;box-shadow:inset 0 2px 4px rgba(0,0,0,0.2);display:flex;align-items:center;padding:2px;border:1.5px solid rgba(255,255,255,0.4)}
+.theme-switch{width:40px;height:22px;background:linear-gradient(135deg,#f39c12,#e74c3c);border-radius:30px;position:relative;transition:background 0.4s ease;box-shadow:inset 0 2px 4px rgba(0,0,0,0.2);display:flex;align-items:center;padding:2px;border:1.5px solid rgba(255,255,255,0.4)}
 :root[data-theme="dark"] .theme-switch{background:linear-gradient(135deg,#1e3c72,#2a5298)}
-.theme-switch-handle{width:18px;height:18px;background:#ffffff;border-radius:50%;position:absolute;left:3px;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 5px rgba(0,0,0,0.3);transition:transform 0.4s cubic-bezier(0.68,-0.55,0.27,1.55)}
-:root[data-theme="dark"] .theme-switch-handle{transform:translateX(22px);background:linear-gradient(135deg,#00c6ff,#0072ff)}
-.theme-switch-handle i{font-size:9px;color:#e67e22;transition:color 0.3s ease}
+.theme-switch-handle{width:16px;height:16px;background:#ffffff;border-radius:50%;position:absolute;left:2px;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 5px rgba(0,0,0,0.3);transition:transform 0.4s cubic-bezier(0.68,-0.55,0.27,1.55)}
+:root[data-theme="dark"] .theme-switch-handle{transform:translateX(18px);background:linear-gradient(135deg,#00c6ff,#0072ff)}
+.theme-switch-handle i{font-size:8px;color:#e67e22;transition:color 0.3s ease}
 :root[data-theme="dark"] .theme-switch-handle i{color:#ffffff}
 
 .portal-header{text-align:center;margin-bottom:20px;background:linear-gradient(135deg,#1a3d5c,var(--azul));color:#fff;padding:25px 15px;border-radius:15px;box-shadow:var(--sombra)}
@@ -188,8 +191,27 @@ radio-player{flex:1;width:50%;height:140px;display:block;min-width:0}
 .chat-input-area{display:flex;padding:8px;background:#fff;border-top:1px solid var(--gris-borde)}
 .chat-input-area input{flex:1;min-width:0;padding:9px 11px;border:1px solid var(--gris-borde);border-radius:20px;outline:none;font-size:13px}
 .chat-input-area button{background:var(--azul);color:#fff;border:none;width:36px;height:36px;border-radius:50%;margin-left:6px;cursor:pointer;font-size:15px;flex-shrink:0}
-@media(min-width:768px){.tienda-grid{grid-template-columns:repeat(auto-fit,minmax(190px,1fr))}.item img{height:150px}}
-@media(max-width:500px){body{padding:8px 8px 100px}.user-bar{gap:5px;padding:7px 8px}.user-bar button:not(.sobre-notificacion-bar):not(.btn-compartir-custom):not(.btn-salida-custom){padding:7px 8px}.nombre{max-width:80px;font-size:11px}.avatar{width:30px;height:30px;font-size:12px}.portal-nav{left:8px;right:8px;bottom:8px}.portal-nav button{font-size:10px;padding:8px 2px}.nav-icon{font-size:17px}.portal-section{padding:14px}.portal-section h2{font-size:17px}#reloj-lluvia #hora{font-size:18px}#reloj-lluvia #fecha{font-size:9px}.carousel-container2 .slide img{max-width:220px;max-height:280px}.sw-fila{grid-template-columns:1fr}.tienda-controles{grid-template-columns:1fr}.carrito-botones{grid-template-columns:1fr}.clima-detalles{font-size:11px;gap:6px}.clima-temp{font-size:30px}}
+
+/* Optimización para celulares muy angostos */
+@media(max-width:500px){
+  body{padding:8px 8px 100px}
+  .user-bar{gap:3px;padding:4px 6px}
+  .nombre{max-width:60px;font-size:10px}
+  .avatar{width:26px;height:26px;font-size:11px}
+  .portal-nav{left:8px;right:8px;bottom:8px}
+  .portal-nav button{font-size:10px;padding:8px 2px}
+  .nav-icon{font-size:17px}
+  .portal-section{padding:14px}
+  .portal-section h2{font-size:17px}
+  #reloj-lluvia #hora{font-size:18px}
+  #reloj-lluvia #fecha{font-size:9px}
+  .carousel-container2 .slide img{max-width:220px;max-height:280px}
+  .sw-fila{grid-template-columns:1fr}
+  .tienda-controles{grid-template-columns:1fr}
+  .carrito-botones{grid-template-columns:1fr}
+  .clima-detalles{font-size:11px;gap:6px}
+  .clima-temp{font-size:30px}
+}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
 
 :root[data-theme="dark"]{--azul:#3B82C4;--azul-claro:#5A9BD8;--verde:#22C55E;--amarillo:#F5B800;--rojo:#EF4444;--gris-bg:#0F172A;--gris-borde:#2D3748;--texto:#E2E8F0;--sombra:0 8px 30px rgba(0,0,0,.4)}
@@ -369,7 +391,7 @@ radio-player{flex:1;width:50%;height:140px;display:block;min-width:0}
 <section id="seccion-archivos" class="portal-section">
   <h2>📁 Archivos y Documentos</h2>
   
-  <!-- Panel de Generación de Códigos (Siempre visible) -->
+  <!-- Panel de Generación de Códigos -->
   <div id="panelGenerarCodigo" style="background:#e8f3ff; border:1px solid #c9e2f7; border-radius:12px; padding:15px; margin-bottom:18px; text-align:center;">
     <h3 style="color:#1769aa; font-size:15px; margin-bottom:8px;">🔑 Generador de Códigos para Guardias</h3>
     <p style="font-size:12px; color:#4a5568; margin-bottom:10px;">Crea un código único (solo números) y un enlace mágico para que el guardia pueda ingresar desde su celular.</p>
@@ -442,7 +464,8 @@ function cargarCodigosMagicos(){
   if(codigoURL){
     // Si viene un código por URL, desbloqueamos el portal automáticamente
     localStorage.setItem("stock_autorizado","1");
-    localStorage.setItem("usuario_activo","Guardia (Enlace)");
+    // Usamos un nombre corto para que la barra superior no se desborde
+    localStorage.setItem("usuario_activo","Guardia");
     
     // Limpiar URL
     window.history.replaceState({}, document.title, window.location.pathname);
@@ -580,7 +603,7 @@ function desbloquearApp(nombreCompleto){
   document.getElementById("userAvatar").textContent=nombre.charAt(0).toUpperCase();
   const btn=document.getElementById("btnAccionUser");
   btn.className="btn-salida-custom";
-  btn.innerHTML=`<div class="puerta-box"><i class="fa-solid fa-person-running"></i></div><span>Salida</span>`;
+  btn.innerHTML=`<div class="puerta-box"><i class="fa-solid fa-person-running"></i></div><span>Salir</span>`;
   btn.title="Cerrar sesión";
   btn.onclick=cerrarSesion;
 }
