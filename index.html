@@ -157,14 +157,8 @@ radio-player{flex:1;width:50%;height:140px;display:block;min-width:0}
 .uruleyes-header,.stock-header{background:#0d1b2a;color:#fff;display:flex;justify-content:space-between;align-items:center;padding:12px 5%;border-bottom:3px solid #d4af37;gap:10px}
 .uruleyes-header h1,.stock-header h1{font-size:18px}
 .uruleyes-header nav a,.stock-header nav a{color:#fff;text-decoration:none;font-weight:bold;font-size:13px;cursor:pointer}
-.uruleyes-frame-container,.stock-frame-container{flex:1;width:100%;position:relative;overflow:auto;-webkit-overflow-scrolling:touch}
-.uruleyes-frame-container iframe,.stock-frame-container iframe{width:100%;height:100%;border:none;position:absolute;inset:0;display:block;min-width:360px}
-@media(max-width:500px){
-  .stock-frame-container iframe{
-    min-width: 480px;
-    width: 480px;
-  }
-}
+.uruleyes-frame-container,.stock-frame-container{flex:1;width:100%;position:relative;overflow:hidden}
+.uruleyes-frame-container iframe,.stock-frame-container iframe{width:100%;height:100%;border:none;position:absolute;inset:0;display:block}
 .toast{position:fixed;bottom:100px;right:15px;max-width:calc(100vw - 30px);background:var(--azul);color:#fff;padding:12px 18px;border-radius:10px;box-shadow:0 8px 20px rgba(0,0,0,.25);font-weight:600;font-size:13px;transform:translateX(calc(100% + 30px));transition:transform .3s;z-index:7000}
 .toast.show{transform:translateX(0)}
 .toast.success{background:var(--verde)}
@@ -380,7 +374,8 @@ radio-player{flex:1;width:50%;height:140px;display:block;min-width:0}
 <section id="seccion-archivos" class="portal-section">
   <h2>📁 Archivos y Documentos</h2>
   
-  <div id="panelGenerarCodigo" style="background:#e8f3ff; border:1px solid #c9e2f7; border-radius:12px; padding:15px; margin-bottom:18px; text-align:center;">
+  <!-- Panel de generación de códigos: OCULTO por defecto, solo admin -->
+  <div id="panelGenerarCodigo" style="display:none; background:#e8f3ff; border:1px solid #c9e2f7; border-radius:12px; padding:15px; margin-bottom:18px; text-align:center;">
     <h3 style="color:#1769aa; font-size:15px; margin-bottom:8px;">🔑 Generador de Códigos para Guardias</h3>
     <p style="font-size:12px; color:#4a5568; margin-bottom:10px;">Crea un código único y un enlace mágico para que el guardia pueda ingresar desde su celular.</p>
     <input type="text" id="inputNombreGuardia" placeholder="Nombre del guardia (Ej: Hugo)" style="padding:8px; border:1px solid #c9e2f7; border-radius:6px; width:80%; max-width:250px; margin-bottom:8px;">
@@ -404,6 +399,7 @@ radio-player{flex:1;width:50%;height:140px;display:block;min-width:0}
         <li>🎓 Material de capacitación</li>
       </ul>
       <button class="archivos-admin-btn" onclick="pedirClaveAgregarArchivo()">🔒 Agregar archivo (admin)</button>
+      <button class="archivos-admin-btn" style="background:#1769aa;margin-left:6px" onclick="pedirClaveMostrarGenerador()">🔑 Generar código (admin)</button>
     </div>
   </div>
   <div id="archivosGrid" class="archivos-grid"></div>
@@ -461,16 +457,12 @@ function normalizar(texto){return String(texto).toLowerCase().normalize("NFD").r
 function mostrarToast(msg,tipo="success"){const toast=document.getElementById("toast");toast.textContent=msg;toast.className="toast show "+tipo;clearTimeout(toast._timer);toast._timer=setTimeout(()=>toast.className="toast "+tipo,3200)}
 
 /* ===================== STOCK ===================== */
-let stockCheckTimeout=null;
-
 function abrirStock(){
   const contenedor=document.getElementById("stockFullscreen");
   const iframe=document.getElementById("iframeStock");
-  
+  // Recargar siempre limpio
   iframe.src="about:blank";
-  // Forzamos recarga limpia
   setTimeout(()=>{ iframe.src=STOCK_URL; },50);
-  
   contenedor.classList.add("active");
   document.body.style.overflow="hidden";
 }
@@ -478,7 +470,6 @@ function cerrarStock(e){
   if(e)e.preventDefault();
   const contenedor=document.getElementById("stockFullscreen");
   const iframe=document.getElementById("iframeStock");
-  clearTimeout(stockCheckTimeout);
   contenedor.classList.remove("active");
   iframe.src="about:blank";
   document.body.style.overflow="";
@@ -504,6 +495,16 @@ function cargarCodigosMagicos(){
   }
 }
 cargarCodigosMagicos();
+
+/* ===== Pide clave para mostrar el generador de códigos ===== */
+function pedirClaveMostrarGenerador(){
+  const pass=prompt("Clave de administrador para acceder al generador de códigos:");
+  if(pass!==CLAVE_MAESTRA){mostrarToast("Clave incorrecta.","error");return;}
+  const panel=document.getElementById("panelGenerarCodigo");
+  panel.style.display="block";
+  panel.scrollIntoView({behavior:"smooth",block:"start"});
+  mostrarToast("🔓 Generador desbloqueado","success");
+}
 
 function generarCodigoGuardia(){
   const nombre=document.getElementById("inputNombreGuardia").value.trim();
